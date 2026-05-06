@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Graphene Integration Route Selection for Ferroelectric Photonic Memory — v10.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:      #0f2540;
+    --navy-mid:  #1a3a5c;
+    --blue:      #2e6da4;
+    --blue-lt:   #4a90c4;
+    --accent:    #c8401a;
+    --bg:        #fafaf7;
+    --bg-warm:   #f4f1ea;
+    --bg-box:    #eef3f8;
+    --rule:      #c8c0b0;
+    --rule-lt:   #ddd8ce;
+    --text:      #1a1a18;
+    --text-mid:  #3a3a38;
+    --text-muted:#6a6860;
+    --serif:     'Libre Baskerville', Georgia, serif;
+    --sans:      'Source Sans 3', sans-serif;
+    --mono:      'Source Code Pro', monospace;
+    --col-w:     720px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { font-size: 16px; scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--serif);
+    font-size: 1rem;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── PROGRESS BAR ── */
+  #progress {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--blue));
+    width: 0%; z-index: 999; transition: width 0.1s linear;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--navy);
+    color: #fff;
+    padding: 3.5rem 2rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent, transparent 40px,
+      rgba(255,255,255,0.015) 40px, rgba(255,255,255,0.015) 41px
+    );
+    pointer-events: none;
+  }
+  header::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--accent) 0%, var(--blue) 60%, transparent 100%);
+  }
+  .header-inner {
+    max-width: var(--col-w);
+    margin: 0 auto;
+    position: relative;
+  }
+  .paper-label {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--blue-lt);
+    margin-bottom: 1.2rem;
+  }
+  h1.title {
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 700;
+    line-height: 1.25;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  h1.subtitle {
+    font-family: var(--sans);
+    font-size: 1.05rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 2rem;
+    letter-spacing: 0.01em;
+  }
+  .meta-row {
+    display: flex; flex-wrap: wrap; gap: 1.5rem;
+    font-family: var(--sans); font-size: 0.85rem;
+    color: rgba(255,255,255,0.55);
+    border-top: 1px solid rgba(255,255,255,0.12);
+    padding-top: 1.2rem;
+  }
+  .meta-row strong { color: rgba(255,255,255,0.85); font-weight: 600; }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--navy-mid);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .nav-inner {
+    max-width: var(--col-w);
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex; gap: 0; overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-inner::-webkit-scrollbar { display: none; }
+  nav a {
+    display: inline-block;
+    padding: 0.75rem 1rem;
+    font-family: var(--sans); font-size: 0.75rem;
+    font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  nav a:hover { color: #fff; border-bottom-color: var(--blue-lt); }
+
+  /* ── MAIN ── */
+  main {
+    max-width: var(--col-w);
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+  }
+
+  /* ── ABSTRACT ── */
+  .abstract-block {
+    background: var(--bg-box);
+    border-left: 4px solid var(--blue);
+    border-radius: 0 6px 6px 0;
+    padding: 1.8rem 2rem;
+    margin: 2.5rem 0;
+  }
+  .abstract-block h2 {
+    font-family: var(--sans); font-size: 0.7rem;
+    font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--blue);
+    margin-bottom: 0.9rem;
+  }
+  .abstract-block p {
+    font-family: var(--sans); font-size: 0.95rem;
+    line-height: 1.7; color: var(--text-mid);
+  }
+  .keywords {
+    margin-top: 1rem;
+    font-family: var(--sans); font-size: 0.82rem;
+    color: var(--text-muted); font-style: italic;
+  }
+  .keywords strong { font-style: normal; font-weight: 600; color: var(--text-mid); }
+
+  /* ── SECTIONS ── */
+  section { margin-bottom: 3.5rem; }
+
+  h2.sec-head {
+    font-family: var(--sans);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--navy);
+    counter-increment: section;
+    display: flex; align-items: baseline; gap: 0.7rem;
+  }
+  h2.sec-head .sec-num {
+    font-size: 0.75rem; font-weight: 700;
+    letter-spacing: 0.1em; color: var(--blue);
+    background: var(--bg-box);
+    padding: 0.15em 0.5em; border-radius: 3px;
+    white-space: nowrap;
+  }
+
+  h3.sub-head {
+    font-family: var(--sans);
+    font-size: 1rem; font-weight: 700;
+    color: var(--navy-mid);
+    margin: 1.8rem 0 0.7rem;
+  }
+
+  p { margin-bottom: 1rem; }
+  p + p { text-indent: 0; }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-left: 3px solid var(--accent);
+    background: #fdf6f3;
+    padding: 1.2rem 1.5rem;
+    margin: 1.5rem 0;
+    border-radius: 0 4px 4px 0;
+    font-family: var(--sans); font-size: 0.92rem;
+    line-height: 1.65;
+  }
+  .callout.blue {
+    border-left-color: var(--blue);
+    background: var(--bg-box);
+  }
+  .callout .callout-title {
+    font-weight: 700; text-transform: uppercase;
+    font-size: 0.7rem; letter-spacing: 0.12em;
+    color: var(--accent); margin-bottom: 0.5rem;
+  }
+  .callout.blue .callout-title { color: var(--blue); }
+  .callout p { margin-bottom: 0.5rem; font-size: inherit; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout strong { color: var(--navy); }
+
+  /* ── TABLES ── */
+  .tbl-wrap {
+    overflow-x: auto;
+    margin: 1.5rem 0 0.5rem;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  }
+  table {
+    width: 100%; border-collapse: collapse;
+    font-family: var(--sans); font-size: 0.84rem;
+    line-height: 1.4;
+  }
+  thead tr { background: var(--navy); color: #fff; }
+  thead th {
+    padding: 0.65rem 0.85rem;
+    text-align: left; font-weight: 600;
+    font-size: 0.78rem; letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  tbody tr:nth-child(odd)  { background: #fff; }
+  tbody tr:nth-child(even) { background: var(--bg-box); }
+  tbody tr:hover { background: #e8f0f8; transition: background 0.15s; }
+  tbody td {
+    padding: 0.55rem 0.85rem;
+    border-bottom: 1px solid var(--rule-lt);
+    color: var(--text-mid); vertical-align: top;
+  }
+  tbody td.mono { font-family: var(--mono); font-size: 0.8rem; color: var(--navy-mid); }
+  tbody td.bold { font-weight: 700; color: var(--navy); }
+  tbody td.hi   { background: #ddeeff !important; font-weight: 600; color: var(--navy); }
+  tbody td.warn { background: #fff3cd !important; }
+  tbody td.zero { color: var(--text-muted); font-style: italic; }
+  .tbl-caption {
+    font-family: var(--sans); font-size: 0.82rem;
+    color: var(--text-muted); font-style: italic;
+    margin-bottom: 1.5rem; padding-top: 0.4rem;
+    line-height: 1.5;
+  }
+
+  /* route F rows */
+  .f1-row td { background: #fff5f2 !important; }
+  .f2-row td { background: #e8f4e8 !important; }
+  .best-row td { background: #e8f0f8 !important; font-weight: 600; }
+
+  /* ── EXPERIMENTS ── */
+  .experiment {
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    margin: 1.5rem 0 2rem;
+    overflow: hidden;
+  }
+  .exp-header {
+    background: var(--navy);
+    color: #fff;
+    padding: 1rem 1.4rem;
+    display: flex; align-items: baseline; gap: 0.8rem;
+  }
+  .exp-num {
+    font-family: var(--sans); font-size: 0.68rem;
+    font-weight: 700; letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: var(--blue);
+    padding: 0.2em 0.6em; border-radius: 3px;
+    white-space: nowrap;
+  }
+  .exp-num.priority { background: var(--accent); }
+  .exp-title {
+    font-family: var(--sans); font-size: 0.97rem;
+    font-weight: 600; line-height: 1.3;
+  }
+  .exp-body {
+    padding: 1.2rem 1.4rem;
+    font-family: var(--sans); font-size: 0.92rem;
+    line-height: 1.65;
+  }
+  .exp-body p { margin-bottom: 0.7rem; font-size: inherit; }
+  .exp-measure {
+    background: var(--bg-box);
+    border-radius: 4px;
+    padding: 0.8rem 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
+  .exp-measure strong { color: var(--navy); }
+  .branch-grid { display: grid; gap: 0.5rem; margin: 0.8rem 0 1rem; }
+  .branch {
+    display: grid; grid-template-columns: auto 1fr;
+    gap: 0.6rem; align-items: start;
+    padding: 0.6rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.88rem;
+  }
+  .branch-a { background: #e8f4e8; }
+  .branch-b { background: #fff8e1; }
+  .branch-c { background: #fdecea; }
+  .branch-label {
+    font-weight: 700; font-size: 0.72rem;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 0.15em 0.5em; border-radius: 3px;
+    white-space: nowrap; align-self: start; margin-top: 0.1em;
+  }
+  .branch-a .branch-label { background: #2e7d32; color: #fff; }
+  .branch-b .branch-label { background: #e65100; color: #fff; }
+  .branch-c .branch-label { background: #c62828; color: #fff; }
+  .prior-update {
+    font-size: 0.85rem; color: var(--text-muted);
+    border-top: 1px solid var(--rule-lt);
+    padding-top: 0.7rem; margin-top: 0.5rem;
+  }
+  .prior-update strong { color: var(--navy-mid); }
+
+  /* ── CONCLUSIONS ── */
+  .conclusion-list { counter-reset: conc; }
+  .conclusion-item {
+    display: grid; grid-template-columns: 2.2rem 1fr;
+    gap: 0.6rem; margin-bottom: 1rem;
+    align-items: start;
+  }
+  .conc-num {
+    font-family: var(--sans); font-weight: 700;
+    font-size: 0.9rem; color: var(--blue);
+    width: 2rem; height: 2rem;
+    border: 2px solid var(--blue);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 0.1rem;
+  }
+  .conc-text {
+    font-family: var(--sans); font-size: 0.95rem;
+    line-height: 1.65; color: var(--text-mid);
+    padding-top: 0.2rem;
+  }
+
+  /* ── REFERENCES ── */
+  .ref-list { font-family: var(--sans); font-size: 0.84rem; line-height: 1.55; }
+  .ref-item {
+    display: grid; grid-template-columns: 3rem 1fr;
+    gap: 0.3rem; padding: 0.4rem 0;
+    border-bottom: 1px solid var(--rule-lt);
+    color: var(--text-mid);
+  }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-tag {
+    font-weight: 700; color: var(--navy);
+    font-size: 0.8rem; white-space: nowrap;
+    padding-top: 0.05em;
+  }
+  .ref-note {
+    font-style: italic; color: var(--text-muted);
+    font-size: 0.8rem; display: block; margin-top: 0.1rem;
+  }
+
+  /* ── RULE / DIVIDER ── */
+  hr.sec-rule {
+    border: none; border-top: 1px solid var(--rule);
+    margin: 2.5rem 0;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy);
+    color: rgba(255,255,255,0.45);
+    text-align: center;
+    padding: 1.5rem 2rem;
+    font-family: var(--sans); font-size: 0.78rem;
+    letter-spacing: 0.04em;
+  }
+  footer strong { color: rgba(255,255,255,0.75); }
+
+  /* ── INLINE STYLES ── */
+  sup.cite {
+    font-family: var(--sans); font-size: 0.68rem;
+    color: var(--blue); font-weight: 700;
+    vertical-align: super;
+  }
+  code { font-family: var(--mono); font-size: 0.88em; color: var(--navy-mid); }
+  em { font-style: italic; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    main { padding: 2rem 1rem 4rem; }
+    h1.title { font-size: 1.4rem; }
+    .meta-row { gap: 0.8rem; }
+    thead th, tbody td { padding: 0.45rem 0.55rem; font-size: 0.78rem; }
+  }
+
+  /* ── FADE IN ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .fade-in { animation: fadeUp 0.55s ease both; }
+  .fade-in:nth-child(2) { animation-delay: 0.08s; }
+  .fade-in:nth-child(3) { animation-delay: 0.16s; }
+  .fade-in:nth-child(4) { animation-delay: 0.24s; }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<!-- ═══════════════ HEADER ═══════════════ -->
+<header>
+  <div class="header-inner">
+    <div class="paper-label fade-in">White Paper &nbsp;·&nbsp; Solbakken Research Initiative &nbsp;·&nbsp; Paper 4 of 4</div>
+    <h1 class="title fade-in">Graphene Integration Route Selection<br>for Ferroelectric Photonic Memory</h1>
+    <h1 class="subtitle fade-in">A Bayesian Quality Assessment Across Ten Process Scenarios</h1>
+    <div class="meta-row fade-in">
+      <span><strong>Author</strong> &nbsp;Nils Haaland</span>
+      <span><strong>Affiliation</strong> &nbsp;Independent Researcher, Omaha</span>
+      <span><strong>Contact</strong> &nbsp;nhaaland@yahoo.com</span>
+      <span><strong>Version</strong> &nbsp;10.0 — May 2026</span>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav>
+  <div class="nav-inner">
+    <a href="#abstract">Abstract</a>
+    <a href="#s1">1. Introduction</a>
+    <a href="#s2">2. Goldilocks Window</a>
+    <a href="#s3">3. Routes</a>
+    <a href="#s4">4. Methodology</a>
+    <a href="#s5">5. Results</a>
+    <a href="#s6">6. Discussion</a>
+    <a href="#s7">7. Experiments</a>
+    <a href="#s8">8. Conclusion</a>
+    <a href="#refs">References</a>
+  </div>
+</nav>
+
+<!-- ═══════════════ MAIN ═══════════════ -->
+<main>
+
+<!-- ABSTRACT -->
+<div id="abstract" class="abstract-block">
+  <h2>Abstract</h2>
+  <p>Graphene-gated ferroelectric photonic memory is a proposed architecture for non-volatile weight storage in photonic AI accelerators. <strong>No experimental prototype combining graphene gating, ferroelectric polarization, and photonic waveguide operation has been demonstrated.</strong> Ten candidate integration routes — spanning UNCD graphitization, SCD(111) graphitization, and CVD metal-substrate transfer — differ sufficiently in substrate physics, transfer mechanism, and process maturity that testing all ten in parallel is neither economically nor experimentally feasible. This paper provides a pre-experimental decision framework: a Bayesian Monte Carlo simulation anchored to primary literature that ranks ten routes by joint probability of meeting five simultaneous graphene quality criteria, identifies which constraints are substrate physics (irreducible) versus process variables (reducible), and specifies four experiments — ordered by decision value — that most efficiently collapse the decision space before fabrication begins.</p>
+  <p>Principal results: (i) all UNCD routes fail on domain size — substrate physics, not process variable; (ii) SCD(111) direct graphitization fails on mobility and carrier density within any realistic envelope; (iii) SCD(111) Ni-assisted graphitization (Route F) achieves ~0% joint pass probability at the only peer-reviewed anchor (Kanada et al. 2017: 140 cm²/V·s) — the 57.2% projected H-termination ceiling is a theoretical upper bound with no direct experimental confirmation; (iv) CVD/Pt with hBN encapsulation (Route I) achieves 38.6%, the highest of any route at current demonstrated state; (v) CVD/Pt bonded to SCD(111) (Route J) yields 21–36% across the full transfer-penalty uncertainty range. Route rankings are falsifiable theoretical predictions. Section 7 is the falsification protocol.</p>
+  <p class="keywords"><strong>Keywords:</strong> graphene, CVD, ferroelectric photonic memory, hexagonal boron nitride, single-crystal diamond, UNCD, Bayesian Monte Carlo, photonic AI accelerators, non-volatile weight storage, pre-experimental decision framework, integration route selection</p>
+</div>
+
+<hr class="sec-rule">
+
+<!-- ═══ SECTION 1 ═══ -->
+<section id="s1">
+  <h2 class="sec-head"><span class="sec-num">§ 1</span> Introduction</h2>
+
+  <h3 class="sub-head">1.1 &nbsp;The weight storage problem</h3>
+  <p>Photonic matrix-vector multiplication (MVM) has emerged as a leading candidate for energy-efficient AI inference at scale. Interferometric networks of Mach-Zehnder interferometer (MZI) meshes can, in principle, perform a multiply-accumulate operation at energies approaching 0.1 fJ per MAC — three to four orders of magnitude below DRAM-limited digital accelerators.<sup class="cite">[4]</sup> The central unresolved problem is weight storage. Phase weights encoded in thermo-optic or electro-optic phase shifters are volatile: every inference cycle requires weights to be reloaded from external memory.</p>
+  <p>For a 70-billion-parameter model running in FP16 precision on HBM3 memory, each generated token requires transferring approximately 140 GB of model weights from DRAM. At the HBM3 I/O energy intensity of approximately 2.5 pJ/bit, this corresponds to roughly <strong>2.8 J per token</strong> in memory transfer energy alone — three to four orders of magnitude above the ~0.1 fJ/MAC photonic compute energy. Total system energy per token including compute and thermal overhead is substantially higher.<sup class="cite">[Husom]</sup> Eliminating per-token weight reload would remove the dominant energy term in memory-bound inference.</p>
+  <p>Ferroelectric materials — particularly HfO₂-family films (Al:HfO₂, Hf₀.₅Zr₀.₅O₂) — offer a compelling path to non-volatile photonic weight storage: switching at 65 fJ per write event, CMOS-compatible deposition, and demonstrated endurance exceeding 10⁷ cycles. Zhang et al. demonstrated a non-volatile ferroelectric-silicon photonic memory achieving 6.6 dB optical extinction ratio at 5 V; Koike et al. demonstrated non-volatile optical phase shift in HZO on SiN; Xu et al. demonstrated femtojoule-per-state ferroelectric photonic memory with 10⁷-cycle endurance across six optical states in an HZO-gated LiNbO₃ ring resonator — architecturally distinct from the Al:HfO₂/graphene stack evaluated here, but demonstrating the endurance and energy targets achievable in this device class.<sup class="cite">[1][2][3]</sup></p>
+  <p>Graphene is a natural gate electrode for this architecture: optically transparent at 1550 nm under Pauli blocking conditions, atomically thin, and electrostatically tunable via the ferroelectric polarization state. Patil et al. (Small, 2025) demonstrated sub-fJ switching (~0.85 fJ) using an atomically thin graphene <em>edge</em> electrode in a 3D vertical geometry above a 10 nm HZO layer — the closest published device to the ferroelectric optical gate architecture evaluated here, noting that the 3D vertical edge electrode geometry differs from the planar above-ferroelectric gate configuration assumed in this paper's tolerance chain.<sup class="cite">[3c]</sup></p>
+
+  <h3 class="sub-head">1.2 &nbsp;The experimental selection problem</h3>
+  <p>Ten candidate routes exist for integrating graphene into a ferroelectric photonic memory stack, differing fundamentally in substrate physics, growth mechanism, transfer method, and process maturity. Testing all ten experimentally in parallel is not tractable for any single group. This paper provides a principled answer to the question "which routes should we attempt first?" before the first wafer is loaded. It is explicitly a pre-experimental decision framework, not a results paper.</p>
+
+  <h3 class="sub-head">1.3 &nbsp;Epistemic status</h3>
+  <div class="callout">
+    <div class="callout-title">This paper is</div>
+    <p>A pre-experimental decision tool ranking ten integration routes by joint probability of meeting five quality criteria simultaneously, identifying substrate-physics versus process-variable constraints, and specifying four experiments that most efficiently collapse the decision space.</p>
+  </div>
+  <div class="callout">
+    <div class="callout-title">This paper is not</div>
+    <p>A prediction of device performance. Goldilocks thresholds are theory-derived hypotheses calibrated to a device architecture with no experimental prototype. Route rankings are prioritisation tools for experimental investment, not device specifications.</p>
+  </div>
+  <div class="callout blue">
+    <div class="callout-title">Critical prior caveat</div>
+    <p>Route F's joint pass probability at <strong>current demonstrated state is approximately 0%</strong>, anchored to the only peer-reviewed measurement for Ni-assisted SCD(111) graphitization (Kanada et al. 2017: 140 cm²/V·s, 5.7×10¹³ cm⁻²). The 57.2% projected H-termination ceiling is a <strong>theoretical upper bound with no direct experimental confirmation</strong>. These two figures must not be conflated.</p>
+    <p><strong>Falsification target:</strong> Any laboratory demonstrating a working graphene-gated ferroelectric photonic memory cell at any route provides the first experimental anchor for the entire framework.</p>
+  </div>
+</section>
+
+<!-- ═══ SECTION 2 ═══ -->
+<section id="s2">
+  <h2 class="sec-head"><span class="sec-num">§ 2</span> The Goldilocks Quality Window</h2>
+
+  <h3 class="sub-head">2.1 &nbsp;Five quality criteria</h3>
+  <p>Graphene quality for ferroelectric photonic memory is characterised by five measurable parameters. The conjunction of all five defines the Goldilocks window. Thresholds are derived from the optical tolerance chain for a 64×64 MVM tile with a 0.5 dB total insertion loss budget — a device specification that has not been built.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr>
+        <th>Parameter</th><th>Symbol</th><th>Threshold</th><th>Physical basis</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>Defect density</td><td class="mono">I_D/I_G</td><td>&lt; 0.1</td><td>Defects scatter carriers; reduce conductivity modulation depth</td></tr>
+        <tr><td>Domain size</td><td class="mono">L_domain</td><td>&gt; 10 µm</td><td>Grain boundaries produce local carrier density spikes; when spacing &lt; optical mode width, IL variance exceeds per-cell budget</td></tr>
+        <tr><td>Carrier mobility</td><td class="mono">µ</td><td>&gt; 3,000 cm²/V·s</td><td>Low mobility increases Drude intraband absorption, competing with electro-optic modulation</td></tr>
+        <tr><td>Carrier density</td><td class="mono">n*</td><td>&lt; 10¹¹ cm⁻²</td><td>Spatial uniformity criterion (see §2.2); distinct from the Pauli blocking mean-doping constraint</td></tr>
+        <tr><td>Monolayer coverage</td><td class="mono">P(mono)</td><td>&gt; 95% area</td><td>Bilayer islands reduce optical modulation depth below 5% of single-layer value</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tbl-caption">Table 1. The five Goldilocks criteria. Thresholds are theory-derived hypotheses for a 64×64 MVM tile; not validated against a working device.</p>
+
+  <h3 class="sub-head">2.2 &nbsp;Optical tolerance chain</h3>
+  <p>The insertion loss of a graphene-loaded waveguide is determined by the imaginary part of the Kubo optical conductivity: σ(ω) = (e²/4ℏ)·tanh[(ℏω − 2E_F)/4k_BT] + intraband term, where E_F = ℏv_F√(πn), with Fermi velocity v_F ≈ 10⁶ m/s.</p>
+
+  <div class="callout blue">
+    <div class="callout-title">Two distinct carrier density constraints — must not be conflated</div>
+    <p><strong>Constraint 1 — Pauli blocking threshold (mean doping level):</strong> At 1550 nm (ℏω = 0.80 eV), Pauli blocking requires E_F &gt; 0.40 eV, corresponding to mean carrier density n &lt; 1.2×10¹² cm⁻². Constraint on the <em>mean</em> residual doping.</p>
+    <p><strong>Constraint 2 — Uniformity threshold (spatial variation):</strong> For a 64×64 MVM array with 0.5 dB total IL budget and 50 µm interaction length, the per-cell carrier density <em>variation</em> tolerance is Δn &lt; 10¹¹ cm⁻². The n* &lt; 10¹¹ cm⁻² Goldilocks threshold applies to this uniformity criterion — a constraint on spatial standard deviation, not the mean.</p>
+  </div>
+
+  <p>The five criteria are applied as independent pass/fail gates — a conservative first-order approximation. Partial compensatory relationships exist in real devices. Relaxing the binary gates to a continuous Kubo-derived loss function yields approximately +2–5 percentage points on Route I's joint probability without changing the route ranking.</p>
+  <p>The 10 µm domain size threshold is the point at which grain boundary effects transition from dominant to perturbative: at 10 µm mean domain size, a 50 µm interaction length contains approximately five boundary crossings, each contributing ~0.1 dB IL variance. Yazyev and Louie established that grain boundaries produce either high carrier transparency or near-perfect reflection depending on misorientation angle;<sup class="cite">[13]</sup> Tsen et al. confirmed grain boundary resistance varies by up to an order of magnitude with interdomain connectivity.<sup class="cite">[14]</sup></p>
+
+  <h3 class="sub-head">2.3 &nbsp;Array-size scaling</h3>
+  <p>Every threshold in Table 1 is calibrated to a 64×64 array. The Δn uniformity threshold scales as 1/N for an N×N array under a fixed total IL budget.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr>
+        <th>Array size</th><th>n* threshold</th><th>Route I P(cell)</th><th>Route I P(array) uncalibrated</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>16×16</td><td>~4×10¹¹ cm⁻²</td><td>~55%</td><td>~0.01%</td></tr>
+        <tr><td>32×32</td><td>~2×10¹¹ cm⁻²</td><td>~47%</td><td>&lt;0.001%</td></tr>
+        <tr class="best-row"><td><strong>64×64 (baseline)</strong></td><td><strong>10¹¹ cm⁻²</strong></td><td><strong>38.6%</strong></td><td>&lt;&lt;0.001%</td></tr>
+        <tr><td>128×128</td><td>~5×10¹⁰ cm⁻²</td><td>~28%</td><td>negligible</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tbl-caption">Table 2. Array-size scaling of the carrier density uniformity threshold and Route I probabilities. P(array) assumes no post-fabrication calibration and independent cells — an upper-bound independence model.</p>
+
+  <p>No route achieves meaningful uncalibrated array yield at 64×64 or above: post-fabrication calibration or redundancy is required for all routes. The single-crystal substrate argument becomes structurally necessary above approximately N=64.</p>
+
+  <h3 class="sub-head">2.4 &nbsp;Strain correction</h3>
+  <p>CVD graphene on platinum exhibits compressive strain of 0.07–0.12% from thermal expansion mismatch, measurable as a G-peak blue-shift. The primary concern is that this can be misread as carrier density increase if not decomposed from doping contributions. ISO/TS 9651:2025 and ISO/TS 23359:2025 cover materials-tier classification but do not specify the substrate-dependent doping offset parameter or optical-loss-relevant carrier density uniformity metrics required for photonic integration pre-qualification.<sup class="cite">[19][20]</sup> Experiment 3 is designed to produce this metrology.</p>
+</section>
+
+<!-- ═══ SECTION 3 ═══ -->
+<section id="s3">
+  <h2 class="sec-head"><span class="sec-num">§ 3</span> Ten Integration Routes</h2>
+
+  <h3 class="sub-head">3.1 &nbsp;Route families</h3>
+  <p>The ten routes divide into <strong>in-place routes</strong> (graphene formed directly on the photonic substrate, no transfer step) and <strong>transfer routes</strong> (grown on a separate metal substrate and transferred). In-place routes eliminate transfer-induced damage. Transfer routes offer superior intrinsic graphene quality at growth but introduce transfer penalties that are the dominant source of quality degradation.</p>
+
+  <h3 class="sub-head">3.2 &nbsp;UNCD graphitization (Routes A–D) — eliminated by substrate physics</h3>
+  <p>All four UNCD routes fail the domain size criterion with marginal pass probabilities below 0.1%. The 2–5 nm UNCD grain structure constrains graphene domain sizes to sub-micron scale — orders of magnitude below the 10 µm threshold. This is a substrate physics constraint: no catalyst choice, atmosphere, or annealing temperature reported in the literature has produced 10 µm graphene domains from a substrate with nm-scale crystalline grains. A combined-lever sensitivity analysis confirms the ceiling: even at 40 µm mean domain size — 20× the baseline, undemonstrated for UNCD — and aggressive H-plasma, joint pass probability reaches only 6.8%.</p>
+  <p>UNCD is not dismissed from the architecture. It retains an important role as a thermal management substrate for transferred graphene (§6.5) and is eliminated only from the in-place graphitization route.</p>
+
+  <h3 class="sub-head">3.3 &nbsp;SCD(111) direct graphitization (Route E) — eliminated by device physics</h3>
+  <p>Route E achieves ~0% joint pass probability within any realistic improvement envelope. Despite mm-scale domain size (96% domain pass rate), direct graphitization consistently produces multilayer graphene with room-temperature mobilities of 140–400 cm²/V·s and carrier densities exceeding 10¹³ cm⁻². Multilayer formation is thermodynamically favoured on the (111) surface without a catalyst.</p>
+
+  <h3 class="sub-head">3.4 &nbsp;SCD(111) Ni-assisted with H-termination (Route F) — theoretical long-term target</h3>
+
+  <div class="callout">
+    <div class="callout-title">Route F: Demonstrated vs. Theoretical — The most important epistemic distinction in this paper</div>
+    <p><strong>Demonstrated state (F1):</strong> The only peer-reviewed Hall mobility measurement for Ni-assisted graphitization on SCD(111) is Kanada et al. (2017): 140 cm²/V·s room temperature, carrier density 5.7×10¹³ cm⁻², p-type conduction.<sup class="cite">[Kanada]</sup> At this anchor, Route F's joint pass probability is effectively <strong>zero</strong> — indistinguishable from Route E. The Ni catalyst was removed by H₂SO₄:H₂O₂ prior to measurement; this is a pre-H-termination result.</p>
+    <p><strong>Theoretical ceiling (F2):</strong> H-termination creates a surface dipole layer reducing remote phonon scattering. Hicks et al. (2024) establish the theoretical mobility ceiling at 8,000–10,000 cm²/V·s based on phonon scattering models.<sup class="cite">[15]</sup> This ceiling has <strong>not been experimentally demonstrated</strong> for the Ni-assisted graphitization + H-termination process sequence. The 57.2% projected ceiling is a theoretical upper bound, not a measured result.</p>
+  </div>
+
+  <p>Experiment 1 is not a fine-tuning exercise — it is the measurement that determines whether H-termination produces <em>any</em> usable mobility improvement over the Kanada baseline. Until that experiment is performed, Route F's designation as a long-term target rests on theoretical surface physics arguments, not experimental process evidence.</p>
+
+  <h3 class="sub-head">3.5 &nbsp;CVD transfer routes (Routes G–J)</h3>
+  <p><strong>Route G</strong> (CVD/Pt → SiO₂, wet PMMA transfer): 13.7% joint pass probability. The ~20× carrier density transfer penalty makes carrier density the binding constraint (31.6% pass rate), with mobility (48.1%) as the immediate secondary. Route G is a cascading two-constraint problem.</p>
+  <p><strong>Route H</strong> (CVD/Cu → SiO₂): 8.2%. The ~25× carrier density transfer penalty produces the lowest joint probability among CVD routes.</p>
+  <p><strong>Route I</strong> (CVD/Pt → hBN encapsulation): 38.6% — the highest of any route at current demonstrated state. hBN reduces the carrier density transfer penalty from ~20× to ~5×,<sup class="cite">[9][10]</sup> making carrier density pass probability 83.0% and leaving mobility (51.6%) as the sole binding constraint. The binding mobility constraint reflects the polycrystalline grain boundaries of the CVD film itself; no transfer optimisation eliminates it. Absent quasi-single-crystal CVD, 38.6% is the practical ceiling for Route I under the current growth regime.</p>
+  <p><strong>Route J</strong> (CVD/Pt → SCD(111) bonded substrate): midpoint estimate 28.8%, range 21–36%. No direct experimental measurement of graphene transfer to bonded SCD(111) has been reported. The ~10× carrier density transfer penalty is an engineering estimate bounded by analogy — SiO₂ produces ~20×; hBN encapsulation ~5×; bonded SCD(111) is estimated between these bounds. Route J is the development bridge: the same SCD(111) substrate required for Route F, accessible today via transferred graphene while in-place graphitization matures.</p>
+</section>
+
+<!-- ═══ SECTION 4 ═══ -->
+<section id="s4">
+  <h2 class="sec-head"><span class="sec-num">§ 4</span> Simulation Methodology</h2>
+
+  <h3 class="sub-head">4.1 &nbsp;Prior distributions</h3>
+  <p>Each quality parameter is modelled as a lognormal random variable X ~ LogNormal(µ_ln, σ_ln), appropriate for strictly positive physical quantities with multiplicative variability. σ_ln brackets the spread of reported values across at least two independent groups per route where available, or is conservatively inflated when only a single group reported a value. Monolayer coverage is modelled as a Beta-distributed probability, kept independent of film-quality parameters by construction. Transfer penalties are multiplicative lognormal factors. N = 200,000 Monte Carlo samples; sampling error below 0.05 percentage points.</p>
+
+  <h3 class="sub-head">4.2 &nbsp;Correlation structure</h3>
+  <p>Quality parameters are physically correlated via Cholesky decomposition in log-space: defect density and mobility (ρ = −0.6, both degraded by grain boundaries); domain size and mobility (ρ = +0.7, larger domains contain fewer grain boundaries); defect density and carrier density (ρ = +0.3, charged defects act as dopants). These values are physically motivated but not fitted to experimental data. Perturbing each ρ by ±0.2 leaves the qualitative route ordering stable; the Route F/I crossover mobility shifts by approximately ±500 cm²/V·s.</p>
+
+  <h3 class="sub-head">4.3 &nbsp;Literature anchors by route</h3>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr>
+        <th>Route</th><th>Domain size µm</th><th>Mobility cm²/V·s</th><th>Transfer factor</th><th>Primary anchor</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>A: UNCD UHV</td><td class="mono">LogN(0.3, 0.7)</td><td class="mono">LogN(300, 0.7)</td><td>H-plasma only</td><td>Yan 2012</td></tr>
+        <tr><td>B: UNCD Ar</td><td class="mono">LogN(0.5, 0.6)</td><td class="mono">LogN(800, 0.7)</td><td>H-plasma only</td><td>Sumant 2016</td></tr>
+        <tr><td>C: UNCD Cu cat.</td><td class="mono">LogN(1.0, 0.6)</td><td class="mono">LogN(1000, 0.5)</td><td>H-plasma only</td><td>Sumant 2016</td></tr>
+        <tr><td>D: UNCD Ni RTA ★</td><td class="mono">LogN(2.0, 0.5)</td><td class="mono">LogN(1800, 0.5)</td><td>H-plasma only</td><td>Sumant 2016</td></tr>
+        <tr><td>E: SCD(111) direct</td><td class="mono">LogN(50, 0.6)</td><td class="mono">LogN(250, 0.6)</td><td>H-plasma only</td><td>JAP 2013; Carbon 2021</td></tr>
+        <tr class="f1-row"><td>F1: SCD Ni, demonstrated ★</td><td class="mono">LogN(500, 0.5)</td><td class="mono">LogN(140, 0.5)</td><td>H-plasma</td><td>Kanada 2017</td></tr>
+        <tr class="f2-row"><td>F2: SCD Ni+H, theoretical ★</td><td class="mono">LogN(500, 0.5)</td><td class="mono">LogN(8000, 0.5)</td><td>H-plasma</td><td>Hicks 2024 (ceiling only)</td></tr>
+        <tr><td>G: CVD/Pt → SiO₂</td><td class="mono">LogN(30, 0.5)</td><td class="mono">LogN(5000, 0.4)</td><td class="mono">LogN(20, 0.7)</td><td>Gao 2012; Zhang 2012</td></tr>
+        <tr><td>H: CVD/Cu → SiO₂</td><td class="mono">LogN(50, 0.5)</td><td class="mono">LogN(4000, 0.5)</td><td class="mono">LogN(25, 0.8)</td><td>Kim 2009</td></tr>
+        <tr class="best-row"><td>I: CVD/Pt → hBN ★</td><td class="mono">LogN(30, 0.5)</td><td class="mono">LogN(5000, 0.4)</td><td class="mono">LogN(5, 0.5)</td><td>Banszerus 2015; Pizzocchero 2016</td></tr>
+        <tr><td>J: CVD/Pt → SCD(111)</td><td class="mono">LogN(30, 0.5)</td><td class="mono">LogN(5000, 0.4)</td><td class="mono">LogN(10, 0.6) †</td><td>Gao 2012; estimated</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tbl-caption">Table 3. Prior distribution anchors. ★ = best-in-family. Route F split into F1 (Kanada 2017 demonstrated) and F2 (Hicks 2024 theoretical ceiling). † Route J transfer factor is an engineering estimate with no direct experimental measurement.</p>
+</section>
+
+<!-- ═══ SECTION 5 ═══ -->
+<section id="s5">
+  <h2 class="sec-head"><span class="sec-num">§ 5</span> Results</h2>
+
+  <h3 class="sub-head">5.1 &nbsp;Summary table</h3>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr>
+        <th>Route</th><th>D/G</th><th>Domain</th><th>Mobility</th><th>n*</th><th>Mono</th><th>P(all 5)</th><th>Binding constraint</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>A: UNCD UHV</td><td>0.124</td><td class="zero">0.000</td><td>0.001</td><td>0.020</td><td>0.602</td><td class="zero">~0.000</td><td>Domain size</td></tr>
+        <tr><td>B: UNCD Ar</td><td>0.358</td><td class="zero">0.000</td><td>0.029</td><td>0.020</td><td>0.668</td><td class="zero">~0.000</td><td>Domain size</td></tr>
+        <tr><td>C: UNCD Cu</td><td>0.155</td><td class="zero">0.000</td><td>0.014</td><td>0.005</td><td>0.715</td><td class="zero">~0.000</td><td>Domain size</td></tr>
+        <tr><td>D: UNCD Ni ★</td><td>0.711</td><td class="zero">0.001</td><td>0.155</td><td>0.088</td><td>0.751</td><td class="zero">~0.000</td><td>Domain size</td></tr>
+        <tr><td>E: SCD direct</td><td>0.033</td><td>0.996</td><td class="zero">0.000</td><td class="zero">0.001</td><td>0.334</td><td class="zero">~0.000</td><td>Mobility / n*</td></tr>
+        <tr class="f1-row"><td>F1: SCD Ni, demonstrated ★</td><td>0.899</td><td>1.000</td><td class="zero">0.001</td><td class="zero">0.000</td><td>0.778</td><td class="zero">~0.000</td><td>Mobility / n*</td></tr>
+        <tr class="f2-row"><td>F2: SCD Ni+H, theoretical ★</td><td>0.899</td><td>1.000</td><td>0.950</td><td>0.834</td><td>0.778</td><td class="bold">57.2% †</td><td>n* (theoretical)</td></tr>
+        <tr><td>G: Pt→SiO₂</td><td>1.000</td><td>0.986</td><td>0.481</td><td>0.316</td><td>0.899</td><td>13.7%</td><td>n* (next: mobility)</td></tr>
+        <tr><td>H: Cu→SiO₂</td><td>0.999</td><td>0.999</td><td>0.337</td><td>0.269</td><td>0.900</td><td>8.2%</td><td>n* (next: mobility)</td></tr>
+        <tr class="best-row"><td>I: Pt→hBN ★</td><td>1.000</td><td>0.986</td><td>0.516</td><td>0.830</td><td>0.901</td><td class="bold hi">38.6%</td><td>Mobility</td></tr>
+        <tr><td>J: Pt→SCD(111)</td><td>1.000</td><td>0.986</td><td>0.567</td><td>0.566</td><td>0.900</td><td class="warn">21–36% ‡</td><td>n* (next: mobility)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tbl-caption">Table 4. Main simulation results. Each cell shows marginal pass probability for each Goldilocks criterion. ★ = best-in-family. ~0.000 indicates P &lt; 0.0001. † Route F2 is a theoretical upper bound; current demonstrated state (F1) is ~0%. ‡ Route J range spans the 7×–15× transfer-penalty uncertainty; midpoint 28.8% corresponds to the ~10× estimate. N = 200,000 samples.</p>
+
+  <h3 class="sub-head">5.2 &nbsp;Route F: demonstrated state versus theoretical ceiling</h3>
+  <p>The most consequential result in Table 4 is the separation of Route F into F1 and F2. At the Kanada (2017) anchor (140 cm²/V·s, 5.7×10¹³ cm⁻²), Route F produces ~0% joint pass probability — indistinguishable from Route E. The gap between F1 (~0%) and F2 (57.2%) is the largest uncertainty in the paper, and it is an <em>experimental</em> gap, not a theoretical one. Experiment 1 is the measurement that begins to close it.</p>
+
+  <h3 class="sub-head">5.3 &nbsp;Route F mobility trajectory (conditional on H-termination improvement)</h3>
+  <div class="callout blue">
+    <div class="callout-title">Conditional analysis — hypothesis, not demonstrated fact</div>
+    <p>The following analysis is conditional on H-termination producing mobility improvement above the Kanada baseline. All rows except the first are undemonstrated hypotheses.</p>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr>
+        <th>Mobility prior mean</th><th>P(mob &gt; 3000)</th><th>P(n* &lt; 10¹¹)</th><th>P(all 5)</th><th>Status</th>
+      </tr></thead>
+      <tbody>
+        <tr class="f1-row"><td>140 cm²/V·s — Kanada anchor</td><td>~0.1%</td><td>~0.0%</td><td class="zero">~0.000</td><td class="bold">Demonstrated</td></tr>
+        <tr><td>3,000 cm²/V·s — optimistic near-term</td><td>49.9%</td><td>56.8%</td><td>21.8%</td><td class="zero">Undemonstrated hypothesis</td></tr>
+        <tr><td>5,000 cm²/V·s — process target</td><td>80.4%</td><td>83.5%</td><td>49.9%</td><td class="zero">Undemonstrated hypothesis</td></tr>
+        <tr class="f2-row"><td>8,000 cm²/V·s — H-term ceiling</td><td>94.9%</td><td>83.4%</td><td class="bold">57.2%</td><td class="zero">Theoretical upper bound</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tbl-caption">Table 5. Route F mobility trajectory. Carrier density pass rate stabilises at ~83–84% above 3,000 cm²/V·s, confirming mobility as the primary development lever if H-termination proves effective.</p>
+
+  <h3 class="sub-head">5.4 &nbsp;CVD route ranking</h3>
+  <p>The four CVD routes share identical growth priors and differ only in transfer substrate. The ranking directly reflects transfer penalty severity: hBN (I, 38.6%) &gt; SCD(111) bonded (J, 21–36%) &gt; SiO₂/Pt (G, 13.7%) &gt; SiO₂/Cu (H, 8.2%). Route I has resolved the carrier density problem (83.0%) and faces mobility (51.6%) as its structural ceiling — set by polycrystalline grain boundaries that no transfer optimisation can eliminate.</p>
+</section>
+
+<!-- ═══ SECTION 6 ═══ -->
+<section id="s6">
+  <h2 class="sec-head"><span class="sec-num">§ 6</span> Discussion</h2>
+
+  <h3 class="sub-head">6.1 &nbsp;The operational Pareto front</h3>
+  <p>At current demonstrated state, the operational Pareto front consists of Route I and Route J — both transfer routes, both available with existing infrastructure. Route F is not on the operational Pareto front at current demonstrated state; its inclusion is contingent on Experiment 1 producing mobility substantially above the Kanada anchor.</p>
+  <p>Route I (38.6%) leads today. hBN encapsulation at ~$50–200 per laboratory-scale transfer; CVD/Pt graphene from commercial suppliers at comparable cost. Route J (21–36%) requires SCD(111) at approximately $500–1,500 per 3×3 mm piece — justified if Experiment 2 confirms transfer penalty below ~10×.</p>
+  <p>The rational entry strategy: adopt Route I for early device demonstrations; begin Route F process characterisation (Experiment 1) in parallel; switch to Route J when diamond substrate infrastructure is in place and Experiment 2 confirms transfer penalty below 10×; upgrade to Route F when Experiment 1 demonstrates mobility above 3,500 cm²/V·s. This three-phase strategy requires no redesign of the photonic stack between phases.</p>
+
+  <h3 class="sub-head">6.2 &nbsp;Why Route I's ceiling is structural</h3>
+  <p>Route I's 38.6% ceiling is not an optimisation problem — it is a materials property. The mobility binding constraint at 51.6% reflects grain boundaries in the CVD film itself. Transfer optimisation addresses carrier density, which hBN has largely solved (83.0%). It does not address the grain boundary network. The only path beyond Route I's current ceiling, short of quasi-single-crystal CVD, is Route F.</p>
+
+  <h3 class="sub-head">6.3 &nbsp;Route J as development bridge</h3>
+  <p>Route J's value is architectural, not probabilistic. Its joint probability (21–36%) is lower than Route I (38.6%) under all but the most optimistic transfer penalty assumptions. Its value is that it establishes SCD(111) substrate infrastructure today, positioning a group for direct upgrade to Route F without photonic stack redesign. No SCD(111) infrastructure investment is recommended before Experiment 2 results are available.</p>
+
+  <h3 class="sub-head">6.4 &nbsp;The endurance question — partially addressed</h3>
+  <p>Chen et al. (Nanoscale, July 2025) demonstrated &gt;10⁸ cycle endurance for monolayer graphene intercalated inside an HZO FeFET gate stack.<sup class="cite">[3b]</sup> Patil et al. (Small, October 2025) demonstrated sub-fJ switching using a graphene edge electrode in a 3D vertical geometry above a 10 nm HZO layer.<sup class="cite">[3c]</sup> Neither result directly validates endurance for the <em>planar above-ferroelectric optical gate geometry</em> at photonic device scale. The correct framing: the graphene-HfO₂ interface is unlikely to be an endurance liability; whether it is an endurance asset in the planar optical gate geometry remains an open experimental question. Han et al. (2026) provide a non-graphene endurance benchmark via TiO₂ interlayer engineering.<sup class="cite">[3d]</sup></p>
+
+  <h3 class="sub-head">6.5 &nbsp;UNCD thermal management</h3>
+  <p>UNCD retains an important role as a thermal management substrate for transferred graphene. A hybrid architecture — CVD/Pt+hBN transferred to a UNCD underlayer — would combine Route I graphene quality with UNCD's thermal conductivity (1,400–2,000 W/m·K vs. 1.4 W/m·K for SiO₂) and current-carrying capacity (18 µA/nm², Yan et al.<sup class="cite">[11]</sup>). If UNCD surface charge trap density can be reduced through surface passivation to the level of bonded SCD(111), this variant's transfer penalty would fall in the 7×–15× range estimated for Route J, yielding a speculative joint pass probability of 20–36%.</p>
+
+  <h3 class="sub-head">6.6 &nbsp;Low-temperature direct CVD (speculative, Route K)</h3>
+  <p>Tang et al. demonstrated transfer-free CVD graphene at 300°C with I_D/I_G = 0.08;<sup class="cite">[17]</sup> Kim et al. demonstrated direct CVD growth on HfO₂.<sup class="cite">[18]</sup> Together these motivate a speculative Route K: direct PECVD on Al:HfO₂ at 350–400°C, no transfer step, no diamond substrate. No mobility or carrier density data exist at the required thermal budget; Route K is not evaluated quantitatively here but represents a fifth experiment beyond the four in Section 7.</p>
+
+  <h3 class="sub-head">6.7 &nbsp;The process-variation-dominated regime</h3>
+  <p>At Route I's 38.6% per-cell pass probability, the expected number of fully passing cells in a 64×64 MVM array is 4,096 × 0.386 ≈ 1,581 — fewer than 40% without post-selection. A fully passing array without calibration requires per-cell pass rates approaching 80% or higher, achievable only at Route F's theoretical H-termination ceiling.</p>
+  <div class="callout blue">
+    <div class="callout-title">The SOI analogy</div>
+    <p>Photonic AI accelerators are entering the process-variation-dominated regime that CMOS entered in the 1990s, where the binding constraint on yield is statistical uniformity of the modulator material across a large array rather than individual device physics. The CMOS response was statistical process control, design-for-manufacturability, and ultimately epitaxial SOI — eliminating polycrystalline grain boundaries as the root cause of threshold voltage variance.</p>
+    <p>The photonic analog is structurally identical: <strong>single-crystal substrates are not a preference — they are eventually a requirement</strong>, because they eliminate grain boundary topology as the common root cause of per-cell variance, spatial disorder, and cascading constraint failure simultaneously. The framework here provides the first quantitative vocabulary for that transition, anchoring the crossover at a concrete mobility target of 3,500–4,500 cm²/V·s rather than a qualitative substrate preference.</p>
+    <p>Important qualification: SCD(111) substrates currently lack a wafer-scale volume production roadmap. The trajectory depends on demand from quantum computing and power electronics.</p>
+  </div>
+</section>
+
+<!-- ═══ SECTION 7 ═══ -->
+<section id="s7">
+  <h2 class="sec-head"><span class="sec-num">§ 7</span> Experimental Programme — Falsification Protocol</h2>
+  <p>The four experiments below are ordered by decision value. Each produces a specific number that updates a prior in Table 3, resolves a design choice, and either confirms or eliminates a route. They are not supplementary work — they are the falsification targets the framework was built to specify.</p>
+
+  <!-- Exp 1 -->
+  <div class="experiment">
+    <div class="exp-header">
+      <span class="exp-num">Exp. 1</span>
+      <span class="exp-title">Route F Mobility Mapping — Does H-termination produce any usable improvement?</span>
+    </div>
+    <div class="exp-body">
+      <div class="exp-measure">
+        <strong>What to measure:</strong> Room-temperature Hall mobility on SCD(111) with varying Ni catalyst thickness (0.5–5 nm) and RTA temperature (850–1050°C), before and after H-plasma treatment. Target deliverable: post-H-plasma mobility mean and standard deviation — specifically whether H-termination produces statistically significant improvement over the Kanada (2017) anchor of 140 cm²/V·s.
+      </div>
+      <div class="branch-grid">
+        <div class="branch branch-a">
+          <span class="branch-label">Branch A</span>
+          <span><strong>Post-H-plasma mean &gt; 1,000 cm²/V·s:</strong> H-termination produces meaningful mobility improvement. Begin systematic optimisation toward the 3,500–4,500 cm²/V·s crossover target. Route F process development is justified.</span>
+        </div>
+        <div class="branch branch-b">
+          <span class="branch-label">Branch B</span>
+          <span><strong>Mean 140–1,000 cm²/V·s:</strong> H-termination produces marginal improvement. Focus on Route I for device demonstrations; reassess SCD(111) strategy.</span>
+        </div>
+        <div class="branch branch-c">
+          <span class="branch-label">Branch C</span>
+          <span><strong>Mean ≈ Kanada baseline (&lt;200 cm²/V·s):</strong> H-termination produces no detectable improvement. Route F theoretical target is not practically accessible. Route I is the rational path.</span>
+        </div>
+      </div>
+      <p class="prior-update"><strong>Prior updated:</strong> Route F mobility prior µ_ln and σ_ln in Table 3.</p>
+    </div>
+  </div>
+
+  <!-- Exp 2 -->
+  <div class="experiment">
+    <div class="exp-header">
+      <span class="exp-num priority">Exp. 2 — Highest Priority</span>
+      <span class="exp-title">Route J Transfer Penalty — Validate or eliminate the development bridge</span>
+    </div>
+    <div class="exp-body">
+      <div class="exp-measure">
+        <strong>What to measure:</strong> Transfer CVD/Pt graphene to three substrates in parallel: (a) SCD(111) bonded via 5, 10, 20 nm SiO₂ interlayers; (b) P(VDF-TrFE) dry transfer per Zhang et al. (Adv. Mater. 2025);<sup class="cite">[16]</sup> (c) hBN hot pick-up reference (Pizzocchero protocol). Measure Hall mobility and carrier density before and after transfer for each arm.
+      </div>
+      <div class="branch-grid">
+        <div class="branch branch-a">
+          <span class="branch-label">Branch A</span>
+          <span><strong>n* multiplier &lt; 8×:</strong> Route J is a genuine bridge route at P(all 5) &gt; 30%. SCD(111) substrate infrastructure investment is justified now.</span>
+        </div>
+        <div class="branch branch-b">
+          <span class="branch-label">Branch B</span>
+          <span><strong>8×–15×:</strong> Route J is marginal. Invest in SCD(111) only if Experiment 1 also supports Route F viability.</span>
+        </div>
+        <div class="branch branch-c">
+          <span class="branch-label">Branch C</span>
+          <span><strong>&gt; 15×:</strong> Route J collapses toward Route G (&lt;15%). Hold at Route I. Do not invest in diamond substrate infrastructure ahead of Experiment 1 evidence.</span>
+        </div>
+      </div>
+      <p class="prior-update"><strong>Prior updated:</strong> Route J transfer factor in Table 3. Route I carrier density prior if P(VDF-TrFE) arm shows penalty below 5×.</p>
+    </div>
+  </div>
+
+  <!-- Exp 3 -->
+  <div class="experiment">
+    <div class="exp-header">
+      <span class="exp-num">Exp. 3</span>
+      <span class="exp-title">Raman Strain–Doping Decomposition — Build the metrology instrument</span>
+    </div>
+    <div class="exp-body">
+      <div class="exp-measure">
+        <strong>What to measure:</strong> Develop and validate a Raman decomposition protocol separating compressive strain (G-peak blue-shift) from carrier doping (2D-peak red-shift and asymmetry) for CVD/Pt graphene at each integration stage: as-grown on Pt, post-transfer, and post-H-plasma.
+      </div>
+      <p>ISO/TS 9651:2025 and ISO/TS 23359:2025 cover materials-tier characterisation but do not specify the substrate-dependent doping offset parameter or the optical-loss-relevant carrier density uniformity metrics required for photonic integration pre-qualification.<sup class="cite">[19][20]</sup> This experiment produces the device-integration metrology that no current standard provides.</p>
+      <p class="prior-update"><strong>Decision output:</strong> Validated protocol enabling Experiments 1, 2, and 4 to report carrier density with quantified uncertainty. Without this, systematic error in carrier density cannot be bounded post-hoc.</p>
+    </div>
+  </div>
+
+  <!-- Exp 4 -->
+  <div class="experiment">
+    <div class="exp-header">
+      <span class="exp-num">Exp. 4</span>
+      <span class="exp-title">Spatial Carrier Density Mapping — Determine the calibration strategy</span>
+    </div>
+    <div class="exp-body">
+      <div class="exp-measure">
+        <strong>What to measure:</strong> KPFM or scanning photocurrent microscopy over 50×50 µm² at sub-micron resolution, at each integration stage: as-transferred, post-anneal, post-ferroelectric switching cycle. Target deliverable: spatial correlation length L_corr of carrier density fluctuations. Chen et al.<sup class="cite">[3b]</sup> show graphene modifies the ferroelectric domain landscape; L_corr is therefore a coupled graphene-ferroelectric metric, not purely a graphene quality metric.
+      </div>
+      <div class="branch-grid">
+        <div class="branch branch-a">
+          <span class="branch-label">Branch A</span>
+          <span><strong>L_corr ≪ cell pitch (~1–5 µm):</strong> Averaging regime. Global offset calibration is sufficient. Transfer routes can reach large N with calibration.</span>
+        </div>
+        <div class="branch branch-b">
+          <span class="branch-label">Branch B</span>
+          <span><strong>L_corr ~ cell pitch (~10–50 µm):</strong> Mesoscopic disorder regime. Per-cell IL variation cannot be calibrated out globally. Single-crystal graphene (Route F, if demonstrated) or cell-by-cell trimming required above crossover array size.</span>
+        </div>
+        <div class="branch branch-c">
+          <span class="branch-label">Branch C</span>
+          <span><strong>L_corr &gt; cell pitch:</strong> Configuration-dependent variance dominates. Only Route F eliminates this structurally.</span>
+        </div>
+      </div>
+      <p class="prior-update"><strong>Prior updated:</strong> Informs calibration strategy for all routes; validates or refines the N-dependent single-crystal requirement from Table 2.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 8 ═══ -->
+<section id="s8">
+  <h2 class="sec-head"><span class="sec-num">§ 8</span> Conclusion</h2>
+  <p>This paper is a pre-experimental decision framework for graphene integration route selection in ferroelectric photonic memory. No experimental prototype combining graphene gating, ferroelectric polarization, and photonic waveguide operation has been demonstrated. Eight conclusions follow:</p>
+
+  <div class="conclusion-list">
+    <div class="conclusion-item">
+      <div class="conc-num">1</div>
+      <p class="conc-text"><strong>UNCD routes are eliminated by substrate physics, not process variables.</strong> The 2–5 nm grain structure produces irreducibly sub-micron graphene domains for the 64×64 MVM tolerance stack. A different diamond morphology is required, not a different process parameter.</p>
+    </div>
+    <div class="conclusion-item">
+      <div class="conc-num">2</div>
+      <p class="conc-text"><strong>SCD(111) direct graphitization fails within any realistic improvement envelope.</strong> Multilayer formation and n* &gt; 10¹³ cm⁻² produce ~0% joint pass probability despite mm-scale domain size.</p>
+    </div>
+    <div class="conclusion-item">
+      <div class="conc-num">3</div>
+      <p class="conc-text"><strong>Route F achieves ~0% joint probability at the only peer-reviewed experimental anchor</strong> (Kanada et al. 2017: 140 cm²/V·s). The 57.2% projected ceiling under H-termination is a theoretical upper bound with no direct experimental confirmation. Experiment 1 determines whether Route F is experimentally accessible at all.</p>
+    </div>
+    <div class="conclusion-item">
+      <div class="conc-num">4</div>
+      <p class="conc-text"><strong>Route I (CVD/Pt → hBN, 38.6%) is the rational near-term entry point</strong> and the only route with a meaningful demonstrated joint pass probability. The mobility binding constraint is structural — set by polycrystalline grain boundaries that no transfer optimisation can eliminate.</p>
+    </div>
+    <div class="conclusion-item">
+      <div class="conc-num">5</div>
+      <p class="conc-text"><strong>The Route F / Route I crossover at 3,500–4,500 cm²/V·s</strong> is a concrete process development target — but only if Experiment 1 demonstrates H-termination produces mobility above the Kanada baseline. The crossover analysis is conditional on that demonstration.</p>
+    </div>
+    <div class="conclusion-item">
+      <div class="conc-num">6</div>
+      <p class="conc-text"><strong>Route J (21–36%) is the highest-priority unverified hypothesis.</strong> Experiment 2 either validates it as a genuine bridge route or eliminates it. No SCD(111) substrate infrastructure investment is recommended before Experiment 2 results are available.</p>
+    </div>
+    <div class="conclusion-item">
+      <div class="conc-num">7</div>
+      <p class="conc-text"><strong>The endurance question is partially addressed but not resolved</strong> for the planar above-ferroelectric optical gate geometry at photonic device scale.</p>
+    </div>
+    <div class="conclusion-item">
+      <div class="conc-num">8</div>
+      <p class="conc-text"><strong>The primary falsification target for the entire framework is a working device</strong> — any graphene-gated ferroelectric photonic memory cell at any route and any quality level. That result provides the first experimental anchor for the Goldilocks thresholds and the tolerance chain from which all route rankings derive.</p>
+    </div>
+  </div>
+
+  <p style="margin-top:1.5rem;">The most important near-term result is not a device demonstration but a Hall mobility measurement on H-terminated SCD(111) graphene. That measurement either opens Route F as a realistic long-term target or closes it, redirecting investment toward Route I and the quasi-single-crystal CVD approaches that represent its only structural ceiling bypass.</p>
+
+  <hr class="sec-rule">
+  <h3 class="sub-head">Acknowledgements</h3>
+  <p>The author thanks Claude (Anthropic) for sustained dialogue partnership throughout the simulation design, prior construction, red-team review, and manuscript development across all versions. The author retains sole responsibility for all numerical estimates, prior choices, and conclusions. This work was conducted independently under the Solbakken Research Initiative without institutional funding. The author does not have access to the experimental infrastructure required to execute Experiments 1–4. This paper is a call to the field: the four experiments are offered as a prioritised, decision-branched experimental roadmap for any group with access to SCD(111) substrates, hBN transfer protocols, and Hall measurement infrastructure. Simulation code and prior parameter files will be made available as supplementary material upon journal submission.</p>
+</section>
+
+<!-- ═══ REFERENCES ═══ -->
+<section id="refs">
+  <h2 class="sec-head"><span class="sec-num">Refs</span> References</h2>
+  <div class="ref-list">
+    <div class="ref-item"><span class="ref-tag">[1]</span><span>Zhang, Y. et al. Non-volatile ferroelectric-silicon photonic memory. <em>Light: Science &amp; Applications</em> 13, 2024.</span></div>
+    <div class="ref-item"><span class="ref-tag">[2]</span><span>Koike, K. et al. Non-volatile optical phase shift in Hf₀.₅Zr₀.₅O₂ on SiN waveguide. <em>Nature Communications</em> 15, 2024.</span></div>
+    <div class="ref-item"><span class="ref-tag">[3]</span><span>Xu, X. et al. Pockels photonic memory with femtojoule-per-state energy and six non-volatile optical states. <em>Nature Communications</em> 16, 2025. <span class="ref-note">HZO-gated LiNbO₃ ring resonator geometry; architecturally distinct from Al:HfO₂/graphene stack evaluated here.</span></span></div>
+    <div class="ref-item"><span class="ref-tag">[3b]</span><span>Chen, Y. et al. A novel high endurance HZO FeFET with monolayer graphene in the gate oxide. <em>Nanoscale</em> (RSC), July 2025. doi:10.1039/D5NR02579F</span></div>
+    <div class="ref-item"><span class="ref-tag">[3c]</span><span>Patil, S. et al. Ultra-low power 3D ferroelectric memory using atomically thin edge electrode. <em>Small</em>, October 2025. doi:10.1002/smll.202505543</span></div>
+    <div class="ref-item"><span class="ref-tag">[3d]</span><span>Han, C. et al. Interface-engineered TiO₂ interlayer for reliable hafnia-based FeFETs. <em>Advanced Electronic Materials</em>, February 2026. doi:10.1002/aelm.202500767</span></div>
+    <div class="ref-item"><span class="ref-tag">[4]</span><span>Sorianello, V. et al. Graphene–silicon phase modulators with gigahertz bandwidth. <em>Nature Photonics</em> 12, 2018.</span></div>
+    <div class="ref-item"><span class="ref-tag">[5]</span><span>Sensale-Rodriguez, B. et al. Broadband graphene terahertz modulators. <em>Nature Communications</em> 3, 2012.</span></div>
+    <div class="ref-item"><span class="ref-tag">[6]</span><span>Sumant, A.V. et al. Metal-induced rapid transformation of diamond into graphene on wafer scale. <em>Nature Communications</em> 7, 12099, 2016.</span></div>
+    <div class="ref-item"><span class="ref-tag">[7]</span><span>Kim, K.S. et al. Large-scale pattern growth of graphene films. <em>Nature</em> 457, 706–710, 2009.</span></div>
+    <div class="ref-item"><span class="ref-tag">[8]</span><span>Gao, L. et al. Repeated growth and bubbling transfer of graphene with millimetre-size grains using platinum. <em>Nature Communications</em> 3, 699, 2012.</span></div>
+    <div class="ref-item"><span class="ref-tag">[9]</span><span>Banszerus, L. et al. Ultrahigh-mobility graphene devices from CVD on reusable copper. <em>Science Advances</em> 1, e1500222, 2015.</span></div>
+    <div class="ref-item"><span class="ref-tag">[10]</span><span>Pizzocchero, F. et al. The hot pick-up technique for van der Waals heterostructures. <em>Nature Communications</em> 7, 11894, 2016.</span></div>
+    <div class="ref-item"><span class="ref-tag">[11]</span><span>Yan, Z. et al. Graphene-on-diamond devices with enhanced current-carrying capacity. <em>Nano Letters</em> 12, 1317–1322, 2012.</span></div>
+    <div class="ref-item"><span class="ref-tag">[12]</span><span>Wang, L. et al. One-dimensional electrical contact to a two-dimensional material. <em>Science</em> 342, 614–617, 2013.</span></div>
+    <div class="ref-item"><span class="ref-tag">[13]</span><span>Yazyev, O.V. &amp; Louie, S.G. Electronic transport in polycrystalline graphene. <em>Nature Materials</em> 9, 806–809, 2010.</span></div>
+    <div class="ref-item"><span class="ref-tag">[14]</span><span>Tsen, A.W. et al. Tailoring electrical transport across grain boundaries in polycrystalline graphene. <em>Science</em> 336, 1143–1146, 2012.</span></div>
+    <div class="ref-item"><span class="ref-tag">[15]</span><span>Hicks, J. et al. Graphene on single-crystal diamond for electronic applications: a review. <em>physica status solidi (a)</em> 221, 2400567, 2024.</span></div>
+    <div class="ref-item"><span class="ref-tag">[16]</span><span>Zhang, Y. et al. Dry transfer of CVD graphene using adhesion-switchable ferroelectric polymers. <em>Advanced Materials</em> 37(50), 2025. doi:10.1002/adma.202409876</span></div>
+    <div class="ref-item"><span class="ref-tag">[17]</span><span>Tang, C. et al. Low-temperature transfer-free CVD graphene at 300°C. <em>ACS Applied Materials &amp; Interfaces</em>, 2022.</span></div>
+    <div class="ref-item"><span class="ref-tag">[18]</span><span>Kim, S. et al. Direct CVD growth of transferable graphene on HfO₂. <em>Nanomaterials</em> 13(7), 2023. doi:10.3390/nano13071191</span></div>
+    <div class="ref-item"><span class="ref-tag">[19]</span><span>ISO/TS 9651:2025. Nanotechnologies — Classification framework for graphene-related 2D materials. ISO, July 2025.</span></div>
+    <div class="ref-item"><span class="ref-tag">[20]</span><span>ISO/TS 23359:2025. Nanotechnologies — Characterization of graphene: chemical properties. ISO, August 2025.</span></div>
+    <div class="ref-item"><span class="ref-tag">[Husom]</span><span>Husom, E. et al. The Price of Prompting: Profiling Energy Use in Large Language Models Inference. <em>arXiv:2407.16893v2</em>, 2026. <span class="ref-note">System-level energy context for DRAM reload motivation in §1.1.</span></span></div>
+    <div class="ref-item"><span class="ref-tag">[Kanada]</span><span>Kanada, K. et al. Fabrication of graphene on atomically flat diamond (111) surfaces using nickel as a catalyst. <em>Diamond and Related Materials</em> 74, 24–28, 2017. doi:10.1016/j.diamond.2017.01.011 <span class="ref-note">Route F demonstrated mobility anchor: 140 cm²/V·s, 5.7×10¹³ cm⁻², pre-H-termination.</span></span></div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <strong>Paper 4, Version 10.0 — May 2026</strong> &nbsp;·&nbsp;
+  Solbakken Research Initiative, Omaha &nbsp;·&nbsp;
+  Nils Haaland &nbsp;·&nbsp; nhaaland@yahoo.com
+</footer>
+
+<script>
+  // Reading progress bar
+  window.addEventListener('scroll', () => {
+    const el = document.getElementById('progress');
+    const total = document.body.scrollHeight - window.innerHeight;
+    el.style.width = (window.scrollY / total * 100) + '%';
+  });
+</script>
+</body>
+</html>
