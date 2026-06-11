@@ -1,55 +1,123 @@
-# Graphene Integration Route Selection for Ferroelectric Photonic Memory
+# The Certificate Before the Compiler
 
-**A Bayesian Quality Assessment Across Eleven Process Scenarios**
-Paper 4 of 4 · Solbakken Research Initiative · Nils Haaland, Independent Researcher, Omaha
+A conformance schema for physical reservoir computing hardware.
 
-**Read the paper:** https://bluebflatminor.github.io/photonic-memory-paper4/
+**Status: v1.2 DRAFT — round-1 adversarial review AND self red-team folded.
+NOT yet deployed. DOI verification incomplete.**
 
----
+## Contents
 
-**Current version: v10.4 (June 2026) — citation-integrity & measured-anchor revisions.**
-The canonical changelog is the Revision Log section of the paper itself; this README does not duplicate it. Headline changes: one fabricated reference removed and tombstoned ([18]); one reference re-scoped (transfer-free is not catalyst-free); the first published Hall comparison of graphene on H- vs O-terminated single-crystal diamond (Aitkulova et al., *Carbon Trends* 2025) incorporated as a measured anchor; Route F2 ceiling-truncated (57.2% → ≈54%).
+- `index.html` — the note (single file, auto dark mode, inline SVG figure, CC0)
+- `certificate_demo.py` — companion simulation v1.2 (NumPy only, fixed seeds).
+  Reproduces every number and the figure in §6: `python3 certificate_demo.py`
+- `index_v1.0.html.bak` — pre-review draft, retained for diff
 
-## What this is
+## Thesis
 
-A pre-experimental decision framework. No experimental prototype combining graphene gating, ferroelectric polarization, and photonic waveguide operation has been demonstrated — by anyone. Eleven candidate routes exist for integrating graphene into a ferroelectric photonic memory stack, and no single group can test them all. This paper ranks the routes by joint probability of meeting five simultaneous graphene quality criteria, separates substrate-physics constraints (irreducible) from process-kinetic constraints (reducible), and specifies five experiments — ordered by decision value, each with explicit decision branches — that most efficiently collapse the route space before anyone loads a wafer.
+Physical reservoir computing needs no programming language — learning is
+confined to a linear readout, so the logical minimum interface is three calls.
+What it lacks is the characterization certificate a device must return for
+those calls to mean anything. v1.2 schema: a three-clause mandatory core with
+a stated evaluation order — Clause 5 (replica consistency) → Clause 2
+(correlated-noise floor, percentile-defined) → Clause 1 (ε-resolved effective
+dimensionality, two input ensembles) — plus three annexes (memory,
+nonlinearity, disorder/transferability).
 
-The route rankings are falsifiable theoretical predictions. Section 7 of the paper is the falsification protocol. The author does not have access to the experimental infrastructure required to run it; the paper is a call to the field.
+## Version history
 
-## Key findings (v10.4)
+**v1.2 — self red-team (5 findings, all folded):**
+1. ε_floor was a single-realization hard threshold on a fluctuating spectral
+   edge → now percentile-defined (p95 over ≥20 noise-only acquisitions),
+   in schema and simulation. Numbers survived the tightening.
+2. Additive-noise assumption was load-bearing and unstated → now an explicit
+   schema field (`additive_noise_assumed`) and stated scope in Clause 2;
+   Clause 5 (replica consistency) PROMOTED to core as the instrument that
+   sees dynamical noise, which is not SVD-separable from signal.
+3. Single-ensemble certification is Goodhart-able (tune to the test) →
+   core now requires two declared ensembles (i.i.d. + band-limited
+   correlated), with the r_eff difference reported as input sensitivity.
+   Toy still demonstrates one ensemble; stated as limitation in §6/§10.
+4. No uncertainty quantification anywhere → core fields carry acquisition
+   statistics; §6 reports mean [min, max] over 10 seeds instead of one.
+5. Implicit clause dependency → mandatory evaluation order stated:
+   consistency gates noise, noise gates dimensionality.
 
-- **Route I (CVD/Pt → hBN encapsulation): 38.6%** — the highest joint pass probability at demonstrated state, and the rational near-term entry point. Its ceiling is structural: polycrystalline grain boundaries in the CVD film, which no transfer optimisation removes.
-- **Route F (SCD(111) Ni-assisted graphitization + H-termination) splits into numbers that must not be conflated:** ~0% at the only peer-reviewed graphitization anchor (Kanada 2017, 140 cm²/V·s); ≈5% at the newly measured transferred-film anchor (Aitkulova 2025, 1,644 cm²/V·s on H-terminated (100) diamond, film-limited); ≈54% at the ceiling-truncated theoretical bound, which no experiment has approached.
-- **The Aitkulova measurement confirms the mechanism, not the magnitude:** H-termination raises the remote-phonon energy barrier (114 vs 60 meV) — the physics behind Route F's ceiling — while the configuration this framework actually needs, H-terminated (111) with a graphitized film, remains unmeasured. Experiment 1 specifies that measurement.
-- **All UNCD routes and Route K fail today, but for categorically different reasons:** UNCD by irreducible substrate physics (closed); Route K (direct PECVD on the ferroelectric oxide) by reducible nucleation kinetics (deferred, pending Experiment 5).
-- **Every route lands in the calibration-dependent regime** — the regime CMOS entered in the 1990s. Single-crystal substrates are eventually a requirement, not a preference; the framework puts a number on the crossover (3,500–4,500 cm²/V·s).
+v1.2 headline numbers (10 seeds, p95/20-acquisition floors):
+K_eff 27.0 [25.6, 29.6]; ε_floor 0.0044→0.0192; honest r_eff A 158 [140, 176]
+vs B 35 [31, 42]; naive/honest inflation 3.5× [3.4, 3.8].
 
-## Repository contents
+**v1.1 — round-1 adversarial review (DeepSeek, ChatGPT, Perplexity, Gemini):**
+Clause 2 generalized (correlated noise as principle, Petermann as instance);
+core/annex tiering introduced; overclaims softened ("never will", "no
+interface exists", IEC/VAMAS gap → "I found no evidence"); three-calls
+labeled logical minimum; falsification/conformance duality promoted to
+abstract; §9 rewritten as roadmap + cross-substrate feasibility
+precondition; §10(iv) added (certificate's own kill condition); Gemini
+fold-ins (input_transfer sub-block, transfer class as statistical
+invariance, Volterra Tier 1); refs [12], [13] added pending verification.
 
-- `index.html` — the paper, self-contained, auto dark mode (GitHub Pages)
-- Monte Carlo companion tool — reproduces all Table 4/5 figures from the Table 3 priors and §4.2 correlation structure
-- This README
+**Drift self-audit (between v1.0 triage and v1.1):** K_eff relabeled as
+covariance anisotropy ratio (not a Petermann factor — Gemini had echoed the
+loose framing back); convergence count corrected; one self-serving discard
+reversed (toy vs. Petermann correlation structure now answered plainly in
+§6); Gemini's "true Petermann matrix from FDTD" scoped down (see T2 note);
+"Circular Dyson Ensembles" folded as principle, not name-drop.
 
-## Methodology
+## T2 MEEP scoped deliverable
 
-Every paper in this program follows the same workflow: physics-problem framing → structured multi-AI adversarial review (multiple independent models, each pass triaged into fold-in / reframe / discard) → public deployment with the full revision history visible. Corrections are made in place and tombstoned, never silently rewritten. All versions of this paper, including its errors, are documented in the Revision Log.
+The 2.5D axisymmetric run is block-diagonal in azimuthal number m: mode
+non-orthogonality is computable only WITHIN each m-sector (Harminv-extracted
+quasi-normal modes + unconjugated overlap integrals); cross-sector mixing
+from non-axisymmetric scatterers is structurally invisible. T2 can deliver
+per-sector lower bounds on non-orthogonality / covariance anisotropy —
+sufficient as the Clause-2 physical anchor and to replace the toy's mixing
+matrix — but NOT "the true Petermann matrix," which requires 3D (assessed
+intractable).
 
-### Reference verification (added v10.4)
+## Pre-deployment checklist (MANDATORY)
 
-Per-reference DOI resolution is a mandatory pre-deployment step for every paper and note in this program: each DOI must resolve to the claimed title, authors, and venue before anything ships. The rule exists because this paper failed without it. Three fabricated citations entered published versions — two caught at v10.1, a third at v10.4 — despite structured multi-AI adversarial review. All three are documented in the Revision Log, and the third ([18]) is retained in the reference list as a tombstone. The protocol's failures are part of its record.
+- [x] Adversarial review round 1 complete and triaged
+- [x] Drift self-audit between triage and revision
+- [x] Self red-team of v1.1 → fixes folded into v1.2
+- [x] Multi-seed variance for §6 headline numbers
+- [ ] Every pending DOI below resolves to claimed title/authors (project rule)
+- [ ] Bogaerts variability-framework citation inserted from Paper 4 reference
+      list (still deliberately omitted rather than risk a wrong DOI)
+- [ ] Decide: Xu et al. 2025 in §1 as differentiation, or out of scope
+- [ ] Figure renders correctly in light and dark mode on iOS Safari
+- [ ] Optional round-2 adversarial review of v1.2 before deployment
 
-The general lesson is worth stating plainly: AI-assisted literature work generates plausible, well-formatted, nonexistent references, and no amount of reviewing the *text* catches them. Only resolving the identifiers does. Review checks arguments; verification checks objects.
+## Reference verification table
 
-## For experimental groups
+| # | Reference | DOI / locator | Status |
+|---|-----------|---------------|--------|
+| 1 | Trouvain et al. 2020, ReservoirPy, ICANN | 10.1007/978-3-030-61616-8_40 | VERIFIED (in-session) |
+| 2 | PRCpy | arXiv:2410.18356 | VERIFIED (arXiv listing) |
+| 3 | emucore-direct | pypi.org/project/emucore-direct | VERIFIED (PyPI) |
+| 4 | Jaeger 2001, GMD Report 148 | tech report | verify report number |
+| 5 | Maass et al. 2002, Neural Comp. 14(11) 2531 | 10.1162/089976602760407955 (expected) | **PENDING** |
+| 6 | Roy & Vetterli 2007, EUSIPCO 606–610 | no DOI | VERIFIED (cited listing) |
+| 7 | Petermann 1979, IEEE JQE QE-15, 566 | 10.1109/JQE.1979.1070064 (expected) | **PENDING** |
+| 8 | Jaeger 2002, GMD Report 152 | tech report | verify report number |
+| 9 | Dambre et al. 2012, Sci Rep 2, 514 | 10.1038/srep00514 | VERIFIED (nature.com) |
+| 10 | Uchida et al. 2004, PRL 93, 244102 | 10.1103/PhysRevLett.93.244102 | VERIFIED (aps.org) |
+| 11 | Tanaka et al. 2019, Neural Networks 115, 100–123 | 10.1016/j.neunet.2019.03.005 (expected) | **PENDING** |
+| 12 | Petermann-factor sensitivity limit, Nat. Commun. 11 (2020) | 10.1038/s41467-020-15341-6 | DOI from URL; **author list PENDING** |
+| 13 | Generalized Petermann factor at EPs (2025, APS) | unresolved (nonstandard APS DOI in source) | **PENDING — full verification** |
 
-The five experiments in §7 are offered as a prioritised, decision-branched roadmap for any group with access to SCD(111) substrates, hBN transfer protocols, Hall measurement infrastructure, or remote-plasma PECVD capability. Each experiment names the prior it updates and the decision each branch triggers. Experiment 1 (Hall mobility of graphitized graphene on H-terminated SCD(111), with parallel-conduction control) is the highest-decision-value measurement in the framework — and as of v10.4 it has a published adjacent-process benchmark to beat.
+Do not deploy until each PENDING row resolves to the claimed title and
+authors. (Lesson of Paper 4: three hallucinated citations caught
+post-publication.)
 
-Questions, corrections, and collaboration inquiries: nhaaland@yahoo.com. Corrections are especially welcome; they get tombstoned, credited, and folded into the next version.
+## Known limitations (also §10 of the note)
 
-## How to cite
-
-Haaland, N. (2026). *Graphene Integration Route Selection for Ferroelectric Photonic Memory: A Bayesian Quality Assessment Across Eleven Process Scenarios* (v10.4). Solbakken Research Initiative. DOI: **[Zenodo concept DOI — fill on first release]**
+1. Worked example is a tanh toy with a generic non-orthogonal mixing matrix;
+   demonstrates clause logic, not cavity physics (§6 says so plainly).
+2. Toy certifies one input ensemble; schema requires two.
+3. Whether Clause 2 is binding for real devices is empirical and open.
+4. Cross-substrate measurement comparability is an unestablished
+   precondition, stated in §9.
 
 ## License
 
-CC0 1.0 Universal — public domain. No attribution is required; citation is appreciated for traceability.
+CC0 1.0 Universal. Public domain. No rights reserved.
