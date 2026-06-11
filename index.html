@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="light dark">
-<title>Graphene Integration Route Selection for Ferroelectric Photonic Memory — v10.3</title>
+<title>Graphene Integration Route Selection for Ferroelectric Photonic Memory — v10.4</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -460,7 +460,6 @@
 
     nav { background: #0a1424; }
 
-    /* Correction banner — amber tones shifted darker */
     .correction-banner {
       background: #2a2310;
       border-bottom-color: #b88820;
@@ -468,7 +467,6 @@
     }
     .correction-banner strong { color: #e8d098; }
 
-    /* Abstract & callouts — darker boxes with adjusted contrast */
     .abstract-block { background: var(--bg-box); }
     .abstract-block p { color: var(--text-mid); }
 
@@ -481,12 +479,10 @@
     .callout.correction .callout-title { color: #d4b878; }
     .callout strong { color: #e8e6df; }
 
-    /* Section headings */
     h2.sec-head { color: var(--text); border-bottom-color: var(--blue); }
     h2.sec-head .sec-num { background: var(--bg-box); color: var(--blue-lt); }
     h3.sub-head { color: var(--blue-lt); }
 
-    /* Tables — alternating rows in dark */
     tbody tr:nth-child(odd)  { background: #1a1e26; }
     tbody tr:nth-child(even) { background: #1f242d; }
     tbody tr:hover { background: #2a3548; }
@@ -497,27 +493,22 @@
     tbody td.warn { background: #3a3010 !important; color: #e8d098; }
     tbody td.zero { color: var(--text-muted); }
 
-    /* Route F1/F2 row highlights — desaturated for dark */
     .f1-row td { background: #2a1d18 !important; }
     .f2-row td { background: #1a2a1d !important; }
     .best-row td { background: #1a2438 !important; }
 
-    /* Experiments */
     .experiment { border-color: var(--rule); }
     .exp-header { background: #0a1424; }
     .exp-measure { background: var(--bg-box); }
     .exp-measure strong { color: var(--text); }
 
-    /* Branch boxes — darker palette */
     .branch-a { background: #1a2a1d; }
     .branch-b { background: #2a2310; }
     .branch-c { background: #2a1818; }
 
-    /* Conclusion numbers */
     .conc-num { color: var(--blue-lt); border-color: var(--blue); }
     .conc-text { color: var(--text-mid); }
 
-    /* References */
     .ref-item { border-bottom-color: var(--rule-lt); color: var(--text-mid); }
     .ref-tag { color: var(--blue-lt); }
     .ref-note { color: var(--text-muted); }
@@ -526,21 +517,16 @@
       color: #d4b878;
     }
 
-    /* Inline code */
     code { color: var(--blue-lt); }
 
-    /* Footer */
     footer { background: #050d1a; }
 
-    /* Table captions */
     .tbl-caption { color: var(--text-muted); }
     .tbl-caption strong { color: var(--text-mid); }
 
-    /* Prior update boxes */
     .prior-update { color: var(--text-muted); border-top-color: var(--rule-lt); }
     .prior-update strong { color: var(--blue-lt); }
 
-    /* HR */
     hr.sec-rule { border-top-color: var(--rule); }
   }
 </style>
@@ -550,8 +536,8 @@
 <div id="progress"></div>
 
 <div class="correction-banner">
-  <strong>v10.3 — Red-team revisions:</strong> &nbsp;
-  Conclusion 6 HTML fix · ordinal-caveat added to §5 · §6.6 deleted (superseded by §3.6) · abstract updated to eleven routes · Conclusion 9 added for Route K · Table 4 footnotes distinguishing measured vs. theoretical priors · §7 opener corrected to five experiments
+  <strong>v10.4 — Citation-integrity &amp; measured-anchor revisions:</strong> &nbsp;
+  reference [18] removed (fabricated) · [17] re-scoped (transfer-free ≠ catalyst-free) · Aitkulova et al. (Carbon Trends 2025) added as measured graphene-on-H-diamond anchor · Route F2 ceiling-truncated (57.2% → ≈54%) · Table 5 measured row added · Exp. 1 parallel-conduction control added · §6.6 array-yield statement corrected · Table 2 bound direction corrected
 </div>
 
 <header>
@@ -563,7 +549,7 @@
       <span><strong>Author</strong> &nbsp;Nils Haaland</span>
       <span><strong>Affiliation</strong> &nbsp;Independent Researcher, Omaha</span>
       <span><strong>Contact</strong> &nbsp;nhaaland@yahoo.com</span>
-      <span><strong>Version</strong> &nbsp;10.3 — May 2026 (red-team revisions)</span>
+      <span><strong>Version</strong> &nbsp;10.4 — June 2026 (citation-integrity &amp; measured-anchor revisions)</span>
     </div>
   </div>
 </header>
@@ -587,9 +573,32 @@
 
 <main>
 
+<!-- ============ PRE-DEPLOYMENT DRAFT BANNER — DELETE THIS ENTIRE BLOCK BEFORE DEPLOYING ============ -->
+<div style="border:2px dashed #c8401a; border-radius:6px; padding:1rem 1.4rem; margin:0 0 2rem; font-family:'Source Sans 3',sans-serif; font-size:0.85rem; color:#c8401a;">
+  <strong>PRE-DEPLOYMENT DRAFT.</strong> Pending before this banner is removed:
+  (1)&nbsp;[15b] residuals — carrier density &amp; sheet-resistivity values/units from Tables 1–3 of the full text; journal volume no. if displayed (article DOI verified: 10.1016/j.cartre.2025.100598);
+  (2)&nbsp;Majdi et al. 2023, <em>Appl. Phys. Lett.</em> 123, doi:10.1063/5.0156108 — check reported mobility; if it exceeds 1,644, the Table 5 measured row re-anchors;
+  (3)&nbsp;MC companion confirmation of all figures marked ≈ (F2 truncated ≈54%; measured-anchor row ≈5%; truncated F2 marginals in Table 4) — including the n*-scenario convention for the measured row, since the companion tool scales n* with the mobility scenario in Table 5 while the reference reconstruction holds the F2 n* prior fixed.
+</div>
+<!-- ================================================================================================ -->
+
 <!-- CORRECTIONS LOG -->
 <section id="corrections">
-  <h2 class="sec-head"><span class="sec-num">v10.3</span> Revision Log</h2>
+  <h2 class="sec-head"><span class="sec-num">v10.4</span> Revision Log</h2>
+  <div class="callout correction">
+    <div class="callout-title">v10.3 → v10.4 (citation-integrity &amp; measured-anchor revisions)</div>
+    <p>This revision was triggered by per-reference DOI resolution, now adopted as a mandatory pre-deployment step for all papers in this series.</p>
+    <p><strong>[18] removed — fabricated citation.</strong> The cited DOI (<code>10.3390/nano13071191</code>) resolves to an unrelated paper on Ag-nanoparticle transparent conductive films. The nearest genuine paper with a similar title (Kim, Jiang &amp; Lee, <em>Nanomaterials</em> 13(6), 1029, 2023) uses HfO₂ as a sacrificial etch layer beneath Cu-vapor-assisted CVD at 1000&nbsp;°C — it does not support any claim previously attributed to [18]. §3.6 rewritten; the entry is retained in the reference list as a tombstone.</p>
+    <p><strong>Correction to the v10.1 log:</strong> the v10.1 statement "No papers were fabricated; all cited works are real" was itself incorrect. Reference [18] was fabricated and survived two verification rounds. It is the third fabricated citation caught in this paper's history; all three are documented here. The verification protocol has been tightened accordingly (per-reference DOI resolution, pre-deployment, every version).</p>
+    <p><strong>[17] (Qian) re-scoped.</strong> Qian et al. achieve transfer-free growth via a laminated single-crystal Cu foil acting as a sacrificial <em>catalyst</em>, subsequently etched. The I_D/I_G ≈ 0.08 figure is Cu-catalyzed. Transfer-free is not catalyst-free; §3.6 no longer cites [17] as evidence of catalyst-free nucleation on oxide. Route K is now cleanly theory-anchored (Tables 3–4 updated); genuine direct-growth-on-dielectric anchors added as [21] and [22].</p>
+    <p><strong>[15b] added — first Hall comparison of graphene on H- vs O-terminated diamond.</strong> Aitkulova et al. (<em>Carbon Trends</em> 100598, 2025; full text verified) report annealed mobility of 1,644 cm²/V·s on H-terminated (100) and 1,340 cm²/V·s on O-terminated (111) single-crystal diamond, in vacuum, for commercial polycrystalline CVD film. The raw difference is substrate-confounded; the termination-attributable result is the remote-phonon energy barrier (114 vs 60 meV). Incorporated into §3.4, Table 5 (new measured row, joint ≈5%), Experiment 1, and the Route J discussion.</p>
+    <p><strong>Route F2 ceiling truncated.</strong> v10.3 modeled the 8,000 cm²/V·s theoretical ceiling as a lognormal mean, placing ~40% of samples <em>above</em> the stated ceiling. The prior is now truncated at the ceiling: joint pass probability 57.2% → ≈54%. A side effect — the D/G marginal falls from 0.899 to ≈0.84 through the ρ = −0.6 defect–mobility coupling — is retained as an illustration of the correlation structure.</p>
+    <p><strong>§6.6 corrected.</strong> The previous claim that a fully passing uncalibrated array requires "per-cell pass rates approaching 80%" was wrong by several hundred orders of magnitude (0.8<sup>4096</sup> ≈ 10⁻³⁹⁷). Replaced with a yield-with-redundancy statement. The correction strengthens the SOI analogy: calibration-dependence is universal across routes.</p>
+    <p><strong>Table 2 footnote corrected.</strong> Positive spatial correlation raises P(all pass) relative to independence; the independence model is a conservative <em>lower</em> bound, not an upper bound.</p>
+    <p><strong>Route I transfer-penalty provenance flagged.</strong> The ~5× hBN penalty derives from Cu-grown, dry-pick-up films (Banszerus, Pizzocchero); its application to Pt-grown, bubbling-transferred material is by analogy. Table 3 footnote added, mirroring the Route J treatment.</p>
+    <p><strong>Experiment 1 protocol extended.</strong> Parallel-conduction control added: H-terminated diamond develops its own p-type surface channel via adsorbate transfer doping (Yang et al. [23]: 170–340 cm²/V·s), which contaminates Hall data on graphene above it. Vacuum measurement or an O-terminated reference is now specified. The priority badge moves to Experiment 1, resolving the contradiction with the §7 opener; its decision value rose with the publication of [15b].</p>
+    <p><strong>§4.1 clarified:</strong> one sentence added on the sense in which the framework is Bayesian (degree-of-belief priors; no posterior computed until Experiments 1–5 report).</p>
+  </div>
   <div class="callout correction">
     <div class="callout-title">v10.2 → v10.3 (red-team revisions)</div>
     <p>The following revisions were applied following internal red-team review identifying structural inconsistencies and one HTML rendering bug:</p>
@@ -603,7 +612,7 @@
   </div>
   <div class="callout correction">
     <div class="callout-title">v10.0 → v10.1 (reference corrections)</div>
-    <p>The following reference errors were identified through independent verification of all citations. No papers were fabricated; all cited works are real. Corrections are to DOIs and author attributions only. Conceptual claims, numerical results, and experimental protocols are unchanged.</p>
+    <p>The following reference errors were identified through independent verification of all citations. No papers were fabricated; all cited works are real. Corrections are to DOIs and author attributions only. Conceptual claims, numerical results, and experimental protocols are unchanged. <em>[v10.4 note: the "no papers were fabricated" statement above is preserved as a historical record but was incorrect — see the v10.4 log entry on reference [18].]</em></p>
     <p><strong>[Kanada]</strong> DOI corrected: <code>10.1016/j.diamond.2017.01.011</code> → <code>10.1016/j.diamond.2017.02.014</code></p>
     <p><strong>[17] "Tang et al."</strong> First author corrected: Tang → <strong>Qian</strong>. Full citation: Qian, F. et al. ACS Appl. Mater. Interfaces 2022, 14(47), 53174–53182. DOI: 10.1021/acsami.2c16505</p>
     <p><strong>[15] "Hicks et al."</strong> Author list corrected throughout. Actual authors: <strong>Aitkulova, A., Majdi, S., Suntornwipat, N. and Isberg, J.</strong> Citation: Aitkulova et al. Phys. Status Solidi A 2025, 222, 2400567. DOI: 10.1002/pssa.202400567</p>
@@ -616,7 +625,7 @@
 <div id="abstract" class="abstract-block">
   <h2>Abstract</h2>
   <p>Graphene-gated ferroelectric photonic memory is a proposed architecture for non-volatile weight storage in photonic AI accelerators. <strong>No experimental prototype combining graphene gating, ferroelectric polarization, and photonic waveguide operation has been demonstrated.</strong> Eleven candidate integration routes — spanning UNCD graphitization, SCD(111) graphitization, CVD metal-substrate transfer, and direct low-temperature PECVD on the ferroelectric oxide itself — differ sufficiently in substrate physics, transfer mechanism, and process maturity that testing all in parallel is neither economically nor experimentally feasible. This paper provides a pre-experimental decision framework: a Bayesian Monte Carlo simulation anchored to primary literature that ranks routes by joint probability of meeting five simultaneous graphene quality criteria, identifies which constraints are substrate physics (irreducible) versus process variables (reducible), and specifies five experiments — ordered by decision value — that most efficiently collapse the decision space before fabrication begins.</p>
-  <p>Principal results: (i) all UNCD routes fail on domain size — substrate physics, not process variable; (ii) SCD(111) direct graphitization fails on mobility and carrier density within any realistic envelope; (iii) SCD(111) Ni-assisted graphitization (Route F) achieves ~0% joint pass probability at the only peer-reviewed anchor (Kanada et al. 2017: 140 cm²/V·s) — the 57.2% projected H-termination ceiling is a theoretical upper bound with no direct experimental confirmation; (iv) CVD/Pt with hBN encapsulation (Route I) achieves 38.6%, the highest of any route at current demonstrated state; (v) CVD/Pt bonded to SCD(111) (Route J) yields 21–36% across the full transfer-penalty uncertainty range; (vi) direct PECVD on Al:HfO₂ (Route K) achieves ~0% joint pass probability at theoretical-kinetic priors, but the failure mode is reducible (kinetic nucleation) rather than substrate-physics irreducible — distinguishing it categorically from UNCD elimination. Route rankings are falsifiable theoretical predictions. Section 7 is the falsification protocol.</p>
+  <p>Principal results: (i) all UNCD routes fail on domain size — substrate physics, not process variable; (ii) SCD(111) direct graphitization fails on mobility and carrier density within any realistic envelope; (iii) SCD(111) Ni-assisted graphitization (Route F) achieves ~0% joint pass probability at the only peer-reviewed graphitization anchor (Kanada et al. 2017: 140 cm²/V·s); newly published measured transport for transferred CVD graphene on H-terminated (100) diamond — 1,644 cm²/V·s, film-limited (Aitkulova et al. 2025) — implies ≈5% joint probability at demonstrated graphene-on-diamond transport, while the ceiling-truncated theoretical upper bound is ≈54%, with no direct experimental confirmation of the ceiling; (iv) CVD/Pt with hBN encapsulation (Route I) achieves 38.6%, the highest of any route at current demonstrated state; (v) CVD/Pt bonded to SCD(111) (Route J) yields 21–36% across the full transfer-penalty uncertainty range; (vi) direct PECVD on Al:HfO₂ (Route K) achieves ~0% joint pass probability at theory-anchored priors, but the failure mode is reducible (kinetic nucleation) rather than substrate-physics irreducible — distinguishing it categorically from UNCD elimination. Route rankings are falsifiable theoretical predictions. Section 7 is the falsification protocol.</p>
   <p class="keywords"><strong>Keywords:</strong> graphene, CVD, ferroelectric photonic memory, hexagonal boron nitride, single-crystal diamond, UNCD, PECVD, Bayesian Monte Carlo, photonic AI accelerators, non-volatile weight storage, pre-experimental decision framework, integration route selection</p>
 </div>
 
@@ -645,8 +654,10 @@
     <p>A prediction of device performance. Goldilocks thresholds are theory-derived hypotheses calibrated to a device architecture with no experimental prototype. Route rankings are prioritisation tools for experimental investment, not device specifications.</p>
   </div>
   <div class="callout blue">
-    <div class="callout-title">Critical prior caveat</div>
-    <p>Route F's joint pass probability at <strong>current demonstrated state is approximately 0%</strong>, anchored to the only peer-reviewed measurement for Ni-assisted SCD(111) graphitization (Kanada et al. 2017: 140 cm²/V·s, 5.7×10¹³ cm⁻²). The 57.2% projected H-termination ceiling is a <strong>theoretical upper bound with no direct experimental confirmation</strong>. These two figures must not be conflated.</p>
+    <div class="callout-title">Route F: three numbers that must not be conflated</div>
+    <p><strong>Demonstrated, graphitized (F1):</strong> 140 cm²/V·s, 5.7×10¹³ cm⁻² — Kanada et al. 2017, the only Hall measurement for the Ni-assisted graphitization sequence on SCD(111).<sup class="cite">[Kanada]</sup> Joint pass probability ~0%. Measured under conditions in which parallel conduction through the diamond's own H-induced surface channel cannot be excluded (§3.4).</p>
+    <p><strong>Demonstrated, transferred graphene on H-terminated diamond:</strong> 1,644 cm²/V·s annealed, in vacuum — Aitkulova et al. 2025.<sup class="cite">[15b]</sup> A different film (transferred polycrystalline CVD, not graphitized) on a different orientation (H-terminated (100), not (111)). Anchoring the F-family mobility prior to this value yields joint ≈5%. The raw H-versus-O difference (+23%) is confounded by substrate differences; the termination-attributable result is a higher remote-phonon energy barrier under H-termination (114 vs 60 meV).</p>
+    <p><strong>Theoretical ceiling (F2):</strong> 8,000–10,000 cm²/V·s phonon-scattering bound.<sup class="cite">[15]</sup> Not demonstrated for any graphene-on-diamond process sequence. With the prior truncated at the ceiling, joint ≈54%.</p>
     <p><strong>Falsification target:</strong> Any laboratory demonstrating a working graphene-gated ferroelectric photonic memory cell at any route provides the first experimental anchor for the entire framework.</p>
   </div>
 </section>
@@ -702,7 +713,7 @@
       </tbody>
     </table>
   </div>
-  <p class="tbl-caption">Table 2. Array-size scaling of the carrier density uniformity threshold and Route I probabilities. P(array) assumes no post-fabrication calibration and independent cells — an upper-bound independence model.</p>
+  <p class="tbl-caption">Table 2. Array-size scaling of the carrier density uniformity threshold and Route I probabilities. P(array) assumes no post-fabrication calibration and independent cells — a conservative <strong>lower-bound</strong> independence model; positive spatial correlation between neighbouring cells (Experiment 4) can only raise these values. <span class="ref-corrected">CORRECTED v10.4 — previously mislabelled as an upper bound</span></p>
 
   <h3 class="sub-head">2.4 &nbsp;Strain correction</h3>
   <p>CVD graphene on platinum exhibits compressive strain of 0.07–0.12% from thermal expansion mismatch, measurable as a G-peak blue-shift. The primary concern is that this can be misread as carrier density increase if not decomposed from doping contributions. ISO/TS 9651:2025 and ISO/TS 23359:2025 cover materials-tier classification but do not specify the substrate-dependent doping offset parameter or optical-loss-relevant carrier density uniformity metrics required for photonic integration pre-qualification.<sup class="cite">[19][20]</sup> Experiment 3 is designed to produce this metrology.</p>
@@ -725,26 +736,29 @@
   <h3 class="sub-head">3.4 &nbsp;SCD(111) Ni-assisted with H-termination (Route F) — theoretical long-term target</h3>
 
   <div class="callout">
-    <div class="callout-title">Route F: Demonstrated vs. Theoretical — The most important epistemic distinction in this paper</div>
-    <p><strong>Demonstrated state (F1):</strong> The only peer-reviewed Hall mobility measurement for Ni-assisted graphitization on SCD(111) is Kanada et al. (2017): 140 cm²/V·s room temperature, carrier density 5.7×10¹³ cm⁻², p-type conduction.<sup class="cite">[Kanada]</sup> At this anchor, Route F's joint pass probability is effectively <strong>zero</strong> — indistinguishable from Route E. The Ni catalyst was removed by H₂SO₄:H₂O₂ prior to measurement; this is a pre-H-termination result.</p>
-    <p><strong>Theoretical ceiling (F2):</strong> H-termination creates a surface dipole layer reducing remote phonon scattering. Aitkulova et al. (2025) establish the theoretical mobility ceiling at 8,000–10,000 cm²/V·s based on phonon scattering models.<sup class="cite">[15]</sup> This ceiling has <strong>not been experimentally demonstrated</strong> for the Ni-assisted graphitization + H-termination process sequence. The 57.2% projected ceiling is a theoretical upper bound, not a measured result.</p>
+    <div class="callout-title">Route F: demonstrated graphitization vs. demonstrated transfer vs. theoretical ceiling — the most important epistemic distinction in this paper</div>
+    <p><strong>Demonstrated graphitization state (F1):</strong> The only peer-reviewed Hall mobility measurement for Ni-assisted graphitization on SCD(111) is Kanada et al. (2017): 140 cm²/V·s room temperature, carrier density 5.7×10¹³ cm⁻², p-type conduction.<sup class="cite">[Kanada]</sup> At this anchor, Route F's joint pass probability is effectively <strong>zero</strong> — indistinguishable from Route E. The Ni catalyst was removed by H₂SO₄:H₂O₂ prior to measurement; this is a pre-H-termination result.</p>
+    <p><strong>Demonstrated transferred-film state (new in v10.4):</strong> Aitkulova et al. (2025) report Hall transport for commercial polycrystalline CVD graphene (Graphenea "Easy Transfer") on terminated single-crystal diamond: annealed mobility of 1,644 cm²/V·s on H-terminated <strong>(100)</strong> electronic-grade diamond versus 1,340 cm²/V·s on O-terminated <strong>(111)</strong> optical-grade diamond, measured 80–400 K under high vacuum.<sup class="cite">[15b]</sup> Three readings. First, the raw +23% H-versus-O difference is <em>not</em> a clean termination lever: the samples differ in orientation, supplier, and grade, and the authors state the low-temperature mobility difference cannot be attributed solely to termination. The termination-attributable result is the remote-interfacial-phonon (RIP) energy — <strong>114 meV (H) versus 60 meV (O)</strong> — meaning H-termination measurably raises the phonon-scattering barrier: qualitative confirmation of the mechanism behind the F2 ceiling, silent on its magnitude. Second, the absolute value bounds what a polycrystalline commercial film delivers in this environment: ≈1,600 cm²/V·s — 12× above Kanada, below the 3,000 cm²/V·s threshold, a factor of ≈5 below the ceiling — with the authors attributing the limit substantially to grain-boundary scattering in the <em>film</em>, not the substrate. The substrate ceiling is therefore not excluded by this measurement. Third, neither sample matches this paper's target configuration: the H-terminated measurement is on (100), not (111). The caveat that keeps Route F open is now double: a transferred polycrystalline film is not the graphitization product, and H-terminated (111) remains unmeasured.</p>
+    <p><strong>Theoretical ceiling (F2):</strong> H-termination creates a surface dipole layer reducing remote phonon scattering. Aitkulova et al. (2025, review) establish the theoretical mobility ceiling at 8,000–10,000 cm²/V·s based on phonon scattering models.<sup class="cite">[15]</sup> This ceiling has <strong>not been experimentally demonstrated</strong> for any graphene-on-diamond process sequence; the closest measured value <sup class="cite">[15b]</sup> is a factor of ≈5 below it. With the mobility prior truncated at the ceiling (v10.4 correction, §4.1), the projected joint probability is ≈54% — a theoretical upper bound, not a measured result.</p>
   </div>
 
-  <p>Experiment 1 is not a fine-tuning exercise — it is the measurement that determines whether H-termination produces <em>any</em> usable mobility improvement over the Kanada baseline. Until that experiment is performed, Route F's designation as a long-term target rests on theoretical surface physics arguments, not experimental process evidence.</p>
+  <p><strong>Measurement-artifact caveat.</strong> H-terminated diamond exposed to air develops its own p-type surface conduction channel via adsorbate-mediated transfer doping (a two-dimensional hole gas; Yang et al. report 170–340 cm²/V·s for this channel, doubling on 400 K annealing<sup class="cite">[23]</sup>). Hall measurements of graphene on H-terminated diamond performed in ambient air therefore contain a parallel conduction path — Aitkulova et al. measured 220 kΩ/sq for their bare H-terminated surface prior to graphene transfer<sup class="cite">[15b]</sup> — and the Kanada carrier density of 5.7×10¹³ cm⁻² may include a diamond surface-channel contribution that is not attributable to the graphene film. Aitkulova et al. measured under high vacuum, suppressing the adsorbate mechanism. Experiment 1 now specifies a parallel-conduction control for exactly this reason.</p>
+
+  <p>Experiment 1 is not a fine-tuning exercise — it is the measurement that determines whether H-termination produces <em>any</em> usable mobility improvement over the Kanada baseline in the graphitization sequence, with the transferred-film result<sup class="cite">[15b]</sup> as the adjacent-process comparison point. Until that experiment is performed, Route F's designation as a long-term target rests on theoretical surface physics arguments, not experimental process evidence — with the adjacent evidence now available confirming the ceiling's mechanism while leaving its magnitude, and the (111) configuration itself, unmeasured.</p>
 
   <h3 class="sub-head">3.5 &nbsp;CVD transfer routes (Routes G–J)</h3>
   <p><strong>Route G</strong> (CVD/Pt → SiO₂, wet PMMA transfer): 13.7% joint pass probability. The ~20× carrier density transfer penalty makes carrier density the binding constraint (31.6% pass rate), with mobility (48.1%) as the immediate secondary. Route G is a cascading two-constraint problem.</p>
   <p><strong>Route H</strong> (CVD/Cu → SiO₂): 8.2%. The ~25× carrier density transfer penalty produces the lowest joint probability among CVD routes.</p>
-  <p><strong>Route I</strong> (CVD/Pt → hBN encapsulation): 38.6% — the highest of any route at current demonstrated state. hBN reduces the carrier density transfer penalty from ~20× to ~5×,<sup class="cite">[9][10]</sup> making carrier density pass probability 83.0% and leaving mobility (51.6%) as the sole binding constraint. The binding mobility constraint reflects the polycrystalline grain boundaries of the CVD film itself; no transfer optimisation eliminates it. Absent quasi-single-crystal CVD, 38.6% is the practical ceiling for Route I under the current growth regime.</p>
-  <p><strong>Route J</strong> (CVD/Pt → SCD(111) bonded substrate): midpoint estimate 28.8%, range 21–36%. No direct experimental measurement of graphene transfer to bonded SCD(111) has been reported. The ~10× carrier density transfer penalty is an engineering estimate bounded by analogy — SiO₂ produces ~20×; hBN encapsulation ~5×; bonded SCD(111) is estimated between these bounds. Route J is the development bridge: the same SCD(111) substrate required for Route F, accessible today via transferred graphene while in-place graphitization matures.</p>
+  <p><strong>Route I</strong> (CVD/Pt → hBN encapsulation): 38.6% — the highest of any route at current demonstrated state. hBN reduces the carrier density transfer penalty from ~20× to ~5×,<sup class="cite">[9][10]</sup> making carrier density pass probability 83.0% and leaving mobility (51.6%) as the sole binding constraint. The binding mobility constraint reflects the polycrystalline grain boundaries of the CVD film itself; no transfer optimisation eliminates it. Absent quasi-single-crystal CVD, 38.6% is the practical ceiling for Route I under the current growth regime. Provenance note (v10.4): the ~5× hBN penalty is measured for Cu-grown films transferred by dry pick-up;<sup class="cite">[9][10]</sup> its application to Pt-grown, bubbling-transferred material is by analogy (Table 3, footnote §).</p>
+  <p><strong>Route J</strong> (CVD/Pt → SCD(111) bonded substrate): midpoint estimate 28.8%, range 21–36%. No direct experimental measurement of graphene transfer to bonded SCD(111) has been reported. The ~10× carrier density transfer penalty is an engineering estimate bounded by analogy — SiO₂ produces ~20×; hBN encapsulation ~5×; bonded SCD(111) is estimated between these bounds. Route J is the development bridge: the same SCD(111) substrate required for Route F, accessible today via transferred graphene while in-place graphitization matures. The Aitkulova transport data<sup class="cite">[15b]</sup> — transferred polycrystalline CVD graphene in direct contact with terminated diamond, ≈1,340–1,644 cm²/V·s — is a measured anchor adjacent to Route J's geometry and suggests the LogN(5000, 0.4) mobility prior is optimistic for direct-contact configurations; Route J's SiO₂ bonding interlayer changes the remote-phonon environment, so the prior is retained but flagged pending Experiment 2.</p>
 
   <h3 class="sub-head" id="s3k">3.6 &nbsp;Low-temperature direct PECVD on Al:HfO₂ (Route K) — The CMOS-pure, transfer-free alternative</h3>
 
-  <p><strong>Route K</strong> represents the Back-End-of-Line (BEOL) industrial ideal for monolithic 2D-CMOS integration by bypassing both sacrificial catalytic metal foils and specialized single-crystal substrates entirely. This pathway utilizes low-temperature (300–400°C) Plasma-Enhanced Chemical Vapor Deposition (PECVD) or Remote Plasma-ALD to nucleate monolayer graphene directly onto the Al:HfO₂ ferroelectric gate dielectric template, eliminating the wrinkling, doping anomalies, and micro-tearing characteristic of standard ex-situ wet/dry transfers.</p>
+  <p><strong>Route K</strong> represents the Back-End-of-Line (BEOL) industrial ideal for monolithic 2D-CMOS integration by bypassing both sacrificial catalytic metal foils and specialized single-crystal substrates entirely. This pathway would nucleate monolayer graphene at low temperature (300–400°C, PECVD or Remote Plasma-ALD) directly onto the Al:HfO₂ ferroelectric gate dielectric, eliminating the wrinkling, doping anomalies, and micro-tearing characteristic of standard ex-situ wet/dry transfers.</p>
 
-  <p>The primary literature anchors highlight a stark divergence between structural lattice continuity and macro-scale electrical transport. Qian et al. (2022) achieved wafer-scale direct growth at 300°C with remarkably low defect densities (I_D/I_G ~ 0.08), proving that coherent hexagonal carbon networks can assemble at true CMOS-compatible thermal budgets.<sup class="cite">[17]</sup> Kim et al. (2023) established that local radical density control during plasma exposure allows uniform, large-area monolayer coverage directly on high-κ target dielectrics without sub-surface oxide degradation.<sup class="cite">[18]</sup></p>
+  <p>The direct-growth-on-dielectric literature establishes both the promise and the constraint of this family. Qian et al. (2022) demonstrated transfer-free wafer-scale graphene at 300°C with I_D/I_G ≈ 0.08 — but via a laminated single-crystal Cu foil acting as a sacrificial <em>catalyst</em>, subsequently etched.<sup class="cite">[17]</sup> The result proves that a CMOS-compatible thermal budget is achievable for transfer-free integration; it does not demonstrate catalyst-free nucleation on the oxide itself, and a Cu lamination/etch sequence applied directly to a ferroelectric gate dielectric raises contamination questions outside this paper's scope. For genuinely catalyst-free growth on amorphous dielectrics — including HfO₂ specifically — the literature consistently reports nucleation-limited nanocrystalline films,<sup class="cite">[21][22]</sup> and no published result demonstrates the monolayer quality, domain size, and transport simultaneously required here. Route K's priors are therefore theory-anchored: classical nucleation kinetics on a non-catalytic amorphous surface, with no peer-reviewed Hall measurement for the relevant process sequence. <em>(v10.4: a previously cited reference attributing monolayer growth on high-κ dielectrics to plasma radical-density control was found to be fabricated and has been removed; see Revision Log.)</em></p>
 
-  <p>However, because nucleation occurs on a non-catalytic, amorphous oxide surface rather than a singular crystalline surface, the film's structural morphology is dictated by extreme sub-surface variation rather than thermodynamic epitaxy. Lacking a long-range crystalline template, carbon species undergo rapid, highly localized island nucleation. The resulting coalesced films are structurally characterized as a complex web of nanometer-scale domains separated by low-angle grain boundaries.</p>
+  <p>Because nucleation occurs on a non-catalytic, amorphous oxide surface rather than a singular crystalline surface, the film's structural morphology is dictated by extreme sub-surface variation rather than thermodynamic epitaxy. Lacking a long-range crystalline template, carbon species undergo rapid, highly localized island nucleation. The resulting coalesced films are structurally characterized as a complex web of nanometer-scale domains separated by low-angle grain boundaries.</p>
 
   <div class="callout blue">
     <div class="callout-title">Route K vs. UNCD — Reducible vs. Irreducible Constraint</div>
@@ -757,7 +771,8 @@
   <h2 class="sec-head"><span class="sec-num">§ 4</span> Simulation Methodology</h2>
 
   <h3 class="sub-head">4.1 &nbsp;Prior distributions</h3>
-  <p>Each quality parameter is modelled as a lognormal random variable X ~ LogNormal(µ_ln, σ_ln), appropriate for strictly positive physical quantities with multiplicative variability. σ_ln brackets the spread of reported values across at least two independent groups per route where available, or is conservatively inflated when only a single group reported a value. Monolayer coverage is modelled as a Beta-distributed probability, kept independent of film-quality parameters by construction. Transfer penalties are multiplicative lognormal factors. N = 200,000 Monte Carlo samples; sampling error below 0.05 percentage points.</p>
+  <p>Each quality parameter is modelled as a lognormal random variable X ~ LogNormal(µ_ln, σ_ln), appropriate for strictly positive physical quantities with multiplicative variability. σ_ln brackets the spread of reported values across at least two independent groups per route where available, or is conservatively inflated when only a single group reported a value. Monolayer coverage is modelled as a Beta-distributed probability, kept independent of film-quality parameters by construction. Transfer penalties are multiplicative lognormal factors. Where a prior represents a theoretical <em>ceiling</em> rather than a central estimate (Route F2), the distribution is truncated at the ceiling value; v10.3 and earlier modelled the ceiling as a mean, placing ~40% of probability mass above the stated bound, which was incoherent for an upper-bound scenario. N = 200,000 Monte Carlo samples; sampling error below 0.05 percentage points.</p>
+  <p>"Bayesian" here denotes the probability-as-degree-of-belief construction of the priors, not a completed inference: no posterior is computed in this paper. The posterior-updating step is exactly what Experiments 1–5 exist to perform; each Branch in §7 specifies which prior moves and how.</p>
 
   <h3 class="sub-head">4.2 &nbsp;Correlation structure</h3>
   <p>Quality parameters are physically correlated via Cholesky decomposition in log-space: defect density and mobility (ρ = −0.6, both degraded by grain boundaries); domain size and mobility (ρ = +0.7, larger domains contain fewer grain boundaries); defect density and carrier density (ρ = +0.3, charged defects act as dopants). These values are physically motivated but not fitted to experimental data. Perturbing each ρ by ±0.2 leaves the qualitative route ordering stable; the Route F/I crossover mobility shifts by approximately ±500 cm²/V·s.</p>
@@ -776,16 +791,16 @@
         <tr><td>D: UNCD Ni RTA ★</td><td class="mono">LogN(2.0, 0.5)</td><td class="mono">LogN(1800, 0.5)</td><td>H-plasma only</td><td>Sumant 2016</td></tr>
         <tr><td>E: SCD(111) direct</td><td class="mono">LogN(50, 0.6)</td><td class="mono">LogN(250, 0.6)</td><td>H-plasma only</td><td>JAP 2013; Carbon 2021</td></tr>
         <tr class="f1-row"><td>F1: SCD Ni, demonstrated ★</td><td class="mono">LogN(500, 0.5)</td><td class="mono">LogN(140, 0.5)</td><td>H-plasma</td><td>Kanada 2017</td></tr>
-        <tr class="f2-row"><td>F2: SCD Ni+H, theoretical ★</td><td class="mono">LogN(500, 0.5)</td><td class="mono">LogN(8000, 0.5)</td><td>H-plasma</td><td>Aitkulova et al. 2025 (ceiling only)</td></tr>
+        <tr class="f2-row"><td>F2: SCD Ni+H, theoretical ★</td><td class="mono">LogN(500, 0.5)</td><td class="mono">LogN(8000, 0.5), trunc. 8000</td><td>H-plasma</td><td>Aitkulova et al. 2025 (ceiling only) [15]; measured adjacent anchor [15b]</td></tr>
         <tr><td>G: CVD/Pt → SiO₂</td><td class="mono">LogN(30, 0.5)</td><td class="mono">LogN(5000, 0.4)</td><td class="mono">LogN(20, 0.7)</td><td>Gao 2012; Zhang 2012</td></tr>
         <tr><td>H: CVD/Cu → SiO₂</td><td class="mono">LogN(50, 0.5)</td><td class="mono">LogN(4000, 0.5)</td><td class="mono">LogN(25, 0.8)</td><td>Kim 2009</td></tr>
-        <tr class="best-row"><td>I: CVD/Pt → hBN ★</td><td class="mono">LogN(30, 0.5)</td><td class="mono">LogN(5000, 0.4)</td><td class="mono">LogN(5, 0.5)</td><td>Banszerus 2015; Pizzocchero 2016</td></tr>
-        <tr><td>J: CVD/Pt → SCD(111)</td><td class="mono">LogN(30, 0.5)</td><td class="mono">LogN(5000, 0.4)</td><td class="mono">LogN(10, 0.6) †</td><td>Gao 2012; estimated</td></tr>
-        <tr><td>K: Direct PECVD on HfO₂ ★</td><td class="mono">LogN(0.1, 0.8)</td><td class="mono">LogN(150, 0.6)</td><td>None (in-place)</td><td>Qian et al. 2022 [17]; Kim et al. 2023 [18]</td></tr>
+        <tr class="best-row"><td>I: CVD/Pt → hBN ★</td><td class="mono">LogN(30, 0.5)</td><td class="mono">LogN(5000, 0.4)</td><td class="mono">LogN(5, 0.5) §</td><td>Banszerus 2015; Pizzocchero 2016</td></tr>
+        <tr><td>J: CVD/Pt → SCD(111)</td><td class="mono">LogN(30, 0.5)</td><td class="mono">LogN(5000, 0.4)</td><td class="mono">LogN(10, 0.6) †</td><td>Gao 2012; estimated; cf. [15b]</td></tr>
+        <tr><td>K: Direct PECVD on HfO₂ ★</td><td class="mono">LogN(0.1, 0.8)</td><td class="mono">LogN(150, 0.6)</td><td>None (in-place)</td><td>Theory-anchored (nucleation kinetics); cf. [21][22]</td></tr>
       </tbody>
     </table>
   </div>
-  <p class="tbl-caption">Table 3. Prior distribution anchors. ★ = best-in-family. Route F split into F1 (Kanada 2017 demonstrated) and F2 (Aitkulova et al. 2025 theoretical ceiling). † Route J transfer factor is an engineering estimate with no direct experimental measurement.</p>
+  <p class="tbl-caption">Table 3. Prior distribution anchors. ★ = best-in-family. Route F split into F1 (Kanada 2017 demonstrated) and F2 (theoretical ceiling, truncated at 8,000 in v10.4). † Route J transfer factor is an engineering estimate with no direct experimental measurement. § Route I hBN penalty is measured for Cu-grown, dry-pick-up films; application to Pt-grown, bubbling-transferred material is by analogy (v10.4). Route K anchors corrected in v10.4: previously cited literature anchors were found inapplicable (Qian: catalytic) or fabricated; see Revision Log.</p>
 </section>
 
 <!-- SECTION 5 -->
@@ -812,24 +827,24 @@
         <tr><td>D: UNCD Ni ★</td><td>0.711</td><td class="zero">0.001</td><td>0.155</td><td>0.088</td><td>0.751</td><td class="zero">~0.000</td><td>Domain size</td></tr>
         <tr><td>E: SCD direct</td><td>0.033</td><td>0.996</td><td class="zero">0.000</td><td class="zero">0.001</td><td>0.334</td><td class="zero">~0.000</td><td>Mobility / n*</td></tr>
         <tr class="f1-row"><td>F1: SCD Ni, demonstrated ★</td><td>0.899</td><td>1.000</td><td class="zero">0.001</td><td class="zero">0.000</td><td>0.778</td><td class="zero">~0.000</td><td>Mobility / n*</td></tr>
-        <tr class="f2-row"><td>F2: SCD Ni+H, theoretical ★</td><td>0.899</td><td>1.000</td><td>0.950</td><td>0.834</td><td>0.778</td><td class="bold">57.2% †</td><td>n* (theoretical)</td></tr>
+        <tr class="f2-row"><td>F2: SCD Ni+H, theoretical ★</td><td>≈0.84</td><td>1.000</td><td>≈0.93</td><td>0.834</td><td>0.778</td><td class="bold">≈54% †</td><td>n* (theoretical)</td></tr>
         <tr><td>G: Pt→SiO₂</td><td>1.000</td><td>0.986</td><td>0.481</td><td>0.316</td><td>0.899</td><td>13.7%</td><td>n* (next: mobility)</td></tr>
         <tr><td>H: Cu→SiO₂</td><td>0.999</td><td>0.999</td><td>0.337</td><td>0.269</td><td>0.900</td><td>8.2%</td><td>n* (next: mobility)</td></tr>
         <tr class="best-row"><td>I: Pt→hBN ★</td><td>1.000</td><td>0.986</td><td>0.516</td><td>0.830</td><td>0.901</td><td class="bold hi">38.6%</td><td>Mobility</td></tr>
         <tr><td>J: Pt→SCD(111)</td><td>1.000</td><td>0.986</td><td>0.567</td><td>0.566</td><td>0.900</td><td class="warn">21–36% ‡</td><td>n* (next: mobility)</td></tr>
-        <tr><td>K: Direct PECVD/HfO₂</td><td>0.912</td><td class="zero">0.000</td><td class="zero">0.000</td><td>0.012</td><td>0.850</td><td class="zero">~0.000</td><td>Domain size / Mobility</td></tr>
+        <tr><td>K: Direct PECVD/HfO₂</td><td>0.912 ¶</td><td class="zero">0.000</td><td class="zero">0.000</td><td>0.012</td><td>0.850</td><td class="zero">~0.000</td><td>Domain size / Mobility</td></tr>
       </tbody>
     </table>
   </div>
-  <p class="tbl-caption">Table 4. Main simulation results. Each cell shows marginal pass probability for each Goldilocks criterion. ★ = best-in-family. ~0.000 indicates P &lt; 0.0001. † Route F2 is a theoretical upper bound; current demonstrated state (F1) is ~0%. ‡ Route J range spans the 7×–15× transfer-penalty uncertainty; midpoint 28.8% corresponds to the ~10× estimate. <strong>Prior provenance:</strong> Routes F1, G, H, I (and the Kanada anchor) derive mobility priors from peer-reviewed Hall measurements. Routes F2 and K derive mobility priors from theoretical models (phonon scattering ceiling for F2; classical nucleation kinetics for K) — no direct Hall measurement exists for the relevant process sequence. Route J transfer factor is an engineering estimate by analogy. These categorical differences should be weighted accordingly when interpreting the P(all 5) column. N = 200,000 samples.</p>
+  <p class="tbl-caption">Table 4. Main simulation results. Each cell shows marginal pass probability for each Goldilocks criterion. ★ = best-in-family. ~0.000 indicates P &lt; 0.0001. † Route F2 prior truncated at the 8,000 ceiling (v10.4); the v10.3 untruncated value was 57.2%. The truncation lowers the D/G marginal via the ρ = −0.6 defect–mobility coupling. Figures marked ≈ are from the v10.4 truncated rerun, pending confirmation in the verified Monte Carlo companion tool. Current demonstrated graphitization state (F1) is ~0%; the measured transferred-film anchor implies ≈5% (Table 5). ‡ Route J range spans the 7×–15× transfer-penalty uncertainty; midpoint 28.8% corresponds to the ~10× estimate. ¶ Route K's defect marginal inherits its scale from Cu-catalyzed literature values now known to be regime-mismatched (§3.6); the joint probability is insensitive to this (domain size dominates), but the marginal should not be quoted in isolation. <strong>Prior provenance:</strong> Routes F1, G, H, I (and the Kanada anchor) derive mobility priors from peer-reviewed Hall measurements. Route F2 derives its mobility prior from a theoretical phonon-scattering ceiling, truncated; Route K is theory-anchored throughout. Route J transfer factor is an engineering estimate by analogy. These categorical differences should be weighted accordingly when interpreting the P(all 5) column. N = 200,000 samples.</p>
 
-  <h3 class="sub-head">5.2 &nbsp;Route F: demonstrated state versus theoretical ceiling</h3>
-  <p>The most consequential result in Table 4 is the separation of Route F into F1 and F2. At the Kanada (2017) anchor (140 cm²/V·s, 5.7×10¹³ cm⁻²), Route F produces ~0% joint pass probability — indistinguishable from Route E. The gap between F1 (~0%) and F2 (57.2%) is the largest uncertainty in the paper, and it is an <em>experimental</em> gap, not a theoretical one. Experiment 1 is the measurement that begins to close it.</p>
+  <h3 class="sub-head">5.2 &nbsp;Route F: demonstrated states versus theoretical ceiling</h3>
+  <p>The most consequential result in Table 4 remains the separation of Route F into demonstrated and theoretical states — now with three levels rather than two. At the Kanada (2017) graphitization anchor (140 cm²/V·s, 5.7×10¹³ cm⁻²), Route F produces ~0% joint pass probability — indistinguishable from Route E. At the Aitkulova (2025) transferred-film anchor (1,644 cm²/V·s, polycrystalline CVD on H-terminated (100) diamond), the joint probability is ≈5%. At the ceiling-truncated theoretical bound, ≈54%. The gap between the measured states and the ceiling is the largest uncertainty in the paper, and it is an <em>experimental</em> gap, not a theoretical one — with the best adjacent measurement sitting near the bottom of the range while remaining film-limited rather than substrate-limited, leaving the upper range untested. Experiment 1 is the measurement that begins to close it.</p>
 
   <h3 class="sub-head">5.3 &nbsp;Route F mobility trajectory (conditional on H-termination improvement)</h3>
   <div class="callout blue">
     <div class="callout-title">Conditional analysis — hypothesis, not demonstrated fact</div>
-    <p>The following analysis is conditional on H-termination producing mobility improvement above the Kanada baseline. All rows except the first are undemonstrated hypotheses.</p>
+    <p>The following analysis is conditional on H-termination producing mobility improvement above the Kanada baseline in the graphitization sequence. Rows marked "undemonstrated hypothesis" remain so; the transferred-film row is a measurement from an adjacent process, not the graphitization sequence.</p>
   </div>
 
   <div class="tbl-wrap">
@@ -838,21 +853,22 @@
         <th>Mobility prior mean</th><th>P(mob &gt; 3000)</th><th>P(n* &lt; 10¹¹)</th><th>P(all 5)</th><th>Status</th>
       </tr></thead>
       <tbody>
-        <tr class="f1-row"><td>140 cm²/V·s — Kanada anchor</td><td>~0.1%</td><td>~0.0%</td><td class="zero">~0.000</td><td class="bold">Demonstrated</td></tr>
+        <tr class="f1-row"><td>140 cm²/V·s — Kanada anchor (graphitized)</td><td>~0.1%</td><td>~0.0%</td><td class="zero">~0.000</td><td class="bold">Demonstrated</td></tr>
+        <tr class="f1-row"><td><strong>1,644 cm²/V·s — Aitkulova 2025 (transferred CVD, H-(100), vacuum)</strong></td><td>≈7%</td><td>83.4% *</td><td class="bold">≈5% *</td><td class="bold">Demonstrated, adjacent process</td></tr>
         <tr><td>3,000 cm²/V·s — optimistic near-term</td><td>49.9%</td><td>56.8%</td><td>21.8%</td><td class="zero">Undemonstrated hypothesis</td></tr>
         <tr><td>5,000 cm²/V·s — process target</td><td>80.4%</td><td>83.5%</td><td>49.9%</td><td class="zero">Undemonstrated hypothesis</td></tr>
-        <tr class="f2-row"><td>8,000 cm²/V·s — H-term ceiling (Aitkulova et al.)</td><td>94.9%</td><td>83.4%</td><td class="bold">57.2%</td><td class="zero">Theoretical upper bound</td></tr>
+        <tr class="f2-row"><td>8,000 cm²/V·s — H-term ceiling, truncated</td><td>≈93%</td><td>83.4%</td><td class="bold">≈54%</td><td class="zero">Theoretical upper bound</td></tr>
       </tbody>
     </table>
   </div>
-  <p class="tbl-caption">Table 5. Route F mobility trajectory. Carrier density pass rate stabilises at ~83–84% above 3,000 cm²/V·s, confirming mobility as the primary development lever if H-termination proves effective.</p>
+  <p class="tbl-caption">Table 5. Route F mobility trajectory, v10.4. Carrier density pass rate stabilises at ~83–84% above 3,000 cm²/V·s, confirming mobility as the primary development lever if H-termination proves effective in the graphitization sequence. The raw H-vs-O difference in [15b] (+23%) is confounded by substrate/orientation differences; the termination-attributable result is the remote-phonon energy barrier (114 vs 60 meV). * The measured row holds the F2 carrier-density prior; the companion tool scales n* with the mobility scenario in the other rows, and if the same convention is applied at 1,644 the joint falls below ≈5% — to be settled in the rerun. Figures marked ≈ pending confirmation in the verified Monte Carlo companion tool.</p>
 
   <h3 class="sub-head">5.4 &nbsp;CVD route ranking</h3>
   <p>The four CVD routes share identical growth priors and differ only in transfer substrate. The ranking directly reflects transfer penalty severity: hBN (I, 38.6%) &gt; SCD(111) bonded (J, 21–36%) &gt; SiO₂/Pt (G, 13.7%) &gt; SiO₂/Cu (H, 8.2%). Route I has resolved the carrier density problem (83.0%) and faces mobility (51.6%) as its structural ceiling — set by polycrystalline grain boundaries that no transfer optimisation can eliminate.</p>
 
   <h3 class="sub-head">5.5 &nbsp;Route K core failure mode and comparative insight</h3>
   <p>Route K presents a structurally important contrast to the UNCD-templated paths (Routes A–D). While the UNCD routes fail due to an <em>irreducible bulk substrate constraint</em> (the inherent phase boundaries of the diamond substrate itself), Route K fails due to a <em>reducible kinetic nucleation constraint</em>.</p>
-  <p>The simulation confirms that while Route K satisfies monolayer thickness criteria (85.0%) and minimizes gross structural D-band defect density (91.2%) — a consequence of highly precise, gentle remote-plasma control — it fails catastrophically on the joint probability envelope (P(all 5) ≈ 0). The lack of long-range lattice alignment forces the carbon film to operate in a highly disordered regime. Average domain size is constrained to ~100 nm by the nucleation site density on amorphous HfO₂ (N_nuc ~ 10¹⁰–10¹¹ cm⁻²), producing mobility in the 150 cm²/V·s range via grain-boundary scattering — indistinguishable from Route E and F1 in practical terms.</p>
+  <p>The simulation indicates that while Route K satisfies monolayer thickness criteria (85.0%) and posts a low gross structural D-band marginal (0.912 — a figure whose anchoring is now flagged as regime-mismatched, Table 4 footnote ¶), it fails catastrophically on the joint probability envelope (P(all 5) ≈ 0). The lack of long-range lattice alignment forces the carbon film to operate in a highly disordered regime. Average domain size is constrained to ~100 nm by the nucleation site density on amorphous HfO₂ (N_nuc ~ 10¹⁰–10¹¹ cm⁻²), producing mobility in the 150 cm²/V·s range via grain-boundary scattering — indistinguishable from Route E and F1 in practical terms. These figures are theory-derived throughout; Experiment 5 produces the first measured anchors for this route.</p>
   <div class="callout blue">
     <div class="callout-title">Why Route K is not dismissed</div>
     <p>Unlike UNCD, Route K's domain constraint is kinetic, not crystallographic. Surface pre-patterning, directed plasma-flux steering, or artificial nucleation center engineering could in principle extend domain sizes beyond the amorphous limit. This is speculative but physically motivated. Experiment 5 tests whether nucleation kinetics have bypassed the amorphous limit at accessible process conditions — and if Branch A obtains, Route K becomes the most industrially attractive path in the entire framework, bypassing diamond infrastructure entirely.</p>
@@ -864,7 +880,7 @@
   <h2 class="sec-head"><span class="sec-num">§ 6</span> Discussion</h2>
 
   <h3 class="sub-head">6.1 &nbsp;The operational Pareto front</h3>
-  <p>At current demonstrated state, the operational Pareto front consists of Route I and Route J — both transfer routes, both available with existing infrastructure. Route F is not on the operational Pareto front at current demonstrated state; its inclusion is contingent on Experiment 1 producing mobility substantially above the Kanada anchor.</p>
+  <p>At current demonstrated state, the operational Pareto front consists of Route I and Route J — both transfer routes, both available with existing infrastructure. Route F is not on the operational Pareto front at current demonstrated state; its inclusion is contingent on Experiment 1 producing mobility substantially above the Kanada anchor, with the transferred-film benchmark<sup class="cite">[15b]</sup> indicating how far the gap to the 3,000 cm²/V·s threshold remains even in a favourable substrate-termination environment.</p>
   <p>Route I (38.6%) leads today. hBN encapsulation at ~$50–200 per laboratory-scale transfer; CVD/Pt graphene from commercial suppliers at comparable cost. Route J (21–36%) requires SCD(111) at approximately $500–1,500 per 3×3 mm piece — justified if Experiment 2 confirms transfer penalty below ~10×.</p>
   <p>The rational entry strategy: adopt Route I for early device demonstrations; begin Route F process characterisation (Experiment 1) in parallel; switch to Route J when diamond substrate infrastructure is in place and Experiment 2 confirms transfer penalty below 10×; upgrade to Route F when Experiment 1 demonstrates mobility above 3,500 cm²/V·s. This three-phase strategy requires no redesign of the photonic stack between phases.</p>
 
@@ -881,7 +897,7 @@
   <p>UNCD retains an important role as a thermal management substrate for transferred graphene. A hybrid architecture — CVD/Pt+hBN transferred to a UNCD underlayer — would combine Route I graphene quality with UNCD's thermal conductivity (1,400–2,000 W/m·K vs. 1.4 W/m·K for SiO₂) and current-carrying capacity (18 µA/nm², Yan et al.<sup class="cite">[11]</sup>). If UNCD surface charge trap density can be reduced through surface passivation to the level of bonded SCD(111), this variant's transfer penalty would fall in the 7×–15× range estimated for Route J, yielding a speculative joint pass probability of 20–36%.</p>
 
   <h3 class="sub-head">6.6 &nbsp;The process-variation-dominated regime</h3>
-  <p>At Route I's 38.6% per-cell pass probability, the expected number of fully passing cells in a 64×64 MVM array is 4,096 × 0.386 ≈ 1,581 — fewer than 40% without post-selection. A fully passing array without calibration requires per-cell pass rates approaching 80% or higher, achievable only at Route F's theoretical H-termination ceiling.</p>
+  <p>At Route I's 38.6% per-cell pass probability, a 64×64 array yields ≈1,581 fully passing cells of 4,096 in expectation. Under the independence model, an <em>uncalibrated, fully passing</em> array is unreachable at any per-cell rate any route in this framework approaches — including the F2 theoretical ceiling. The practical statement is in yield-with-redundancy terms: an architecture that tolerates remapping around failed cells needs per-cell pass rates near the fraction of cells it requires functional (for example, ≈90% per-cell for ≈90% functional cells in expectation), and no route approaches such rates without calibration. Every route in this framework therefore operates in the calibration-dependent regime — which is precisely the regime CMOS entered in the 1990s, and the premise of the analogy below. <em>(v10.4: replaces an incorrect claim that a fully passing array requires ~80% per-cell rates; see Revision Log.)</em></p>
   <div class="callout blue">
     <div class="callout-title">The SOI analogy</div>
     <p>Photonic AI accelerators are entering the process-variation-dominated regime that CMOS entered in the 1990s, where the binding constraint on yield is statistical uniformity of the modulator material across a large array rather than individual device physics. The CMOS response was statistical process control, design-for-manufacturability, and ultimately epitaxial SOI — eliminating polycrystalline grain boundaries as the root cause of threshold voltage variance.</p>
@@ -897,17 +913,18 @@
 
   <div class="experiment">
     <div class="exp-header">
-      <span class="exp-num">Exp. 1</span>
+      <span class="exp-num priority">Exp. 1 — Highest Priority</span>
       <span class="exp-title">Route F Mobility Mapping — Does H-termination produce any usable improvement?</span>
     </div>
     <div class="exp-body">
       <div class="exp-measure">
         <strong>What to measure:</strong> Room-temperature Hall mobility on SCD(111) with varying Ni catalyst thickness (0.5–5 nm) and RTA temperature (850–1050°C), before and after H-plasma treatment. Target deliverable: post-H-plasma mobility mean and standard deviation — specifically whether H-termination produces statistically significant improvement over the Kanada (2017) anchor of 140 cm²/V·s.
       </div>
+      <p><strong>Parallel-conduction control (added v10.4):</strong> All Hall measurements in vacuum (≤10⁻³ mbar) or with an O-terminated reference sample fabricated in the same run. H-terminated diamond in air develops its own p-type surface channel via adsorbate transfer doping;<sup class="cite">[23]</sup> air-ambient Hall data on H-terminated samples is not interpretable for graphene transport. Aitkulova et al.<sup class="cite">[15b]</sup> establish the vacuum-measurement precedent and the adjacent-process comparison point: transferred polycrystalline CVD graphene on H-terminated (100) diamond reaches 1,644 cm²/V·s annealed, limited substantially by film grain boundaries, with H-termination raising the remote-phonon energy barrier (114 vs 60 meV). Experiment 1 measures the configuration [15b] does not: <strong>H-terminated (111) with a graphitized film.</strong></p>
       <div class="branch-grid">
         <div class="branch branch-a">
           <span class="branch-label">Branch A</span>
-          <span><strong>Post-H-plasma mean &gt; 1,000 cm²/V·s:</strong> H-termination produces meaningful mobility improvement. Begin systematic optimisation toward the 3,500–4,500 cm²/V·s crossover target. Route F process development is justified.</span>
+          <span><strong>Post-H-plasma mean &gt; 1,000 cm²/V·s:</strong> H-termination produces meaningful mobility improvement. Begin systematic optimisation toward the 3,500–4,500 cm²/V·s crossover target. Route F process development is justified. Note (v10.4): given [15b], Branch A is the expected outcome <em>if</em> graphitized-film quality can be brought to transferred-film levels — and Branch A no longer implies the 8,000 ceiling is reachable.</span>
         </div>
         <div class="branch branch-b">
           <span class="branch-label">Branch B</span>
@@ -924,7 +941,7 @@
 
   <div class="experiment">
     <div class="exp-header">
-      <span class="exp-num priority">Exp. 2 — Highest Priority</span>
+      <span class="exp-num">Exp. 2</span>
       <span class="exp-title">Route J Transfer Penalty — Validate or eliminate the development bridge</span>
     </div>
     <div class="exp-body">
@@ -945,7 +962,7 @@
           <span><strong>&gt; 15×:</strong> Route J collapses toward Route G (&lt;15%). Hold at Route I. Do not invest in diamond substrate infrastructure ahead of Experiment 1 evidence.</span>
         </div>
       </div>
-      <p class="prior-update"><strong>Prior updated:</strong> Route J transfer factor in Table 3. Route I carrier density prior if P(VDF-TrFE) arm shows penalty below 5×.</p>
+      <p class="prior-update"><strong>Prior updated:</strong> Route J transfer factor in Table 3. Route I carrier density prior if P(VDF-TrFE) arm shows penalty below 5×. The direct-contact mobility figures in [15b] provide the comparison baseline for arm (a).</p>
     </div>
   </div>
 
@@ -986,7 +1003,7 @@
           <span><strong>L_corr &gt; cell pitch:</strong> Configuration-dependent variance dominates. Only Route F eliminates this structurally.</span>
         </div>
       </div>
-      <p class="prior-update"><strong>Prior updated:</strong> Informs calibration strategy for all routes; validates or refines the N-dependent single-crystal requirement from Table 2.</p>
+      <p class="prior-update"><strong>Prior updated:</strong> Informs calibration strategy for all routes; validates or refines the N-dependent single-crystal requirement from Table 2 (whose independence model is a conservative lower bound — Experiment 4 measures exactly the correlation that raises it).</p>
     </div>
   </div>
 
@@ -997,7 +1014,7 @@
     </div>
     <div class="exp-body">
       <div class="exp-measure">
-        <strong>What to measure:</strong> Deposit monolayer graphene via remote-source PECVD at 300°C, 350°C, and 400°C directly onto 10 nm ALD Al₀.₅Hf₀.₅O₂ films. Prior to lithography, perform full-surface 2D Raman mapping across a 50×50 µm² window at 200 nm step resolution. Extract the spatial autocorrelation function of the I_D/I_G ratio and G-band position to determine the correlation length of crystal boundaries. Following spatial mapping, fabricate van der Pauw Hall bars using evaporated Au/Cr contacts. Measure field-effect mobility (µ) and residual carrier density (n*) from 10 K to 300 K to separate temperature-independent grain-boundary hopping from intra-domain transport.
+        <strong>What to measure:</strong> Deposit monolayer graphene via remote-source PECVD at 300°C, 350°C, and 400°C directly onto 10 nm ALD Al₀.₅Hf₀.₅O₂ films. Prior to lithography, perform full-surface 2D Raman mapping across a 50×50 µm² window at 200 nm step resolution. Extract the spatial autocorrelation function of the I_D/I_G ratio and G-band position to determine the correlation length of crystal boundaries. Following spatial mapping, fabricate van der Pauw Hall bars using evaporated Au/Cr contacts. Measure field-effect mobility (µ) and residual carrier density (n*) from 10 K to 300 K to separate temperature-independent grain-boundary hopping from intra-domain transport. Note (v10.4): with Route K now cleanly theory-anchored, Experiment 5 produces the route's <em>first</em> measured anchors of any kind.
       </div>
       <div class="branch-grid">
         <div class="branch branch-a">
@@ -1032,7 +1049,7 @@
     </div>
     <div class="conclusion-item">
       <div class="conc-num">3</div>
-      <p class="conc-text"><strong>Route F achieves ~0% joint probability at the only peer-reviewed experimental anchor</strong> (Kanada et al. 2017: 140 cm²/V·s). The 57.2% projected ceiling under H-termination is a theoretical upper bound with no direct experimental confirmation. Experiment 1 determines whether Route F is experimentally accessible at all.</p>
+      <p class="conc-text"><strong>Route F achieves ~0% joint probability at the only peer-reviewed graphitization anchor</strong> (Kanada et al. 2017: 140 cm²/V·s). Measured transport for transferred polycrystalline CVD graphene on H-terminated (100) diamond — 1,644 cm²/V·s, film-limited by grain boundaries (Aitkulova et al. 2025) — implies ≈5% joint probability at demonstrated graphene-on-diamond transport, while confirming that H-termination raises the remote-phonon energy barrier (114 vs 60 meV): qualitative support for the ceiling's mechanism without evidence of its magnitude. The ≈54% ceiling-truncated projection under H-termination is a theoretical upper bound with no direct experimental confirmation, and the closest measurement sits a factor of ≈5 below the ceiling. Experiment 1 determines whether Route F is experimentally accessible at all.</p>
     </div>
     <div class="conclusion-item">
       <div class="conc-num">4</div>
@@ -1040,7 +1057,7 @@
     </div>
     <div class="conclusion-item">
       <div class="conc-num">5</div>
-      <p class="conc-text"><strong>The Route F / Route I crossover at 3,500–4,500 cm²/V·s</strong> is a concrete process development target — but only if Experiment 1 demonstrates H-termination produces mobility above the Kanada baseline. The crossover analysis is conditional on that demonstration.</p>
+      <p class="conc-text"><strong>The Route F / Route I crossover at 3,500–4,500 cm²/V·s</strong> is a concrete process development target — but only if Experiment 1 demonstrates H-termination produces mobility above the Kanada baseline in the graphitization sequence. The crossover analysis is conditional on that demonstration, and the best adjacent measurement [15b] remains below the crossover band.</p>
     </div>
     <div class="conclusion-item">
       <div class="conc-num">6</div>
@@ -1060,11 +1077,11 @@
     </div>
   </div>
 
-  <p style="margin-top:1.5rem;">The most important near-term result is not a device demonstration but a Hall mobility measurement on H-terminated SCD(111) graphene. That measurement either opens Route F as a realistic long-term target or closes it, redirecting investment toward Route I and the quasi-single-crystal CVD approaches that represent its only structural ceiling bypass.</p>
+  <p style="margin-top:1.5rem;">The most important near-term result is not a device demonstration but a Hall mobility measurement on H-terminated SCD(111) graphene — now with a published adjacent-process benchmark to beat. That measurement either opens Route F as a realistic long-term target or closes it, redirecting investment toward Route I and the quasi-single-crystal CVD approaches that represent its only structural ceiling bypass.</p>
 
   <hr class="sec-rule">
   <h3 class="sub-head">Acknowledgements</h3>
-  <p>The author thanks Claude (Anthropic) for sustained dialogue partnership throughout the simulation design, prior construction, red-team review, and manuscript development across all versions. The author retains sole responsibility for all numerical estimates, prior choices, and conclusions. This work was conducted independently under the Solbakken Research Initiative without institutional funding. The author does not have access to the experimental infrastructure required to execute Experiments 1–5. This paper is a call to the field: the five experiments are offered as a prioritised, decision-branched experimental roadmap for any group with access to SCD(111) substrates, hBN transfer protocols, Hall measurement infrastructure, and remote-plasma PECVD capability. Simulation code and prior parameter files will be made available as supplementary material upon journal submission.</p>
+  <p>The author thanks Claude (Anthropic) for sustained dialogue partnership throughout the simulation design, prior construction, red-team review, citation verification, and manuscript development across all versions. The author retains sole responsibility for all numerical estimates, prior choices, and conclusions. This work was conducted independently under the Solbakken Research Initiative without institutional funding. The author does not have access to the experimental infrastructure required to execute Experiments 1–5. This paper is a call to the field: the five experiments are offered as a prioritised, decision-branched experimental roadmap for any group with access to SCD(111) substrates, hBN transfer protocols, Hall measurement infrastructure, and remote-plasma PECVD capability. Simulation code and prior parameter files will be made available as supplementary material upon journal submission.</p>
 </section>
 
 <!-- REFERENCES -->
@@ -1082,27 +1099,31 @@
     <div class="ref-item"><span class="ref-tag">[6]</span><span>Sumant, A.V. et al. Metal-induced rapid transformation of diamond into graphene on wafer scale. <em>Nature Communications</em> 7, 12099, 2016.</span></div>
     <div class="ref-item"><span class="ref-tag">[7]</span><span>Kim, K.S. et al. Large-scale pattern growth of graphene films. <em>Nature</em> 457, 706–710, 2009.</span></div>
     <div class="ref-item"><span class="ref-tag">[8]</span><span>Gao, L. et al. Repeated growth and bubbling transfer of graphene with millimetre-size grains using platinum. <em>Nature Communications</em> 3, 699, 2012.</span></div>
-    <div class="ref-item"><span class="ref-tag">[9]</span><span>Banszerus, L. et al. Ultrahigh-mobility graphene devices from CVD on reusable copper. <em>Science Advances</em> 1, e1500222, 2015.</span></div>
+    <div class="ref-item"><span class="ref-tag">[9]</span><span>Banszerus, L. et al. Ultrahigh-mobility graphene devices from CVD on reusable copper. <em>Science Advances</em> 1, e1500222, 2015. <span class="ref-note">Cu-grown, dry pick-up; basis of the Route I hBN penalty applied to Pt-grown film by analogy (v10.4).</span></span></div>
     <div class="ref-item"><span class="ref-tag">[10]</span><span>Pizzocchero, F. et al. The hot pick-up technique for van der Waals heterostructures. <em>Nature Communications</em> 7, 11894, 2016.</span></div>
     <div class="ref-item"><span class="ref-tag">[11]</span><span>Yan, Z. et al. Graphene-on-diamond devices with enhanced current-carrying capacity. <em>Nano Letters</em> 12, 1317–1322, 2012.</span></div>
     <div class="ref-item"><span class="ref-tag">[12]</span><span>Wang, L. et al. One-dimensional electrical contact to a two-dimensional material. <em>Science</em> 342, 614–617, 2013.</span></div>
     <div class="ref-item"><span class="ref-tag">[13]</span><span>Yazyev, O.V. &amp; Louie, S.G. Electronic transport in polycrystalline graphene. <em>Nature Materials</em> 9, 806–809, 2010.</span></div>
     <div class="ref-item"><span class="ref-tag">[14]</span><span>Tsen, A.W. et al. Tailoring electrical transport across grain boundaries in polycrystalline graphene. <em>Science</em> 336, 1143–1146, 2012.</span></div>
-    <div class="ref-item"><span class="ref-tag">[15]</span><span>Aitkulova, A., Majdi, S., Suntornwipat, N. and Isberg, J. Graphene on single-crystal diamond for electronic applications: a brief review. <em>physica status solidi (a)</em> 222, 2400567, 2025. doi:10.1002/pssa.202400567 <span class="ref-corrected">CORRECTED — v10.0 listed as "Hicks et al."</span></span></div>
-    <div class="ref-item"><span class="ref-tag">[16]</span><span>Zhang, H. et al. Dry transfer of CVD graphene film using adhesion-switchable ferroelectric polymers. <em>Advanced Materials</em> 37(50), 2025. doi:10.1002/adma.202510545 <span class="ref-corrected">CORRECTED — v10.0 DOI was 202409876</span></span></div>
-    <div class="ref-item"><span class="ref-tag">[17]</span><span>Qian, F. et al. Transfer-free CVD growth of high-quality wafer-scale graphene at 300°C for device mass fabrication. <em>ACS Applied Materials &amp; Interfaces</em> 14(47), 53174–53182, 2022. doi:10.1021/acsami.2c16505 <span class="ref-corrected">CORRECTED — v10.0 listed as "Tang et al."</span></span></div>
-    <div class="ref-item"><span class="ref-tag">[18]</span><span>Kim, S. et al. Direct CVD growth of transferable graphene on HfO₂. <em>Nanomaterials</em> 13(7), 2023. doi:10.3390/nano13071191</span></div>
+    <div class="ref-item"><span class="ref-tag">[15]</span><span>Aitkulova, A., Majdi, S., Suntornwipat, N. and Isberg, J. Graphene on single-crystal diamond for electronic applications: a brief review. <em>physica status solidi (a)</em> 222, 2400567, 2025. doi:10.1002/pssa.202400567 <span class="ref-corrected">CORRECTED v10.1 — v10.0 listed as "Hicks et al."</span></span></div>
+    <div class="ref-item"><span class="ref-tag">[15b]</span><span>Aitkulova, A., Gabrysch, M., Majdi, S., Suntornwipat, N. and Isberg, J. Temperature dependence of charge transport in single-layer graphene on surface-terminated diamond. <em>Carbon Trends</em>, 100598, 2025. doi:10.1016/j.cartre.2025.100598 (open access; preprint doi:10.2139/ssrn.5623754) <span class="ref-corrected">ADDED v10.4 — full text verified</span> <span class="ref-note">AC-Hall, 80–400 K, ~10⁻⁴ mbar; Graphenea "Easy Transfer" CVD film (polycrystalline). H-terminated (100) electronic-grade (Element Six): 1,439 → 1,644 cm²/V·s on 400 K anneal. O-terminated (111) optical-grade (Diamond Elements): 1,238 → 1,340 cm²/V·s. RIP energies: 114 meV (H) vs 60 meV (O). Bare H-terminated surface: 220 kΩ/sq before transfer.</span></span></div>
+    <div class="ref-item"><span class="ref-tag">[16]</span><span>Zhang, H. et al. Dry transfer of CVD graphene film using adhesion-switchable ferroelectric polymers. <em>Advanced Materials</em> 37(50), 2025. doi:10.1002/adma.202510545 <span class="ref-corrected">CORRECTED v10.1 — v10.0 DOI was 202409876</span></span></div>
+    <div class="ref-item"><span class="ref-tag">[17]</span><span>Qian, F. et al. Transfer-free CVD growth of high-quality wafer-scale graphene at 300°C for device mass fabrication. <em>ACS Applied Materials &amp; Interfaces</em> 14(47), 53174–53182, 2022. doi:10.1021/acsami.2c16505 <span class="ref-corrected">CORRECTED v10.1 — v10.0 listed as "Tang et al."</span> <span class="ref-corrected">SCOPE CORRECTED v10.4 — transfer-free via laminated sacrificial single-crystal Cu catalyst (etched post-growth); not catalyst-free nucleation on oxide</span></span></div>
+    <div class="ref-item"><span class="ref-tag">[18]</span><span><span class="ref-corrected">REMOVED v10.4 — FABRICATED CITATION</span> The v10.3 entry ("Kim, S. et al. Direct CVD growth of transferable graphene on HfO₂. <em>Nanomaterials</em> 13(7), 2023, doi:10.3390/nano13071191") does not exist as described: the DOI resolves to an unrelated paper on Ag-nanoparticle transparent conductive films. The nearest genuine paper with a similar title (Kim, Jiang &amp; Lee, <em>Nanomaterials</em> 13(6), 1029, 2023, doi:10.3390/nano13061029) uses HfO₂ as a sacrificial etch layer beneath Cu-vapor-assisted CVD at 1000°C and does not support the claims previously attributed to this reference. <span class="ref-note">Entry retained as a tombstone consistent with this paper's correction practice.</span></span></div>
     <div class="ref-item"><span class="ref-tag">[19]</span><span>ISO/TS 9651:2025. Nanotechnologies — Classification framework for graphene-related 2D materials. ISO, July 2025.</span></div>
     <div class="ref-item"><span class="ref-tag">[20]</span><span>ISO/TS 23359:2025. Nanotechnologies — Characterization of graphene: chemical properties. ISO, August 2025.</span></div>
+    <div class="ref-item"><span class="ref-tag">[21]</span><span>Wang, H. &amp; Yu, G. Direct CVD graphene growth on semiconductors and dielectrics for transfer-free device fabrication. <em>Advanced Materials</em> 28(25), 4956–4975, 2016. doi:10.1002/adma.201505123 <span class="ref-corrected">ADDED v10.4 — DOI-resolved</span></span></div>
+    <div class="ref-item"><span class="ref-tag">[22]</span><span>Khan, A. et al. Direct CVD growth of graphene on technologically important dielectric and semiconducting substrates. <em>Advanced Science</em> 5, 1800050, 2018. doi:10.1002/advs.201800050 <span class="ref-corrected">ADDED v10.4 — DOI-resolved</span> <span class="ref-note">Review of metal-catalyst-free direct CVD on dielectrics explicitly including HfO₂; covers low-temperature PECVD approaches.</span></span></div>
+    <div class="ref-item"><span class="ref-tag">[23]</span><span>Yang, M. et al. Temperature dependence of two-dimensional hole gas on hydrogen-terminated diamond surface. <em>Diamond and Related Materials</em> 139, 110414, 2023. doi:10.1016/j.diamond.2023.110414 <span class="ref-corrected">ADDED v10.4 — sourced from [15b] reference list</span> <span class="ref-note">H-diamond surface channel (2DHG): 170 → 340 cm²/V·s on 400 K annealing; basis of the §3.4 parallel-conduction caveat.</span></span></div>
     <div class="ref-item"><span class="ref-tag">[Husom]</span><span>Husom, E. et al. The Price of Prompting: Profiling Energy Use in Large Language Models Inference. <em>arXiv:2407.16893v2</em>, 2026. <span class="ref-note">System-level inference energy context. Note: the 2.5 pJ/bit HBM3 I/O figure cited in §1.1 is an HBM3 hardware specification independently confirmed from published datasheets; Husom et al. provides complementary system-level energy accounting context.</span></span></div>
-    <div class="ref-item"><span class="ref-tag">[Kanada]</span><span>Kanada, S. et al. Fabrication of graphene on atomically flat diamond (111) surfaces using nickel as a catalyst. <em>Diamond and Related Materials</em> 75, 105–109, 2017. doi:10.1016/j.diamond.2017.02.014 <span class="ref-corrected">CORRECTED — v10.0 DOI was 2017.01.011</span> <span class="ref-note">Route F demonstrated mobility anchor: 140 cm²/V·s, 5.7×10¹³ cm⁻², pre-H-termination.</span></span></div>
+    <div class="ref-item"><span class="ref-tag">[Kanada]</span><span>Kanada, S. et al. Fabrication of graphene on atomically flat diamond (111) surfaces using nickel as a catalyst. <em>Diamond and Related Materials</em> 75, 105–109, 2017. doi:10.1016/j.diamond.2017.02.014 <span class="ref-corrected">CORRECTED v10.1 — v10.0 DOI was 2017.01.011</span> <span class="ref-note">Route F demonstrated mobility anchor: 140 cm²/V·s, 5.7×10¹³ cm⁻², pre-H-termination; possible parallel diamond surface-channel contribution, §3.4.</span></span></div>
   </div>
 </section>
 
 </main>
 
 <footer>
-  <strong>Paper 4, Version 10.3 — May 2026 (red-team revisions)</strong> &nbsp;·&nbsp;
+  <strong>Paper 4, Version 10.4 — June 2026 (citation-integrity &amp; measured-anchor revisions)</strong> &nbsp;·&nbsp;
   Solbakken Research Initiative, Omaha &nbsp;·&nbsp;
   Nils Haaland &nbsp;·&nbsp; nhaaland@yahoo.com
 </footer>
