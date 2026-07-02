@@ -1,123 +1,71 @@
-# The Certificate Before the Compiler
+# Graphene Integration Route Selection for Ferroelectric Photonic Memory
 
-A conformance schema for physical reservoir computing hardware.
+**Paper 4 of 4 · Solbakken Research Initiative · Nils Haaland**
 
-**Status: v1.2 DRAFT — round-1 adversarial review AND self red-team folded.
-NOT yet deployed. DOI verification incomplete.**
+A pre-experimental decision framework ranking eleven graphene integration routes for a graphene-gated ferroelectric (Al:HfO₂) photonic memory stack. A Bayesian Monte Carlo simulation (N = 200,000, Gaussian copula / Cholesky correlation structure), anchored to primary literature, ranks routes by the joint probability of meeting five simultaneous graphene quality criteria ("Goldilocks window"), distinguishes irreducible substrate-physics constraints from reducible process-kinetic ones, and specifies five experiments — ordered by decision value — that most efficiently collapse the decision space before fabrication begins.
 
-## Contents
+**No experimental prototype combining graphene gating, ferroelectric polarization, and photonic waveguide operation has been demonstrated.** This is a decision tool, not a results paper. Route rankings are falsifiable predictions; Section 7 is the falsification protocol.
 
-- `index.html` — the note (single file, auto dark mode, inline SVG figure, CC0)
-- `certificate_demo.py` — companion simulation v1.2 (NumPy only, fixed seeds).
-  Reproduces every number and the figure in §6: `python3 certificate_demo.py`
-- `index_v1.0.html.bak` — pre-review draft, retained for diff
+## Headline results (v10.5)
 
-## Thesis
+| Route | P(all 5 criteria) | Status |
+|---|---|---|
+| I: CVD/Pt → hBN | **38.6%** | Rational near-term entry point |
+| J: CVD/Pt → SCD(111) bonded | 21–36% | Development bridge, pending Exp. 2 |
+| F2: SCD(111) Ni+H (theoretical ceiling) | ≈54% | Theory-anchored upper bound, unmeasured |
+| F @ demonstrated diamond transport | ≈5–24% | Adjacent-process anchors (Aitkulova 2025; Majdi 2023) |
+| F1: SCD(111) Ni graphitized (Kanada 2017) | ~0% | Only demonstrated graphitization state |
+| A–D: UNCD graphitization | ~0% | Eliminated — irreducible substrate physics |
+| E: SCD(111) direct; K: PECVD on HfO₂ | ~0% | E eliminated; K deferred (reducible kinetics, Exp. 5) |
 
-Physical reservoir computing needs no programming language — learning is
-confined to a linear readout, so the logical minimum interface is three calls.
-What it lacks is the characterization certificate a device must return for
-those calls to mean anything. v1.2 schema: a three-clause mandatory core with
-a stated evaluation order — Clause 5 (replica consistency) → Clause 2
-(correlated-noise floor, percentile-defined) → Clause 1 (ε-resolved effective
-dimensionality, two input ensembles) — plus three annexes (memory,
-nonlinearity, disorder/transferability).
+Percentages are decision-ranking tools, not yield predictions. Trust the ordinal ranking, not the digits.
+
+## Status
+
+**v10.5 — pre-deployment draft.** Do not treat as deployed until the dashed red banner is removed from the HTML. Outstanding:
+
+1. **[15b] residuals** — carrier density and sheet-resistivity values from Tables 1–3 of Aitkulova et al. (*Carbon Trends* 100598, 2025) must be extracted manually from the verified full-text copy (publisher blocks automated retrieval), plus volume/page numbers once the Version of Record replaces the current pre-proof.
+2. **Monte Carlo companion rerun** of all figures marked ≈, under the scaled-n\* convention now adopted for Table 5's measured rows. Until the rerun reports, the quoted measured-row joints (≈5% at 1,644 cm²/V·s; ≈24% at 2,750 cm²/V·s) are fixed-n\* **upper bounds**.
+3. **Verified citation for the Al:HfO₂ remnant-polarization range** (order 10–20 µC/cm²) quoted in the §2.2 electrostatic feasibility note. Do not deploy with that range uncited.
+
+## What changed in v10.5
+
+- **[15c] added, Table 5 re-anchored.** Majdi et al., *Appl. Phys. Lett.* 123, 012102 (2023), doi:10.1063/5.0156108 (DOI-verified): 2,750 cm²/V·s room-temperature Hall mobility for transferred CVD graphene on electronic-grade (100) single-crystal diamond. The demonstrated graphene-on-diamond transport ceiling now sits within ≈9% of the 3,000 cm²/V·s threshold — for a transferred film on (100), not the graphitization sequence on (111).
+- **§2.2 Constraint 1 corrected** — the Pauli-blocking doping constraint had an inverted inequality and a 10× magnitude error (was "n < 1.2×10¹² cm⁻²"; correct is n > 1.2×10¹³ cm⁻² for the transparent state).
+- **§2.2 corrected** — insertion loss is governed by the *real* part of the Kubo conductivity, not the imaginary part (the formula was already the real interband term; only the label was wrong).
+- **Table 2 P(array) column corrected** — previous independence-model values were overstated by tens to thousands of orders of magnitude (same error class as the §6.6 claim corrected in v10.4).
+- **Experiment 5 composition corrected** — "Al₀.₅Hf₀.₅O₂" → Al:HfO₂ at the few-cation-percent ferroelectric doping level.
+- **Post-review addenda (adversarial panel):** §2.2 electrostatic feasibility note (σ = ne ≈ 1.9 µC/cm² vs. Al:HfO₂ P_r of order 10–20 µC/cm²; citation pending); Table 5 n\*-convention resolved in favor of scaling n\* with mobility (shared disorder sources), quoted joints re-labeled as fixed-n\* upper bounds; §5.0 threshold-leverage sentence (IL-budget sensitivity); reference-list annotation key.
+
+## Citation-integrity workflow
+
+Per-reference DOI resolution is a mandatory pre-deployment gate for every version of every paper in this series. Three fabricated citations have been caught across this paper's history; each is documented in the Revision Log and, where applicable, retained in the reference list as a tombstone rather than silently deleted. The Revision Log at the top of the paper is the complete, cumulative correction record (v10.1 → v10.5).
+
+Drafts are additionally cycled through a multi-model adversarial review panel treated as **correlated noise, not independent review** — convergent suggestions count as one vote, and reviewer output is screened for regeneration of previously removed content. (The v10.5 log records one rejected recommendation that reproduced the mechanism of fabricated reference [18].)
 
 ## Version history
 
-**v1.2 — self red-team (5 findings, all folded):**
-1. ε_floor was a single-realization hard threshold on a fluctuating spectral
-   edge → now percentile-defined (p95 over ≥20 noise-only acquisitions),
-   in schema and simulation. Numbers survived the tightening.
-2. Additive-noise assumption was load-bearing and unstated → now an explicit
-   schema field (`additive_noise_assumed`) and stated scope in Clause 2;
-   Clause 5 (replica consistency) PROMOTED to core as the instrument that
-   sees dynamical noise, which is not SVD-separable from signal.
-3. Single-ensemble certification is Goodhart-able (tune to the test) →
-   core now requires two declared ensembles (i.i.d. + band-limited
-   correlated), with the r_eff difference reported as input sensitivity.
-   Toy still demonstrates one ensemble; stated as limitation in §6/§10.
-4. No uncertainty quantification anywhere → core fields carry acquisition
-   statistics; §6 reports mean [min, max] over 10 seeds instead of one.
-5. Implicit clause dependency → mandatory evaluation order stated:
-   consistency gates noise, noise gates dimensionality.
+| Version | Summary |
+|---|---|
+| 10.5 (draft) | Majdi 2023 re-anchor ([15c]); Pauli-constraint, Kubo real-part, Table 2, and Exp. 5 composition corrections |
+| 10.4 | Fabricated citation [18] removed; [17] re-scoped (transfer-free ≠ catalyst-free); [15b] measured anchor added; F2 ceiling truncated; §6.6 and Table 2 footnote corrected; Exp. 1 parallel-conduction control |
+| 10.3 | Red-team revisions: Route K consistency, ordinal caveat, footnote provenance system |
+| 10.1 | Reference corrections (DOIs, author attributions) |
+| 10.0 | Route K (11th route) added; F1/F2 split |
 
-v1.2 headline numbers (10 seeds, p95/20-acquisition floors):
-K_eff 27.0 [25.6, 29.6]; ε_floor 0.0044→0.0192; honest r_eff A 158 [140, 176]
-vs B 35 [31, 42]; naive/honest inflation 3.5× [3.4, 3.8].
+## Viewing
 
-**v1.1 — round-1 adversarial review (DeepSeek, ChatGPT, Perplexity, Gemini):**
-Clause 2 generalized (correlated noise as principle, Petermann as instance);
-core/annex tiering introduced; overclaims softened ("never will", "no
-interface exists", IEC/VAMAS gap → "I found no evidence"); three-calls
-labeled logical minimum; falsification/conformance duality promoted to
-abstract; §9 rewritten as roadmap + cross-substrate feasibility
-precondition; §10(iv) added (certificate's own kill condition); Gemini
-fold-ins (input_transfer sub-block, transfer class as statistical
-invariance, Volterra Tier 1); refs [12], [13] added pending verification.
+The paper is a single self-contained HTML file (`paper4_v10.5_draft.html`) — no build step, no dependencies beyond Google Fonts. Open directly in any browser; supports light and dark mode via `prefers-color-scheme`.
 
-**Drift self-audit (between v1.0 triage and v1.1):** K_eff relabeled as
-covariance anisotropy ratio (not a Petermann factor — Gemini had echoed the
-loose framing back); convergence count corrected; one self-serving discard
-reversed (toy vs. Petermann correlation structure now answered plainly in
-§6); Gemini's "true Petermann matrix from FDTD" scoped down (see T2 note);
-"Circular Dyson Ensembles" folded as principle, not name-drop.
+## Related work in this series
 
-## T2 MEEP scoped deliverable
+- Paper 1 — Ferroelectric grain-boundary polarization as a hidden variability source
+- Paper 2 — The weight bottleneck and DRAM energy asymmetry
+- Paper 3 — The diamond-integrated FERRO-PCM architecture
+- Simulation code and prior parameter files: to be released as supplementary material upon journal submission
 
-The 2.5D axisymmetric run is block-diagonal in azimuthal number m: mode
-non-orthogonality is computable only WITHIN each m-sector (Harminv-extracted
-quasi-normal modes + unconjugated overlap integrals); cross-sector mixing
-from non-axisymmetric scatterers is structurally invisible. T2 can deliver
-per-sector lower bounds on non-orthogonality / covariance anisotropy —
-sufficient as the Clause-2 physical anchor and to replace the toy's mixing
-matrix — but NOT "the true Petermann matrix," which requires 3D (assessed
-intractable).
+## Contact
 
-## Pre-deployment checklist (MANDATORY)
+Nils Haaland · Independent Researcher, Omaha · nhaaland@yahoo.com
 
-- [x] Adversarial review round 1 complete and triaged
-- [x] Drift self-audit between triage and revision
-- [x] Self red-team of v1.1 → fixes folded into v1.2
-- [x] Multi-seed variance for §6 headline numbers
-- [ ] Every pending DOI below resolves to claimed title/authors (project rule)
-- [ ] Bogaerts variability-framework citation inserted from Paper 4 reference
-      list (still deliberately omitted rather than risk a wrong DOI)
-- [ ] Decide: Xu et al. 2025 in §1 as differentiation, or out of scope
-- [ ] Figure renders correctly in light and dark mode on iOS Safari
-- [ ] Optional round-2 adversarial review of v1.2 before deployment
-
-## Reference verification table
-
-| # | Reference | DOI / locator | Status |
-|---|-----------|---------------|--------|
-| 1 | Trouvain et al. 2020, ReservoirPy, ICANN | 10.1007/978-3-030-61616-8_40 | VERIFIED (in-session) |
-| 2 | PRCpy | arXiv:2410.18356 | VERIFIED (arXiv listing) |
-| 3 | emucore-direct | pypi.org/project/emucore-direct | VERIFIED (PyPI) |
-| 4 | Jaeger 2001, GMD Report 148 | tech report | verify report number |
-| 5 | Maass et al. 2002, Neural Comp. 14(11) 2531 | 10.1162/089976602760407955 (expected) | **PENDING** |
-| 6 | Roy & Vetterli 2007, EUSIPCO 606–610 | no DOI | VERIFIED (cited listing) |
-| 7 | Petermann 1979, IEEE JQE QE-15, 566 | 10.1109/JQE.1979.1070064 (expected) | **PENDING** |
-| 8 | Jaeger 2002, GMD Report 152 | tech report | verify report number |
-| 9 | Dambre et al. 2012, Sci Rep 2, 514 | 10.1038/srep00514 | VERIFIED (nature.com) |
-| 10 | Uchida et al. 2004, PRL 93, 244102 | 10.1103/PhysRevLett.93.244102 | VERIFIED (aps.org) |
-| 11 | Tanaka et al. 2019, Neural Networks 115, 100–123 | 10.1016/j.neunet.2019.03.005 (expected) | **PENDING** |
-| 12 | Petermann-factor sensitivity limit, Nat. Commun. 11 (2020) | 10.1038/s41467-020-15341-6 | DOI from URL; **author list PENDING** |
-| 13 | Generalized Petermann factor at EPs (2025, APS) | unresolved (nonstandard APS DOI in source) | **PENDING — full verification** |
-
-Do not deploy until each PENDING row resolves to the claimed title and
-authors. (Lesson of Paper 4: three hallucinated citations caught
-post-publication.)
-
-## Known limitations (also §10 of the note)
-
-1. Worked example is a tanh toy with a generic non-orthogonal mixing matrix;
-   demonstrates clause logic, not cavity physics (§6 says so plainly).
-2. Toy certifies one input ensemble; schema requires two.
-3. Whether Clause 2 is binding for real devices is empirical and open.
-4. Cross-substrate measurement comparability is an unestablished
-   precondition, stated in §9.
-
-## License
-
-CC0 1.0 Universal. Public domain. No rights reserved.
+License: **CC0 1.0 Universal** — to the extent possible under law, the author has waived all copyright and related rights to this work. Full legal code: https://creativecommons.org/publicdomain/zero/1.0/legalcode
