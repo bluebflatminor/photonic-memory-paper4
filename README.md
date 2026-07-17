@@ -1,71 +1,57 @@
 # Graphene Integration Route Selection for Ferroelectric Photonic Memory
 
-**Paper 4 of 4 · Solbakken Research Initiative · Nils Haaland**
+**A Bayesian Quality Assessment Across Eleven Process Scenarios**
 
-A pre-experimental decision framework ranking eleven graphene integration routes for a graphene-gated ferroelectric (Al:HfO₂) photonic memory stack. A Bayesian Monte Carlo simulation (N = 200,000, Gaussian copula / Cholesky correlation structure), anchored to primary literature, ranks routes by the joint probability of meeting five simultaneous graphene quality criteria ("Goldilocks window"), distinguishes irreducible substrate-physics constraints from reducible process-kinetic ones, and specifies five experiments — ordered by decision value — that most efficiently collapse the decision space before fabrication begins.
-
-**No experimental prototype combining graphene gating, ferroelectric polarization, and photonic waveguide operation has been demonstrated.** This is a decision tool, not a results paper. Route rankings are falsifiable predictions; Section 7 is the falsification protocol.
-
-## Headline results (v10.5)
-
-| Route | P(all 5 criteria) | Status |
-|---|---|---|
-| I: CVD/Pt → hBN | **38.6%** | Rational near-term entry point |
-| J: CVD/Pt → SCD(111) bonded | 21–36% | Development bridge, pending Exp. 2 |
-| F2: SCD(111) Ni+H (theoretical ceiling) | ≈54% | Theory-anchored upper bound, unmeasured |
-| F @ demonstrated diamond transport | ≈5–24% | Adjacent-process anchors (Aitkulova 2025; Majdi 2023) |
-| F1: SCD(111) Ni graphitized (Kanada 2017) | ~0% | Only demonstrated graphitization state |
-| A–D: UNCD graphitization | ~0% | Eliminated — irreducible substrate physics |
-| E: SCD(111) direct; K: PECVD on HfO₂ | ~0% | E eliminated; K deferred (reducible kinetics, Exp. 5) |
-
-Percentages are decision-ranking tools, not yield predictions. Trust the ordinal ranking, not the digits.
-
-## Status
-
-**v10.5 — pre-deployment draft.** Do not treat as deployed until the dashed red banner is removed from the HTML. Outstanding:
-
-1. **[15b] residuals** — carrier density and sheet-resistivity values from Tables 1–3 of Aitkulova et al. (*Carbon Trends* 100598, 2025) must be extracted manually from the verified full-text copy (publisher blocks automated retrieval), plus volume/page numbers once the Version of Record replaces the current pre-proof.
-2. **Monte Carlo companion rerun** of all figures marked ≈, under the scaled-n\* convention now adopted for Table 5's measured rows. Until the rerun reports, the quoted measured-row joints (≈5% at 1,644 cm²/V·s; ≈24% at 2,750 cm²/V·s) are fixed-n\* **upper bounds**.
-3. **Verified citation for the Al:HfO₂ remnant-polarization range** (order 10–20 µC/cm²) quoted in the §2.2 electrostatic feasibility note. Do not deploy with that range uncited.
-
-## What changed in v10.5
-
-- **[15c] added, Table 5 re-anchored.** Majdi et al., *Appl. Phys. Lett.* 123, 012102 (2023), doi:10.1063/5.0156108 (DOI-verified): 2,750 cm²/V·s room-temperature Hall mobility for transferred CVD graphene on electronic-grade (100) single-crystal diamond. The demonstrated graphene-on-diamond transport ceiling now sits within ≈9% of the 3,000 cm²/V·s threshold — for a transferred film on (100), not the graphitization sequence on (111).
-- **§2.2 Constraint 1 corrected** — the Pauli-blocking doping constraint had an inverted inequality and a 10× magnitude error (was "n < 1.2×10¹² cm⁻²"; correct is n > 1.2×10¹³ cm⁻² for the transparent state).
-- **§2.2 corrected** — insertion loss is governed by the *real* part of the Kubo conductivity, not the imaginary part (the formula was already the real interband term; only the label was wrong).
-- **Table 2 P(array) column corrected** — previous independence-model values were overstated by tens to thousands of orders of magnitude (same error class as the §6.6 claim corrected in v10.4).
-- **Experiment 5 composition corrected** — "Al₀.₅Hf₀.₅O₂" → Al:HfO₂ at the few-cation-percent ferroelectric doping level.
-- **Post-review addenda (adversarial panel):** §2.2 electrostatic feasibility note (σ = ne ≈ 1.9 µC/cm² vs. Al:HfO₂ P_r of order 10–20 µC/cm²; citation pending); Table 5 n\*-convention resolved in favor of scaling n\* with mobility (shared disorder sources), quoted joints re-labeled as fixed-n\* upper bounds; §5.0 threshold-leverage sentence (IL-budget sensitivity); reference-list annotation key.
-
-## Citation-integrity workflow
-
-Per-reference DOI resolution is a mandatory pre-deployment gate for every version of every paper in this series. Three fabricated citations have been caught across this paper's history; each is documented in the Revision Log and, where applicable, retained in the reference list as a tombstone rather than silently deleted. The Revision Log at the top of the paper is the complete, cumulative correction record (v10.1 → v10.5).
-
-Drafts are additionally cycled through a multi-model adversarial review panel treated as **correlated noise, not independent review** — convergent suggestions count as one vote, and reviewer output is screened for regeneration of previously removed content. (The v10.5 log records one rejected recommendation that reproduced the mechanism of fabricated reference [18].)
-
-## Version history
-
-| Version | Summary |
-|---|---|
-| 10.5 (draft) | Majdi 2023 re-anchor ([15c]); Pauli-constraint, Kubo real-part, Table 2, and Exp. 5 composition corrections |
-| 10.4 | Fabricated citation [18] removed; [17] re-scoped (transfer-free ≠ catalyst-free); [15b] measured anchor added; F2 ceiling truncated; §6.6 and Table 2 footnote corrected; Exp. 1 parallel-conduction control |
-| 10.3 | Red-team revisions: Route K consistency, ordinal caveat, footnote provenance system |
-| 10.1 | Reference corrections (DOIs, author attributions) |
-| 10.0 | Route K (11th route) added; F1/F2 split |
-
-## Viewing
-
-The paper is a single self-contained HTML file (`paper4_v10.5_draft.html`) — no build step, no dependencies beyond Google Fonts. Open directly in any browser; supports light and dark mode via `prefers-color-scheme`.
-
-## Related work in this series
-
-- Paper 1 — Ferroelectric grain-boundary polarization as a hidden variability source
-- Paper 2 — The weight bottleneck and DRAM energy asymmetry
-- Paper 3 — The diamond-integrated FERRO-PCM architecture
-- Simulation code and prior parameter files: to be released as supplementary material upon journal submission
-
-## Contact
-
+Paper 4 of 4 · Solbakken Research Initiative
 Nils Haaland · Independent Researcher, Omaha · nhaaland@yahoo.com
+**Current version: 10.7 (draft) — July 2026** · License: CC0 1.0 (public domain)
 
-License: **CC0 1.0 Universal** — to the extent possible under law, the author has waived all copyright and related rights to this work. Full legal code: https://creativecommons.org/publicdomain/zero/1.0/legalcode
+---
+
+## What this paper is
+
+A pre-experimental decision framework for a proposed non-volatile photonic weight-storage architecture: graphene gated by the remnant polarization of an Al:HfO₂ ferroelectric film, operating as an absorption weight in an integrated waveguide. No published prototype uses ferroelectric remnant polarization to gate graphene as the *sole* optically modulated medium in a photonic waveguide, with absorption readout — the constituent physics is demonstrated piecewise (Strikha & Vasko 2011 proposal; Liu et al. 2011 volatile modulator; Singh et al. 2026 as the closest photonic analog with the roles primarily inverted), but never in this combination.
+
+The paper ranks **eleven graphene integration routes** — UNCD graphitization, SCD(111) graphitization, CVD metal-substrate transfer, and direct low-temperature PECVD on the ferroelectric oxide itself — by joint probability of simultaneously meeting five quality criteria (defect density, domain size, mobility, carrier-density uniformity, monolayer coverage), using a Bayesian Monte Carlo simulation (N = 200,000) anchored to primary literature. It distinguishes constraints that are **substrate physics (irreducible)** from those that are **process kinetics (reducible)**, and specifies **five experiments, ordered by decision value**, that most efficiently collapse the decision space before fabrication begins.
+
+## Principal results
+
+- **UNCD routes (A–D): eliminated by substrate physics.** The 2–5 nm grain structure irreducibly caps graphene domain size orders of magnitude below the 10 µm threshold.
+- **SCD(111) direct graphitization (E): ~0%** within any realistic envelope.
+- **Route F (SCD(111) Ni-assisted graphitization): ~0% at the only peer-reviewed graphitization anchor** (Kanada 2017, 140 cm²/V·s). Measured transferred-film transport on single-crystal diamond — 1,644 cm²/V·s (Aitkulova et al. 2026) and 2,750 cm²/V·s (Majdi et al. 2023) — implies ≈5–24% at demonstrated graphene-on-diamond transport; the ceiling-truncated theoretical upper bound is ≈54%, undemonstrated.
+- **Route I (CVD/Pt → hBN): 38.6%**, the highest of any route at current demonstrated state; mobility-bound by the film's own grain boundaries.
+- **Route J (CVD/Pt → bonded SCD(111)): 21–36%**, the development bridge; transfer penalty unmeasured (Experiment 2).
+- **Route K (direct PECVD on Al:HfO₂): ~0%, but reducible** — kinetic nucleation, not substrate physics; deferred pending Experiment 5, not eliminated.
+
+Percentages are decision-ranking tools, not yield predictions; trust the ordinal ranking. Route rankings are falsifiable theoretical predictions and §7 is the falsification protocol.
+
+## Verification protocol
+
+This paper series operates under a falsification-first discipline, documented in the in-paper Revision Log:
+
+- **DOI-gate:** every reference DOI is independently resolved against claimed title and authors before any deployment. This gate has caught **three fabricated citations** in this paper's history (all tombstoned in the reference list, never silently removed — see [18]).
+- **Correlated-instrument discipline:** agreement between LLM instruments on recalled (rather than retrieved) bibliographic detail is treated as correlated evidence, roughly one opinion, never independent confirmation.
+- **Documented instrument failure modes:** fabricated citations ("does not exist" cited as real) and the inverse — retrieval failure promoted to a nonexistence claim ("cannot resolve" reported as "does not exist," logged v10.7). Both are corrosive; both are recorded.
+- **Cumulative corrections:** revision-log entries are never edited after the fact; corrections to prior log entries are made in new entries with cross-notes.
+
+## Version history (10.0 → 10.7 highlights)
+
+| Version | Focus |
+|---|---|
+| 10.1 | Reference corrections (DOIs, author attributions) |
+| 10.3 | Red-team revisions; Route K added as eleventh route; ordinal-caveat framing |
+| 10.4 | Fabricated citation [18] caught and tombstoned; DOI-gate made mandatory; [15b] added; F2 ceiling truncated |
+| 10.5 | [15c] re-anchor (2,750 cm²/V·s); §2.2 inequality/magnitude corrections; Table 2 P(array) corrected |
+| 10.6 | P_r verified at 7.43 µC/cm² (margin restated ≈3.9×); [24] Singh added as closest photonic analog; prior-art lineage [25][26] |
+| 10.7 | Archive-pass closures: [1] first author resolved; [24] publisher-verified (insertion loss 0.2 dB; role-inversion softened); [15b] promoted to Version of Record (*Carbon Trends* 22, 100598, 2026); novelty claim sharpened to "sole optically modulated medium"; Experiment 1 substrate-cleaning sequencing note; "cannot resolve → does not exist" instrument failure mode logged |
+
+## Status — remaining pre-deployment items
+
+1. **[15b] residuals:** carrier density & sheet-resistivity values from Tables 1–3 of the full text (manual extraction; publisher blocks automated retrieval; SSRN preprint doi:10.2139/ssrn.5623754 available).
+2. **Monte Carlo companion rerun** of all ≈-marked figures under the scaled-n* convention; the quoted ≈5%/≈24% measured-anchor joints are fixed-n* upper bounds until then.
+
+## Author's note
+
+The author does not have access to the experimental infrastructure required to execute Experiments 1–5. This paper is a call to the field: the five experiments are offered as a prioritised, decision-branched roadmap for any group with SCD(111) substrates, hBN transfer protocols, Hall measurement infrastructure, and remote-plasma PECVD capability.
+
+GitHub: [bluebflatminor](https://github.com/bluebflatminor) · Released CC0 1.0 — no rights reserved.
