@@ -1,76 +1,197 @@
 # Graphene Integration Route Selection for Ferroelectric Photonic Memory
 
-**A Bayesian Quality Assessment Across Eleven Process Scenarios**
+**Paper 4 of 4 — Solbakken Research Initiative**
+Nils Haaland · Independent Researcher, Omaha · nhaaland@yahoo.com
+**Version 10.9 (draft), August 2026** · CC0 1.0 — released to the public domain
 
-Paper 4 of 4 · Solbakken Research Initiative · Nils Haaland (independent researcher, Omaha)
+A pre-experimental decision framework: a Bayesian Monte Carlo simulation that
+ranks eleven candidate routes for integrating graphene into a ferroelectric
+photonic memory stack, by joint probability of meeting five simultaneous quality
+criteria, and specifies five experiments — ordered by decision value — that most
+efficiently collapse the decision space before fabrication begins.
 
 ---
 
-## Status
+## Status: work in progress
 
-**Version 10.8 (draft) — July 2026 — PRE-DEPLOYMENT.** This version has not cleared its pre-deployment gate. Six banner items are open:
+**This is a working draft of a developing research plan. It is not, and is not
+trying to be, a finished artifact.** Every version will carry open items, flagged
+marginals, uncomputed cells, and claims sitting at different verification tiers.
+That is the intended state, not a shortfall in it.
 
-1. **[15b] residuals** — carrier density and sheet-resistivity values from Tables 1–3 of Aitkulova et al. 2026 (publisher blocks automated retrieval; manual extraction from the verified full text or SSRN preprint required).
-2. **Monte Carlo companion rerun** of all figures marked ≈, under the scaled-n* convention adopted in v10.5 (the quoted ≈5%/≈24% measured-anchor joints are fixed-n* upper bounds until the rerun reports).
-3. **Legacy-tier DOI-gate pass** *(new in v10.8)* — reference entries [4], [5], [7], [8], [9], [10], [12], [13], [14] predate the DOI-gate and have never been individually resolved. Three of three spot-checked legacy entries required correction this cycle.
-4. **Table 3 anchor promotion** *(new in v10.8)* — anchor labels "Zhang 2012", "JAP 2013", "Carbon 2021" are not numbered references; identify, gate, and promote.
-5. **65 fJ write-energy anchor** *(new in v10.8)* — the §1.1 figure is uncited; locate a verified anchor or remove.
-6. **Human archive pass** *(new in v10.8)* — over this cycle's single-instrument corrections. Per the clean-room protocol, the correcting instrument does not close its own items.
+The aim is honesty and factual accuracy, not the appearance of completion — and
+those pull against each other more often than they sound like they should. A
+table with every cell filled and a ledger with every row marked "verified" are
+the shapes this work is most likely to fail into, because a plausible number is
+easier to produce than a checked one and looks identical on the page. So: where a
+value has not been computed, the cell says so and stays empty. Where a source has
+not been read, the entry says so and supports nothing. **Read the gaps as
+content.** They are the parts that have not been faked.
 
-## What this paper is
+## What this is, and what it is not
 
-A **pre-experimental decision framework**: a Bayesian Monte Carlo simulation, anchored to primary literature, that ranks eleven graphene integration routes for a proposed graphene-gated ferroelectric photonic memory cell by joint probability of meeting five simultaneous quality criteria; distinguishes irreducible substrate-physics constraints from reducible process-kinetic ones; and specifies five experiments, ordered by decision value, that most efficiently collapse the decision space before fabrication begins.
+**It is** a prioritisation tool for experimental investment. It answers "which
+routes should we attempt first?" before the first wafer is loaded.
 
-## What it is not
+**It is not** a prediction of device performance. Every threshold in the
+Goldilocks window is a theory-derived hypothesis calibrated to a 64×64 MVM tile
+that has never been built. No published prototype uses ferroelectric remnant
+polarization to gate graphene as the sole optically modulated medium in a
+photonic waveguide, so the framework has **no experimental anchor at the device
+level**. Route rankings are falsifiable theoretical predictions; §7 is the
+falsification protocol.
 
-A results paper or a device-performance prediction. No prototype of the proposed cell exists anywhere; the Goldilocks thresholds are theory-derived hypotheses; route rankings are prioritisation tools for experimental investment. Section 7 is the falsification protocol, and the primary falsification target for the whole framework is any working device at any route.
+**Read the ordinal ranking, not the percentages.** Route I > Route J > Route G >
+Route H, with the UNCD routes, SCD direct graphitization, Route F at its
+demonstrated state, and Route K at the bottom. Reasonable perturbations to priors
+and correlations move individual values by several points without changing that
+order. "38.6% for Route I" is more honestly read as "the highest-probability
+current path, around one-third per cell."
 
-## Principal results (v10.8)
+## Headline results
 
-- All UNCD graphitization routes (A–D) are eliminated by **substrate physics** — sub-micron domains from nm-scale diamond grains — not by any process variable.
-- SCD(111) direct graphitization (E) fails within any realistic envelope; Ni-assisted graphitization (F) is ~0% at the only peer-reviewed graphitization anchor (Kanada 2017, 140 cm²/V·s).
-- Measured transport for **transferred** CVD graphene on single-crystal diamond (Aitkulova 2026: 1,644 cm²/V·s; Majdi 2023: 2,750 cm²/V·s) implies ≈5–24% joint probability at demonstrated transport; the ceiling-truncated theoretical bound is ≈54% with no experimental confirmation of the ceiling.
-- **Route I (CVD/Pt → hBN encapsulation) leads at 38.6%** — the rational near-term entry point, with a structural mobility ceiling set by film grain boundaries.
-- Route J (CVD/Pt → bonded SCD(111)) spans 21–36% and is the development bridge toward Route F, pending Experiment 2.
-- Route K (direct PECVD on Al:HfO₂) is ~0% at theory-anchored priors, but fails by **reducible nucleation kinetics** — deferred, not eliminated (Experiment 5).
+| | |
+|---|---|
+| **Rational near-term entry point** | Route I — CVD/Pt graphene, hBN encapsulation. 38.6% per cell. |
+| **Highest-priority unverified hypothesis** | Route J — CVD/Pt bonded to SCD(111). 21–36%. Experiment 2 validates or kills it. |
+| **Closed by substrate physics** | UNCD routes A–D. 2–5 nm grains cannot yield 10 µm domains. |
+| **Closed at every measured anchor** | Route E, and Route F at its demonstrated graphitization state (~0%). |
+| **Deferred, not closed** | Route K — direct PECVD on Al:HfO₂. Fails on nucleation kinetics, which are reducible. |
+| **Highest-value single measurement** | Hall mobility on H-terminated SCD(111) graphene, with monolayer fraction and a bare-substrate reference arm (Experiment 1). |
 
 ## Verification protocol
 
-This repository documents its own error history rather than hiding it. Conventions in force:
+Every reference in this document must resolve — DOI to claimed title, authors and
+venue — before deployment. The gate is mandatory and pre-deployment, not
+post-hoc. Corrections are **cumulative and never silently applied**: removed
+entries stay in the reference list as tombstones, and the full revision log is
+preserved in the Appendix with its original wording, including statements later
+found to be wrong.
 
-- **DOI-gate:** every reference DOI must resolve live to the claimed title and authors before any deployment. Adopted at v10.4 after a fabricated citation ([18]) survived two earlier verification rounds.
-- **Tombstones:** removed or fabricated references are retained in the reference list and revision log, never silently deleted. Three fabricated- or misattributed-citation incidents are documented (v10.1, v10.4, v10.8).
-- **Instrument quarantine / clean-room rule:** LLM instruments used for verification are treated as instruments, not authorities. Live retrieval is recorded as such; training-corpus recall is not accepted as verification; concordant recall between two LLMs is treated as **correlated evidence, roughly one opinion**, not independent confirmation; and the instrument that finds or fixes an error never closes its own banner item — a human archive pass does.
-- **Documented instrument failure modes:** fabricated citations resolved to unrelated DOIs ([18], v10.4); a retrieval failure promoted to a false nonexistence claim (v10.7); a reviewer recommendation reproducing the mechanism of a known-fabricated reference (v10.5).
-- **Cumulative revision log:** every correction cycle is logged in the paper's Appendix, in full, including statements later found to be wrong (annotated, not edited).
+**Verification tiers (v10.9).** Claims carry one of three provenance levels,
+never collapsed into one another:
 
-## Revision history
+| | |
+|---|---|
+| **T1 read** | Full artifact retrieved and read. |
+| **T2 record** | Publisher or preprint-server record seen — bibliographic detail and any displayed values confirmed — full text not retrieved. |
+| **T3 secondary** | Corroborated only through third-party citation lists or another paper's restatement. **Never sufficient for a numerical value.** |
 
-| Version | Cycle | Summary |
-|---|---|---|
-| 10.0 → 10.1 | Reference corrections | DOI and author-attribution fixes (Kanada, Tang→Qian, Hicks→Aitkulova) |
-| 10.2 → 10.3 | Internal red team | Route K integrated; ordinal-caveat framing; structural fixes |
-| 10.3 → 10.4 | Citation integrity | Fabricated [18] tombstoned; DOI-gate adopted; [15b] added; F2 ceiling truncated; §6.6 array-math corrected |
-| 10.4 → 10.5 | Measured re-anchor | [15c] (2,750 cm²/V·s) added; Pauli-blocking constraint corrected (inverted inequality, 10×); Table 2 P(array) corrected; Exp. 5 composition fixed |
-| 10.5 → 10.6 | P_r verification | [1] resolved: P_r = 7.43 µC/cm², margin restated ≈3.9×; [24]–[26] added; novelty claim sharpened |
-| 10.6 → 10.7 | Archive-pass closures | [1] first author confirmed; [24] verified live, IL corrected; [15b] promoted to VoR; novelty claim sharpened again; second-instrument false-nonexistence failure logged |
-| 10.7 → 10.8 | **External red-team pass** | Legacy tier gated: [2] Koike→Taki, [6] Sumant→Berman, [11] Yan→Yu (all live-resolved with DOIs); §2.2 Kubo expression corrected to two-term form; [4b] Shen 2017 added as fJ/MAC anchor with explicit per-token conversion; Table 5 convention column; [24] issue + contact-endurance detail; logs moved to Appendix |
+Tiers are assigned **per value, not per reference.** A reference can be sound at
+the identifier level and unsourced at the value level; that combination has
+produced two documented failures, and it is the gap the earlier gate did not
+cover. Where a reference's bibliographic tier and a value's tier differ, both are
+stated.
 
-## Contents
+Caught to date and documented in the log:
 
-- `paper4-v10.8-draft.html` — the paper: self-contained HTML, no build step, dark-mode aware. Open in any browser.
-- Simulation code and prior parameter files: to be released as supplementary material.
+- **Three fabricated or misattributed citations** — v10.1 (Hicks→Aitkulova,
+  Tang→Qian), v10.4 (reference [18], fabricated, survived two verification
+  rounds), v10.8 (Koike→Taki, Sumant→Berman, Yan→Yu).
+- **One numerical drift**, v10.9 — an anchor value taken from a *citing* paper's
+  restatement rather than from the source, wrong by 1.6× in mobility and 12× in
+  carrier density. The gate as previously operated checked names and identifiers,
+  not the numbers those references were asked to carry.
+- **Four defects inside v10.9's own corrections**, caught by a provenance audit
+  before deployment and logged rather than quietly fixed: an unsourced monolayer
+  figure written into six locations and withdrawn; an uncomputed probability
+  entered into a results table and blanked; a substantive claim built on a survey
+  that was never successfully retrieved; and a ledger that reported
+  publisher-snippet matching as direct DOI resolution. The tier scheme above
+  exists because of the fourth.
+- **Two documented instrument failure modes** — a second LLM instrument reporting
+  its own retrieval failure as a nonexistence claim (v10.7), and an adversarial
+  panel independently regenerating the mechanism of a known-fabricated reference
+  (v10.5).
 
-## License
+Corollary rules in force: preprints are marked as such and may not anchor a
+prior; concordance between two LLM instruments is correlated evidence, not
+independent verification; and the correcting instrument does not close its own
+items — a human archive pass is the final gate.
 
-**CC0 1.0** — released to the public domain. No rights reserved. Use, copy, modify, and redistribute freely, including the experimental protocol.
+## Current version — v10.9
 
-## AI-collaboration disclosure
+An external literature scan, not a red-team pass. Principal changes:
 
-This paper was developed in sustained collaboration with large language models under an adversarial multi-instrument review methodology (disclosure level D3): Claude (Anthropic) for simulation design dialogue, prior construction, adversarial red-team review, and citation verification with live web retrieval; additional LLM instruments for editorial and cross-check passes, under the quarantine rules described above. The author retains sole responsibility for all numerical estimates, prior choices, conclusions, and errors. The verification protocol exists because these instruments fail, and it documents each failure it catches.
+- **Route F1 expanded from one graphitization anchor to three.** 140 cm²/V·s on
+  (111) (Kanada 2017), 79 cm²/V·s on (100) (Suntornwipat 2023), ~670 cm²/V·s on
+  (100) with a Cu catalyst (Ueda 2016) — every anchor at n ≥ 10¹³ cm⁻². The ~0%
+  result is unchanged and now rests on three independent measurements.
+- **The monolayer-coverage marginal is contradicted by measurement.** Modelled at
+  0.778; the one anchor that reports it gives ~19.8% against a >95% criterion.
+  First Goldilocks criterion in this paper with a measured value contradicting a
+  modelled one. F2's ≈54% ceiling inherits the same marginal. (A companion figure
+  attributed to the (111) anchor was withdrawn within the cycle as unsourced; the
+  correction stands on the single sourced measurement.)
+- **Ni graphitization is measured to etch the substrate** — roughness 3 → 7–9 nm,
+  step 1.76–12.3 nm. An unpriced constraint for a route premised on an atomically
+  flat waveguide interface.
+- **The H-plasma-after-graphitization step gains its first citation**, and the
+  (111) surface an open metallic-vs-semiconducting dispute. Experiment 1's
+  parallel-conduction control now faces three candidate paths, not one.
+- **Route I's defect-density marginal flagged** against integration-sequence data.
+- **The novelty claim's readout clause demoted to descriptive** — absorption
+  readout alone does not distinguish the cell; graphene as sole modulated medium
+  does.
 
-## Contact
+One cell in Table 5 is deliberately blank. **Three marginals are currently known
+to be unsupported and have no replacement value** (F1 and F2 monolayer coverage; Route I defect density). The ordinal
+ranking is unaffected. Those cells should not be quoted until the Monte Carlo
+companion rerun reports.
 
-Nils Haaland · nhaaland@yahoo.com
+## Open items
 
-The author does not have access to the experimental infrastructure required to execute Experiments 1–5. This paper is a call to the field: the five experiments are offered as a prioritised, decision-branched roadmap for any group with SCD(111) substrates, hBN transfer protocols, Hall measurement infrastructure, and remote-plasma PECVD capability.
+Carried in the pre-deployment banner at the top of the document, which is deleted
+only when the list is clear. Sixteen items are open as of v10.9, including the
+legacy-tier DOI-gate pass (nine references never individually resolved), the
+Monte Carlo companion rerun, three Table 3 anchors that never entered the
+numbered reference list, one uncited energy figure, two unchecked prior-art
+leads, four items generated by v10.9's own audit of itself, and the human archive
+pass over this cycle. None of the v10.8 items were closed in v10.9; items 7–16
+are scope expansion.
+
+Three verification defects also remain open: mobility marginals not regenerating
+from priors (V1); defect-density and monolayer-coverage marginals lacking
+published priors (V2, partly closed in v10.9); and a correlation matrix that is
+only marginally positive definite, with 36% of the perturbation sweep
+non-positive-definite (V3).
+
+## Files
+
+| File | |
+|---|---|
+| `index.html` | The paper. Self-contained; fonts from Google Fonts, no other dependencies. Light and dark modes. |
+| `README.md` | This file. |
+
+## A note on the acknowledgement
+
+Simulation design, prior construction, red-team review, and citation verification
+were carried out in sustained dialogue with an LLM instrument (Claude, Anthropic).
+That instrument's outputs are treated throughout as readings to be scored, not as
+authorities — hence the gate, the tombstones, the instrument-record notes, and the
+rule that the correcting instrument cannot close its own items. The v10.9 log
+documents four defects found in that instrument's own corrections during the same
+cycle. They were caught, which is the protocol working; that they were caught by
+the same instrument that produced them is not evidence the audit was exhaustive,
+which is why the human pass remains the final gate. All numerical
+estimates, prior choices, and conclusions remain the author's sole responsibility.
+
+## Citing this work
+
+> Haaland, N. *Graphene Integration Route Selection for Ferroelectric Photonic
+> Memory: A Bayesian Quality Assessment Across Eleven Process Scenarios.*
+> Solbakken Research Initiative, Paper 4, v10.9 (draft), August 2026. CC0 1.0.
+
+## A call to the field
+
+The author does not have access to the experimental infrastructure required to
+execute Experiments 1–5. They are offered as a prioritised, decision-branched
+roadmap for any group with SCD(111) substrates, hBN transfer protocols, Hall
+measurement infrastructure, and remote-plasma PECVD capability. Simulation code
+and prior parameter files will be released as supplementary material on journal
+submission.
+
+The primary falsification target for the whole framework is a working device —
+any graphene-gated ferroelectric photonic memory cell, at any route, at any
+quality level. Corrections, contradicting measurements, and failed replications
+are welcome at the address above and will be logged, not quietly absorbed.
