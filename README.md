@@ -1,230 +1,152 @@
 # Graphene Integration Route Selection for Ferroelectric Photonic Memory
 
 **Paper 4 of 4 — Solbakken Research Initiative**
-Nils Haaland · Independent Researcher, Omaha · nhaaland@yahoo.com
-**Version 10.10 (draft), August 2026** · CC0 1.0 — released to the public domain
+Nils Haaland · Independent Researcher, Omaha · CC0 1.0 (public domain)
 
-A pre-experimental decision framework: a Bayesian Monte Carlo simulation that
-ranks eleven candidate routes for integrating graphene into a ferroelectric
-photonic memory stack, by joint probability of meeting five simultaneous quality
-criteria, and specifies five experiments — ordered by decision value — that most
-efficiently collapse the decision space before fabrication begins.
+A pre-experimental decision framework that ranks eleven candidate routes for integrating graphene into a ferroelectric photonic memory stack, by the joint probability that each meets five simultaneous material-quality criteria. It ends with five experiments, ordered by decision value, that would collapse the decision space before fabrication begins.
+
+**Current version: v10.12 (draft), September 2026 — loss-closure pass.**
 
 ---
 
-## Status: work in progress
+## What this is
 
-**This is a working draft of a developing research plan. It is not, and is not
-trying to be, a finished artifact.** Every version will carry open items, flagged
-marginals, uncomputed cells, and claims sitting at different verification tiers.
-That is the intended state, not a shortfall in it.
+Photonic matrix-vector multiplication is a strong candidate for energy-efficient AI inference, and its unresolved problem is weight storage: phase weights in thermo-optic or electro-optic shifters are volatile, so every inference cycle reloads them from external memory. A ferroelectric-gated graphene cell would store the weight in remnant polarization and read it out in absorption.
 
-The aim is honesty and factual accuracy, not the appearance of completion — and
-those pull against each other more often than they sound like they should. A
-table with every cell filled and a ledger with every row marked "verified" are
-the shapes this work is most likely to fail into, because a plausible number is
-easier to produce than a checked one and looks identical on the page. So: where a
-value has not been computed, the cell says so and stays empty. Where a source has
-not been read, the entry says so and supports nothing. **Read the gaps as
-content.** They are the parts that have not been faked.
+No published prototype does this. The constituent physics exists piecewise — ferroelectric gating of graphene was proposed in 2011, volatile Pauli-blocking waveguide modulators have been mature since 2011, and non-volatile ferroelectric photonic memories are demonstrated in adjacent material systems — but not in this combination.
 
-## What this is, and what it is not
+Before any of that can be built, someone has to choose how to get graphene onto the stack. Eleven routes exist. They differ in substrate physics, growth mechanism, transfer method and process maturity, and no single group can test them in parallel. This paper answers *which to attempt first*, using a Bayesian Monte Carlo simulation anchored to primary literature, and it separates constraints that are irreducible substrate physics from those that are reducible process variables.
 
-**It is** a prioritisation tool for experimental investment. It answers "which
-routes should we attempt first?" before the first wafer is loaded.
+**It is not a results paper and not a device prediction.** Every threshold is a theory-derived hypothesis calibrated to an architecture that has never been built. The route rankings are falsifiable predictions; §7 is the protocol for falsifying them.
 
-**It is not** a prediction of device performance. Every threshold in the
-Goldilocks window is a theory-derived hypothesis calibrated to a 64×64 MVM tile
-that has never been built. No published prototype uses ferroelectric remnant
-polarization to gate graphene as the sole optically modulated medium in a
-photonic waveguide, so the framework has **no experimental anchor at the device
-level**. Route rankings are falsifiable theoretical predictions; §7 is the
-falsification protocol.
+## Headline findings
 
-**Read the ordinal ranking, not the percentages.** Route I > Route J > Route G >
-Route H, with the UNCD routes, SCD direct graphitization, Route F at its
-demonstrated state, and Route K at the bottom. Reasonable perturbations to priors
-and correlations move individual values by several points without changing that
-order. "38.6% for Route I" is more honestly read as "the highest-probability
-current path, around one-third per cell."
+**The array size is the binding architectural choice, and it is not 64×64.** Residual absorption in the Pauli-blocked state depends on carrier mobility alone — the Fermi level cancels exactly — which gives a closed-form exchange rate between weight dynamic range and insertion loss, independent of interaction length and layer count. Running a 64×64 tile inside a 0.5 dB per-path budget needs 11,700–30,200 cm²/V·s depending on the weight precision demanded. The theoretical ceiling for graphene on diamond is 8,000–10,000. **64×64 does not close for any route, including Route F at its ideal limit. N ≈ 16 does** — and N ≈ 16 is independently where demonstrated coherent meshes sit.
 
-## Headline results
+Route rankings, at the N = 16 baseline:
 
 | | |
 |---|---|
-| **Rational near-term entry point** | Route I — CVD/Pt graphene, hBN encapsulation. 38.6% per cell. |
-| **Highest-priority unverified hypothesis** | Route J — CVD/Pt bonded to SCD(111). 21–36%. Experiment 2 validates or kills it. |
-| **Closed by substrate physics** | UNCD routes A–D. 2–5 nm grains cannot yield 10 µm domains. |
-| **Closed at every measured anchor** | Route E, and Route F at its demonstrated graphitization state (~0%). |
-| **Deferred, not closed** | Route K — direct PECVD on Al:HfO₂. Fails on nucleation kinetics, which are reducible. |
-| **Highest-value single measurement** | Hall mobility on H-terminated SCD(111) graphene, with monolayer fraction and a bare-substrate reference arm (Experiment 1). |
+| **Route I** (CVD/Pt → hBN) | 38.6% — highest at current demonstrated state; the rational near-term entry point |
+| **Route J** (CVD/Pt → bonded SCD(111)) | 21–36% — the development bridge, and the highest-priority unverified hypothesis |
+| **Route F** (SCD Ni/Cu graphitization) | ~0% at all three peer-reviewed graphitization anchors; ≈54% at a theoretical ceiling nobody has demonstrated |
+| **Routes A–D** (UNCD) | eliminated by substrate physics — nm-scale grains cannot yield 10 µm domains |
+| **Route K** (direct PECVD on Al:HfO₂) | ~0%, but by *reducible* nucleation kinetics — deferred, not closed |
 
-## Verification protocol
+The single most valuable measurement in the programme is a Hall mobility measurement on H-terminated SCD(111) graphene. It either opens Route F or closes it — and the closure condition now says what Route F would be *for*: mobility buys array size directly, N ≈ 16 at today's demonstrated transferred-film transport and N ≈ 25–44 at the theoretical ceiling. Route F is the difference between a 16-channel tile and a 32-channel one.
 
-Every reference in this document must resolve — DOI to claimed title, authors and
-venue — before deployment. The gate is mandatory and pre-deployment, not
-post-hoc. Corrections are **cumulative and never silently applied**: removed
-entries stay in the reference list as tombstones, and the full revision log is
-preserved in the Appendix with its original wording, including statements later
-found to be wrong.
+## How to read this document
 
-**Verification tiers (v10.9).** Claims carry one of three provenance levels,
-never collapsed into one another:
+Read the gaps as content. This is a working draft of a developing research plan, and at every version it will contain open items, flagged marginals, uncomputed cells, and claims at differing verification tiers — by design. Completeness is not the goal and its *appearance* is a hazard: a table with every cell filled and a ledger with every row marked "verified" are the shapes this document is most likely to fail into. Where a value has not been computed or a source has not been read, the document says so in place rather than supplying something plausible.
 
-| | |
-|---|---|
-| **T1 read** | Full artifact retrieved and read. |
-| **T2 record** | Publisher or preprint-server record seen — bibliographic detail and any displayed values confirmed — full text not retrieved. |
-| **T3 secondary** | Corroborated only through third-party citation lists or another paper's restatement. **Never sufficient for a numerical value.** |
+Three reading rules:
 
-Tiers are assigned **per value, not per reference.** A reference can be sound at
-the identifier level and unsourced at the value level; that combination has
-produced two documented failures, and it is the gap the earlier gate did not
-cover. Where a reference's bibliographic tier and a value's tier differ, both are
-stated.
+1. **Trust the ordinal ranking, not the cardinal values.** Route I > J > G > H is robust to reasonable perturbation of priors and correlations. "38.6%" is not; read it as "around one-third per cell."
+2. **Check the provenance tag before quoting a number.** Priors anchored to peer-reviewed Hall measurements, to a theoretical ceiling, and to nucleation theory are all in the same table and are not the same kind of thing.
+3. **Four cells in Table 4 are known to be unsupported.** They are marked. Do not quote them pending the Monte Carlo rerun.
 
-Caught to date and documented in the log:
+## The verification protocol
 
-- **Three fabricated or misattributed citations** — v10.1 (Hicks→Aitkulova,
-  Tang→Qian), v10.4 (reference [18], fabricated, survived two verification
-  rounds), v10.8 (Koike→Taki, Sumant→Berman, Yan→Yu).
-- **One numerical drift**, v10.9 — an anchor value taken from a *citing* paper's
-  restatement rather than from the source, wrong by 1.6× in mobility and 12× in
-  carrier density. The gate as previously operated checked names and identifiers,
-  not the numbers those references were asked to carry.
-- **Four defects inside v10.9's own corrections**, caught by a provenance audit
-  before deployment and logged rather than quietly fixed: an unsourced monolayer
-  figure written into six locations and withdrawn; an uncomputed probability
-  entered into a results table and blanked; a substantive claim built on a survey
-  that was never successfully retrieved; and a ledger that reported
-  publisher-snippet matching as direct DOI resolution. The tier scheme above
-  exists because of the fourth.
-- **Two documented instrument failure modes** — a second LLM instrument reporting
-  its own retrieval failure as a nonexistence claim (v10.7), and an adversarial
-  panel independently regenerating the mechanism of a known-fabricated reference
-  (v10.5).
+The paper has been through eleven revision cycles under a mandatory per-reference DOI-resolution gate. Three fabricated or misattributed citations have been caught and documented (v10.1, v10.4, v10.8), plus one numerical-drift incident caught before entry (v10.9). Removed entries stay in the reference list as tombstones. The cumulative revision log is never silently edited — including entries later found to be wrong, which are annotated rather than deleted.
 
-Corollary rules in force: preprints are marked as such and may not anchor a
-prior; concordance between two LLM instruments is correlated evidence, not
-independent verification; and the correcting instrument does not close its own
-items — a human archive pass is the final gate.
+**Verification tiers.** Every claim sourced since v10.9 carries one, and they are never collapsed:
 
-## v10.10 — standards pass
+- **[T1 read]** — the full artifact was retrieved and read
+- **[T2 record]** — a publisher or preprint-server record was seen; full text not retrieved
+- **[T3 secondary]** — corroborated only through third-party citation lists or another paper's restatement. **Never sufficient for a numerical value** — this is the class that produced the v10.9 drift incident
+- **[C correspondence]** — established by direct communication with a named participant, attributed by name and date, used only where that person is positioned to know, and never for a value a published record could supply
 
-A scan of the graphene standards landscape, which v10.9 omitted despite two
-sections resting on claims about it.
+Identifier verification and value verification are separate acts. A reference can be T1 for its bibliographic data and T3 for a number attributed to it.
 
-- **A scope error in our own citation.** ISO/TS 23359:2025 is scoped to powders
-  and liquid dispersions, not sheets on substrates. It was cited as a lower tier
-  of the needed measurement; it is a different material form. The paper's
-  argument is stronger after the correction.
-- **Three sheet-scoped standards were omitted**, covering between them layer
-  count, coverage, disorder and strain uniformity — four measurements this paper
-  treated as unstandardised. One of them, IEC TS 62607-6-24:2026, published in
-  June 2026, after the previous scan window. Experiment 3's claim is narrowed to
-  what is genuinely uncovered: the strain-from-doping decomposition, the
-  substrate-dependent doping offset, and carrier-density uniformity.
-- **A reproducibility bound on our own correction.** The interlaboratory study
-  behind ISO/TS 21356-2 found up to 200% spread in I(2D)/I(G) between labs
-  without relative intensity calibration. The v10.9 monolayer correction survives
-  — 19.8% against a >95% criterion is far too wide a gap for that to close — but
-  Experiment 1 now specifies the calibration and fitting protocol.
-- **A fourth disorder channel, named and deferred.** Nanometre-scale strain
-  fluctuation is absent from the correlation structure and is coupled to the
-  substrate roughening measured in v10.9. Adding it is deferred, not attempted:
-  doing it properly needs fitted correlation coefficients, and the existing ones
-  are unfitted.
-- **The 64×64 baseline checked against demonstrated scale.** Coherent MZI-mesh
-  processors are reported at single- to low-double-digit channel counts. 64×64 is
-  a design target, not a scaled version of anything built — and the field's
-  answer to mesh scaling is wavelength parallelism rather than larger N, which
-  this framework does not model.
+**Clean-room convention.** The instrument that makes a correction does not close its own item. Every cycle's corrections remain open pending a human archive pass, and each revision-log entry records which instrument produced it.
 
-Every standards claim this cycle is **T2 or weaker. No standard was read.**
+**A gate pass is not a correction.** New in v10.11: entries that resolved cleanly carry a green tag, corrections keep amber. Through v10.10 both rendered identically, which meant a document that logged its errors and not its clean results would drift toward believing itself worse-founded than it is.
 
-## v10.9
+## What changed in v10.12
 
-An external literature scan, not a red-team pass. Principal changes:
+A loss-closure pass. v10.11 had flagged transparent-state insertion loss as the framework's most consequential unknown. It was computed, and it eliminated a baseline the paper had carried since v10.0.
 
-- **Route F1 expanded from one graphitization anchor to three.** 140 cm²/V·s on
-  (111) (Kanada 2017), 79 cm²/V·s on (100) (Suntornwipat 2023), ~670 cm²/V·s on
-  (100) with a Cu catalyst (Ueda 2016) — every anchor at n ≥ 10¹³ cm⁻². The ~0%
-  result is unchanged and now rests on three independent measurements.
-- **The monolayer-coverage marginal is contradicted by measurement.** Modelled at
-  0.778; the one anchor that reports it gives ~19.8% against a >95% criterion.
-  First Goldilocks criterion in this paper with a measured value contradicting a
-  modelled one. F2's ≈54% ceiling inherits the same marginal. (A companion figure
-  attributed to the (111) anchor was withdrawn within the cycle as unsourced; the
-  correction stands on the single sourced measurement.)
-- **Ni graphitization is measured to etch the substrate** — roughness 3 → 7–9 nm,
-  step 1.76–12.3 nm. An unpriced constraint for a route premised on an atomically
-  flat waveguide interface.
-- **The H-plasma-after-graphitization step gains its first citation**, and the
-  (111) surface an open metallic-vs-semiconducting dispute. Experiment 1's
-  parallel-conduction control now faces three candidate paths, not one.
-- **Route I's defect-density marginal flagged** against integration-sequence data.
-- **The novelty claim's readout clause demoted to descriptive** — absorption
-  readout alone does not distinguish the cell; graphene as sole modulated medium
-  does.
+**The computation.** With ωτ ≫ 1 at 1550 nm, `Re σ_intra = e³v_F²/(πℏ²ω²µ)`. The Fermi level cancels, because τ = µm\*/e and m\* = E_F/v_F². Normalising to σ₀ = e²/4ℏ gives dB of weight range per dB of loss — a figure of merit independent of interaction length and layer count. So the 50 µm interaction length assumed throughout was never a free parameter; changing it slides along the exchange rate rather than improving it.
 
-One cell in Table 5 is deliberately blank. **Three marginals are currently known
-to be unsupported and have no replacement value** (F1 and F2 monolayer coverage; Route I defect density). The ordinal
-ranking is unaffected. Those cells should not be quoted until the Monte Carlo
-companion rerun reports.
+**The result.** Mobility needed to close 0.5 dB per path:
 
-## Open items
+| Required weight range | N = 16 | N = 64 |
+|---|---|---|
+| 7 dB (with retraining) | 2,930 | 11,700 |
+| 10 dB | 4,190 | 16,800 |
+| 12 dB (≈4 bits) | 5,030 | 20,100 |
+| 18 dB (≈6 bits) | 7,540 | 30,200 |
 
-Carried in the pre-deployment banner at the top of the document, which is deleted
-only when the list is clear. Twenty-one items are open as of v10.10, including
-the legacy-tier DOI-gate pass (nine references never individually resolved), the
-Monte Carlo companion rerun, three Table 3 anchors that never entered the
-numbered reference list, one uncited energy figure, two unchecked prior-art
-leads, four items generated by v10.9's own audit of itself, five from the v10.10
-standards pass, and the human archive pass. Item 17 closed in v10.10 by
-correspondence — the first closure since v10.7; items 7–22 are scope expansion.
+Against an 8,000–10,000 ceiling: **every N = 64 value is unreachable, every N = 16 value is reachable**, and the low end is met at the mobility threshold the paper has carried since v10.0. The uncertainty in the requirement moves the crossover, not the verdict.
 
-Three verification defects also remain open: mobility marginals not regenerating
-from priors (V1); defect-density and monolayer-coverage marginals lacking
-published priors (V2, partly closed in v10.9); and a correlation matrix that is
-only marginally positive definite, with 36% of the perturbation sweep
-non-positive-definite (V3).
+**Consequences.**
+- The baseline moves to N = 16. 64×64 is retained as the demonstrated-infeasible case.
+- Two of the five thresholds — mobility and n\* uniformity — are not material constants but array-size choices. The fixed 3,000 cm²/V·s threshold is replaced by a closure condition, `N·R/FOM(µ) ≤ B`.
+- Table 2 is rebuilt as a feasibility surface and promoted from sensitivity check to central result. Its P(array) column is deleted.
+- §6.7 is new: retraining a network against its hardware's actual weight range relaxes the requirement, and is the only non-material lever in the framework.
 
-## Files
+**A caught error, recorded because it nearly shipped.** The required weight range was first pinned at 12 dB using a one-bit-per-3-dB rule. That rule is a *slope* — bits = ER_dB/3 − constant — and the constant was taken as zero from a source snippet truncated mid-sentence. A second check replaced the point estimate with a 7–12 dB bracket. The verdict proved insensitive to the whole bracket, which is the only reason it wasn't load-bearing. Third instance in four cycles of a number inferred rather than retrieved; the pattern isn't the sources, it's the pull toward converting a bracket into a point estimate.
 
-| File | |
-|---|---|
-| `index.html` | The paper. Self-contained; fonts from Google Fonts, no other dependencies. Light and dark modes. |
-| `README.md` | This file. |
+**Kills.** [5] and [19] deleted as orphans (tombstoned, with the reason recorded as distinct from [18]'s fabrication). [31] demoted from reference to lead after three cycles supporting nothing. "Carbon 2021" withdrawn as a Table 3 anchor, closing defect V4 by re-anchoring Route E to the F1 set rather than by identification. [12] finally cited in §6.4, where edge contact bears directly on the contact-failure pattern — it had sat uncited since v10.0 while that section was written without it.
 
-## A note on the acknowledgement
+**What it does not do.** The Drude floor is a floor; measured devices sit ~95× above it, and that gap is precisely what the other four criteria describe. Closure at N = 16 is necessary, not sufficient. No joint probability is recomputed — moving to N = 16 loosens n\* fourfold and raises every route's marginal, and the Monte Carlo rerun is open. And the computation itself is this paper's own arithmetic, checked by no second instrument and no human, which given that it eliminated a baseline is now the most important open item in the document.
 
-Simulation design, prior construction, red-team review, and citation verification
-were carried out in sustained dialogue with an LLM instrument (Claude, Anthropic).
-That instrument's outputs are treated throughout as readings to be scored, not as
-authorities — hence the gate, the tombstones, the instrument-record notes, and the
-rule that the correcting instrument cannot close its own items. The v10.9 log
-documents four defects found in that instrument's own corrections during the same
-cycle. They were caught, which is the protocol working; that they were caught by
-the same instrument that produced them is not evidence the audit was exhaustive,
-which is why the human pass remains the final gate. All numerical
-estimates, prior choices, and conclusions remain the author's sole responsibility.
+## What changed in v10.11
 
-## Citing this work
+A citation-gate pass, aimed at the legacy reference tier that had been open since v10.8.
 
-> Haaland, N. *Graphene Integration Route Selection for Ferroelectric Photonic
-> Memory: A Bayesian Quality Assessment Across Eleven Process Scenarios.*
-> Solbakken Research Initiative, Paper 4, v10.10 (draft), August 2026. CC0 1.0.
+**Six gate passes.** [7] Kim 2009, [8] Gao 2012, [9] Banszerus 2015, [10] Pizzocchero 2016, [13] Yazyev & Louie 2010, [14] Tsen 2012 — all resolved live, all correct as attributed. This matters as a *negative* result: v10.8's three-entry sample of this tier returned three errors, and the obvious inference that the tier was systematically bad turns out to be wrong.
 
-## A call to the field
+**Three banner items closed.**
+- *Item 10* — the Table 3 anchor label "JAP 2013" is Tokuda et al., *Jpn. J. Appl. Phys.* 52, 110121 (2013), now promoted to [47].
+- *Item 11* — both prior-art leads checked. Neither breaches the novelty claim.
+- *Item 18* — IEC TS 62607-6-24:2026 confirmed across two further independent records.
+- *Item 5* — closed by **removal**: the uncited "65 fJ per write event" figure is deleted, not re-anchored.
 
-The author does not have access to the experimental infrastructure required to
-execute Experiments 1–5. They are offered as a prioritised, decision-branched
-roadmap for any group with SCD(111) substrates, hBN transfer protocols, Hall
-measurement infrastructure, and remote-plasma PECVD capability. Simulation code
-and prior parameter files will be released as supplementary material on journal
-submission.
+**And four new defects, three of which the closures created.**
 
-The primary falsification target for the whole framework is a working device —
-any graphene-gated ferroelectric photonic memory cell, at any route, at any
-quality level. Corrections, contradicting measurements, and failed replications
-are welcome at the address above and will be logged, not quietly absorbed.
+- **Verification defect V4.** Identifying "JAP 2013" revealed that it reports TEM structural characterisation with *no transport data*, and it has been carrying Route E's mobility prior since before v10.0. The elimination verdict for Route E stands on independent evidence; the number in Table 3 is sourced to a paper that does not contain it. *An unidentified anchor label cannot be checked for whether it supports the value attached to it — which is why bibliographic housekeeping was concealing a defect.*
+- **[36] does not cover this paper's use.** Confirming the standard also supplied its scope: clean CVD films on SiO₂/Si, excluding twisted multilayer structures. Both exclusions apply here. Withdrawn from Experiment 1.
+- **[10] is exfoliated, not CVD.** Route I's hBN transfer penalty rests on a three-step analogy, previously stated as two.
+- **Title truncation.** Four of six gate-passed entries carried shortened titles. One mattered: dropping "single-crystal" from [8] understated what the Route G/J growth prior rests on.
+
+**Two findings that strengthen existing corrections.** A second independent monolayer counter-anchor ([49], 3–5 layers) now supports the v10.9 correction that rested on a single source; and a fourth published role for graphene in this device class ([48], photoswitchable sp²/sp³ junction) makes the novelty claim stated against four occupied positions rather than three.
+
+**One structural change.** §2.2 now states plainly that the 0.5 dB insertion-loss budget is **per optical path**, not per array — which Table 2's 1/N scaling had implied since it was written but the prose never said. That puts passive mesh loss outside the tolerance chain where it belongs, and exposes the framework's most consequential known gap: transparent-state loss per unit length may bind before any of the five modelled criteria, and it is not one of them. Recorded as a candidate sixth criterion.
+
+## Repository contents
+
+```
+paper4-v10.12.html    The paper. Self-contained; no build step.
+loss-closure.py       Supplementary: the §2.2a computation. Stdlib + numpy.
+README.md             This file.
+```
+
+The HTML is a single file with inlined CSS, two webfont links, and one small progress-bar script. It supports light and dark rendering, prints cleanly (the pre-deployment banner is suppressed and link URLs expand), respects `prefers-reduced-motion`, and carries keyboard focus styling and a skip link.
+
+**Before deploying:** delete the red dashed `PRE-DEPLOYMENT DRAFT` block near the top of `<main>`. It lists 36 open items and is for the author, not the reader.
+
+## Status and open work
+
+The largest open items, in rough priority order:
+
+1. **Independent check of the §2.2a computation** — it eliminated a baseline and no second instrument or human has verified it (item 36)
+2. Monte Carlo rerun against the N-dependent closure condition; N = 16 loosens n\* fourfold and moves every joint probability (item 33)
+3. A better anchor for the required weight dynamic range — currently a 7–12 dB bracket from two sources (item 32)
+4. How far above the Drude floor a real device actually lands; without it the feasibility surface is only a bound (item 34)
+5. Complete the legacy gate — [4] remains unresolved; identify "Zhang 2012" (items 3, 4)
+6. Human archive pass over four cycles of single-instrument corrections (items 6, 12, 30, 36)
+
+## Contributing and falsification
+
+This paper is a call to the field. The author does not have access to the experimental infrastructure required to execute Experiments 1–5, and offers them as a prioritised, decision-branched roadmap for any group with SCD(111) substrates, hBN transfer protocols, Hall measurement infrastructure, and remote-plasma PECVD capability.
+
+The framework's primary falsification target is a working device — a graphene-gated ferroelectric photonic memory cell at any route and any quality level. That result would supply the first experimental anchor for thresholds that are currently all theory.
+
+Corrections to citations, priors, arithmetic or physics are welcome and will be logged rather than silently applied, including the ones that are embarrassing. The revision log's value is that it has never been cleaned up.
+
+**Contact:** nhaaland@yahoo.com
+
+## License
+
+CC0 1.0 Universal — released to the public domain. Simulation code and prior parameter files will be released as supplementary material upon journal submission.
